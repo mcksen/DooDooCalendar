@@ -28,7 +28,7 @@ public class CalendarUI : MonoBehaviour
     private int daysInMonth;
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
-    private void Start()
+    private void Awake()
     {
 
         currentDate = DateTime.Today;
@@ -40,8 +40,8 @@ public class CalendarUI : MonoBehaviour
         daysInMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
         numberOfBlanksBefore = GetBlanksBefore();
         numberOfBlanksAfter = GetBlanksAfter();
-        PopulateWeekDaysGrid();
         PopulateCalendarGrid();
+        PopulateWeekDaysGrid();
     }
 
 
@@ -64,7 +64,7 @@ public class CalendarUI : MonoBehaviour
 
             else
             {
-                GridPopulator.instance.SetTextValue("i.ToString()", populationList[i]);
+                GridPopulator.instance.SetTextValue(i.ToString(), populationList[i]);
                 if (i == currentDate.Day)
                 {
                     populationList[i].GetComponent<Image>().color = currentDayColor;
@@ -75,7 +75,7 @@ public class CalendarUI : MonoBehaviour
                 }
 
             }
-            populationList.Add(dayPrefab);
+
         }
 
 
@@ -100,9 +100,9 @@ public class CalendarUI : MonoBehaviour
 
     private void PopulateWeekDaysGrid()
     {
-        int weekLength = 7;
+
         List<string> weekDays = new List<string> { "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun" };
-        List<GameObject> populationList = GridPopulator.instance.PopulateTheGrid(weekLength, weekDaysGrid, weekDaysPrefab);
+        List<GameObject> populationList = GridPopulator.instance.PopulateTheGrid(weekDays.Count, weekDaysGrid, weekDaysPrefab);
         for (int i = 0; i < weekDays.Count; i++)
         {
             GridPopulator.instance.SetTextValue(weekDays[i], populationList[i]);
