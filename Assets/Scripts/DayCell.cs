@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class DayCell : Cell
 {
     [SerializeField] private TextMeshProUGUI cellText;
-
+    [SerializeField] private GameObject body;
     [SerializeField] private Image image;
 
 

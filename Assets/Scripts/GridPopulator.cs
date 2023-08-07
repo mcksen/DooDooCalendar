@@ -6,12 +6,12 @@ using Ksen;
 public class GridPopulator : MonoBehaviour
 {
     [SerializeField] Cell cellPrefab;
-
+    List<Cell> populationList;
 
 
     public List<Cell> PopulateTheGrid(int numberOfCells)
     {
-        List<Cell> populationList = new();
+        populationList = new();
         for (int i = 0; i <= numberOfCells - 1; i++)
         {
 
@@ -22,7 +22,19 @@ public class GridPopulator : MonoBehaviour
         return populationList;
 
     }
+    public void ClearCalendarGrid()
+    {
+        if (populationList.Count > 0)
+        {
+            foreach (Cell i in populationList)
+            {
+                Destroy(i.gameObject);
+            }
+            populationList.Clear();
 
+
+        }
+    }
 
 
 }
