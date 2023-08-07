@@ -2,25 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using Ksen;
 public class GridPopulator : MonoBehaviour
 {
-    public static GridPopulator instance;
-    void Awake()
-    {
-        instance = this;
-    }
+    [SerializeField] Cell cellPrefab;
 
 
-    public List<GameObject> PopulateTheGrid(int numberOfCells, GameObject parent, GameObject objToPopulate)
+
+    public List<Cell> PopulateTheGrid(int numberOfCells)
     {
-        List<GameObject> populationList = new List<GameObject>();
+        List<Cell> populationList = new();
         for (int i = 0; i <= numberOfCells - 1; i++)
         {
 
-            GameObject obj = GameObject.Instantiate(objToPopulate);
-            obj.transform.SetParent(parent.transform);
-            populationList.Add(obj);
+            Cell cell = Instantiate(cellPrefab);
+            cell.transform.SetParent(transform);
+            populationList.Add(cell);
         }
         return populationList;
 
@@ -28,9 +25,4 @@ public class GridPopulator : MonoBehaviour
 
 
 
-    public void SetTextValue(string text, GameObject obj)
-    {
-
-        obj.GetComponentInChildren<TextMeshProUGUI>().text = text;
-    }
 }

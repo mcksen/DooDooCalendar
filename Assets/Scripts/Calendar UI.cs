@@ -6,14 +6,15 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Ksen;
 
 public class CalendarUI : MonoBehaviour
 {
-    [SerializeField] private GameObject calendarGrid;
-    [SerializeField] private GameObject dayPrefab;
-    [SerializeField] private GameObject weekDaysGrid;
-    [SerializeField] private GameObject weekDaysPrefab;
+
+    [SerializeField] private GridPopulator calendarGridPopulator;
+    [SerializeField] private GridPopulator weekDaysGridPopulator;
+
+
 
     [SerializeField] private Color blankColor;
     [SerializeField] private Color daysDefaultColor;
@@ -23,12 +24,13 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI yearText;
 
 
+
     private DateTime currentDate;
     private DateTime firstDayOfMonth;
     private int daysInMonth;
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
-    private void Awake()
+    private void Start()
     {
 
         currentDate = DateTime.Today;
@@ -50,28 +52,28 @@ public class CalendarUI : MonoBehaviour
     {
 
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
-        List<GameObject> populationList = GridPopulator.instance.PopulateTheGrid(totalDays, calendarGrid, dayPrefab);
+        List<Cell> populationList = calendarGridPopulator.PopulateTheGrid(totalDays);
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
 
 
             if (i < numberOfBlanksBefore || i >= numberOfBlanksBefore + daysInMonth)
             {
-                populationList[i].GetComponent<Image>().color = blankColor;
-                GridPopulator.instance.SetTextValue("", populationList[i]);
+                populationList[i].SetImageColor(blankColor);
+                populationList[i].SetTextValue("");
 
             }
 
             else
             {
-                GridPopulator.instance.SetTextValue(i.ToString(), populationList[i]);
+                populationList[i].SetTextValue(i.ToString());
                 if (i == currentDate.Day)
                 {
-                    populationList[i].GetComponent<Image>().color = currentDayColor;
+                    populationList[i].SetImageColor(currentDayColor);
                 }
                 else
                 {
-                    populationList[i].GetComponent<Image>().color = daysDefaultColor;
+                    populationList[i].SetImageColor(daysDefaultColor);
                 }
 
             }
@@ -102,10 +104,10 @@ public class CalendarUI : MonoBehaviour
     {
 
         List<string> weekDays = new List<string> { "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun" };
-        List<GameObject> populationList = GridPopulator.instance.PopulateTheGrid(weekDays.Count, weekDaysGrid, weekDaysPrefab);
+        List<Cell> populationList = weekDaysGridPopulator.PopulateTheGrid(weekDays.Count);
         for (int i = 0; i < weekDays.Count; i++)
         {
-            GridPopulator.instance.SetTextValue(weekDays[i], populationList[i]);
+            populationList[i].SetTextValue(weekDays[i]);
         }
     }
 }

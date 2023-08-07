@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4245113167025466350}
   - component: {fileID: 6656507874906838880}
   - component: {fileID: 1710591608191100471}
+  - component: {fileID: 6142213992618726016}
   m_Layer: 5
   m_Name: Day Prefab
   m_TagString: Untagged
@@ -122,6 +123,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6142213992618726016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057950050781578889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1013e832fd0b9934ca58f13b5c067e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellText: {fileID: 5286269118139789083}
+  image: {fileID: 6656507874906838880}
 --- !u!1 &9013529216714646262
 GameObject:
   m_ObjectHideFlags: 0
