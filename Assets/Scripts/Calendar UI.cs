@@ -10,6 +10,7 @@ using Ksen;
 
 public class CalendarUI : MonoBehaviour
 {
+    private const int DAYS_IN_WEEK = 7;
 
     [SerializeField] private GridPopulator calendarGridPopulator;
     [SerializeField] private GridPopulator weekDaysGridPopulator;
@@ -28,6 +29,7 @@ public class CalendarUI : MonoBehaviour
     private DateTime currentDate;
     private DateTime defaultDate;
     private DateTime firstDayOfMonth;
+
     private int daysInMonth;
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
@@ -41,6 +43,8 @@ public class CalendarUI : MonoBehaviour
         monthText.text = defaultDate.ToString("MMMM");
         yearText.text = defaultDate.ToString("yyyy");
 
+
+
         numberOfBlanksBefore = GetBlanksBefore();
         numberOfBlanksAfter = GetBlanksAfter();
         PopulateCalendarGrid();
@@ -48,20 +52,26 @@ public class CalendarUI : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        EventManager.instance.onForwardClick -= HandleForwardClick;
+        EventManager.instance.onBackwardClick -= HandleBackwardClick;
+    }
+
 
     private void HandleForwardClick()
     {
         calendarGridPopulator.ClearCalendarGrid();
 
-        Debug.Log(defaultDate.Month.ToString());
+
         defaultDate = defaultDate.AddMonths(1);
-        Debug.Log(defaultDate.Month.ToString() + 3);
-        // defaultDate = new DateTime(defaultDate.Year, defaultDate.Month, 1);
+        defaultDate = new DateTime(defaultDate.Year, defaultDate.Month, 1);
+
         monthText.text = defaultDate.ToString("MMMM");
         yearText.text = defaultDate.ToString("yyyy");
         numberOfBlanksBefore = GetBlanksBefore();
         numberOfBlanksAfter = GetBlanksAfter();
-        Debug.Log(defaultDate.Month.ToString() + 6);
+
         PopulateCalendarGrid();
 
     }
@@ -69,7 +79,8 @@ public class CalendarUI : MonoBehaviour
     {
         calendarGridPopulator.ClearCalendarGrid();
         defaultDate = defaultDate.AddMonths(-1);
-        // defaultDate = new DateTime(defaultDate.Year, defaultDate.Month, 1);
+
+
         monthText.text = defaultDate.ToString("MMMM");
         yearText.text = defaultDate.ToString("yyyy");
         numberOfBlanksBefore = GetBlanksBefore();
@@ -82,6 +93,7 @@ public class CalendarUI : MonoBehaviour
 
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
         List<Cell> populationList = calendarGridPopulator.PopulateTheGrid(totalDays);
+        int day = 1;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
 
@@ -95,8 +107,9 @@ public class CalendarUI : MonoBehaviour
 
             else
             {
-                populationList[i].SetTextValue(i.ToString());
-                if (i == currentDate.Day)
+
+                populationList[i].SetTextValue(day.ToString());
+                if (day == currentDate.Day && defaultDate.Month == currentDate.Month && defaultDate.Year == currentDate.Year)
                 {
                     populationList[i].SetImageColor(currentDayColor);
                 }
@@ -104,7 +117,7 @@ public class CalendarUI : MonoBehaviour
                 {
                     populationList[i].SetImageColor(daysDefaultColor);
                 }
-
+                day++;
             }
 
         }
@@ -119,7 +132,7 @@ public class CalendarUI : MonoBehaviour
 
         firstDayOfMonth = new DateTime(defaultDate.Year, defaultDate.Month, 1);
         int dayofWeek = (Int32)firstDayOfMonth.DayOfWeek;
-        int number = (dayofWeek + 6) % 7;
+        int number = (dayofWeek + 6) % DAYS_IN_WEEK;
 
         return number;
     }
@@ -128,7 +141,7 @@ public class CalendarUI : MonoBehaviour
         daysInMonth = DateTime.DaysInMonth(defaultDate.Year, defaultDate.Month);
         DateTime lastDayOfMonth = new(defaultDate.Year, defaultDate.Month, daysInMonth);
         int dayofWeek = (Int32)lastDayOfMonth.DayOfWeek;
-        int number = (7 - dayofWeek) % 7;
+        int number = (DAYS_IN_WEEK - dayofWeek) % DAYS_IN_WEEK;
 
         return number;
     }

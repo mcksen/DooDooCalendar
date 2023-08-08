@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using Ksen;
 public class GridPopulator : MonoBehaviour
 {
-    [SerializeField] Cell cellPrefab;
-    List<Cell> populationList;
+    [SerializeField] private Cell cellPrefab;
+    private List<Cell> populationList;
 
 
     public List<Cell> PopulateTheGrid(int numberOfCells)

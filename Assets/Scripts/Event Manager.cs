@@ -9,6 +9,7 @@ public class EventManager : ScriptableObject
 
 {
     public static EventManager instance;
+
     public delegate void ButtonClickEvents();
     public ButtonClickEvents onForwardClick;
     public ButtonClickEvents onBackwardClick;
@@ -47,8 +48,6 @@ public class EventManager : ScriptableObject
         }
 
     }
-    // --------------------------------------------------------------------------------------
-    // GameState Events
-    // --------------------------------------------------------------------------------------
+
 
 }

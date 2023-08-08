@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameAwakeSettings : MonoBehaviour
 {
-    [SerializeField] SceneController sceneController;
+    [SerializeField] private SceneController sceneController;
     [SerializeField] private EventManager eventManager;
 
     private void Awake()

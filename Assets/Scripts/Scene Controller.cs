@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 public class SceneController : ScriptableObject
 {
     public static SceneController instance;
+
     [SerializeField] private string calendar;
     [SerializeField] private string awake;
 
 
 
-    List<string> scenesToUnload;
+    private List<string> scenesToUnload;
 
     public void Initialise()
     {
@@ -21,15 +22,7 @@ public class SceneController : ScriptableObject
         EventManager.instance.onOpenGame += HandleOpenGame;
 
     }
-    private void onDestroy()
-    {
-        EventManager.instance.onOpenGame -= HandleOpenGame;
 
-    }
-
-    // --------------------------------------------------------------------------------------
-    // Event-dependant functions
-    // --------------------------------------------------------------------------------------
 
 
 
