@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2255238120494986736}
   - component: {fileID: 4649580175249934954}
   - component: {fileID: 8807475598976571872}
+  - component: {fileID: 1167917614687176785}
   m_Layer: 5
-  m_Name: Mon
+  m_Name: WeekDay Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5568628, g: 0.81568635, b: 0.8705883, a: 1}
+  m_Color: {r: 0.6784314, g: 0.84167504, b: 0.9137255, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -77,6 +78,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1167917614687176785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103922156704977024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e8ca7562618804da7646a53b068a70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellText: {fileID: 3439190377003642375}
+  image: {fileID: 8807475598976571872}
 --- !u!1 &2480513880620310571
 GameObject:
   m_ObjectHideFlags: 0

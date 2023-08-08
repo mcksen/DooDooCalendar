@@ -6,14 +6,16 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Ksen;
 
 public class CalendarUI : MonoBehaviour
 {
-    [SerializeField] private GameObject calendarGrid;
-    [SerializeField] private GameObject dayPrefab;
-    [SerializeField] private GameObject weekDaysGrid;
-    [SerializeField] private GameObject weekDaysPrefab;
+    private const int DAYS_IN_WEEK = 7;
+
+    [SerializeField] private GridPopulator calendarGridPopulator;
+    [SerializeField] private GridPopulator weekDaysGridPopulator;
+
+
 
     [SerializeField] private Color blankColor;
     [SerializeField] private Color daysDefaultColor;
@@ -23,76 +25,123 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI yearText;
 
 
+
     private DateTime currentDate;
+    private DateTime defaultDate;
     private DateTime firstDayOfMonth;
+
     private int daysInMonth;
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
+
     private void Start()
     {
-
+        EventManager.instance.onForwardClick += HandleForwardClick;
+        EventManager.instance.onBackwardClick += HandleBackwardClick;
         currentDate = DateTime.Today;
+        defaultDate = currentDate;
+        monthText.text = defaultDate.ToString("MMMM");
+        yearText.text = defaultDate.ToString("yyyy");
 
-        monthText.text = currentDate.ToString("MMMM");
 
-        yearText.text = currentDate.ToString("yyyy");
-        firstDayOfMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
-        daysInMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+
         numberOfBlanksBefore = GetBlanksBefore();
         numberOfBlanksAfter = GetBlanksAfter();
-        PopulateWeekDaysGrid();
         PopulateCalendarGrid();
+        PopulateWeekDaysGrid();
+
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.instance.onForwardClick -= HandleForwardClick;
+        EventManager.instance.onBackwardClick -= HandleBackwardClick;
     }
 
 
+    private void HandleForwardClick()
+    {
+        calendarGridPopulator.ClearCalendarGrid();
+
+
+        defaultDate = defaultDate.AddMonths(1);
+        defaultDate = new DateTime(defaultDate.Year, defaultDate.Month, 1);
+
+        monthText.text = defaultDate.ToString("MMMM");
+        yearText.text = defaultDate.ToString("yyyy");
+        numberOfBlanksBefore = GetBlanksBefore();
+        numberOfBlanksAfter = GetBlanksAfter();
+
+        PopulateCalendarGrid();
+
+    }
+    private void HandleBackwardClick()
+    {
+        calendarGridPopulator.ClearCalendarGrid();
+        defaultDate = defaultDate.AddMonths(-1);
+
+
+        monthText.text = defaultDate.ToString("MMMM");
+        yearText.text = defaultDate.ToString("yyyy");
+        numberOfBlanksBefore = GetBlanksBefore();
+        numberOfBlanksAfter = GetBlanksAfter();
+        PopulateCalendarGrid();
+    }
 
     public void PopulateCalendarGrid()
     {
 
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
-        List<GameObject> populationList = GridPopulator.instance.PopulateTheGrid(totalDays, calendarGrid, dayPrefab);
+        List<Cell> populationList = calendarGridPopulator.PopulateTheGrid(totalDays);
+        int day = 1;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
 
 
             if (i < numberOfBlanksBefore || i >= numberOfBlanksBefore + daysInMonth)
             {
-                populationList[i].GetComponent<Image>().color = blankColor;
-                GridPopulator.instance.SetTextValue("", populationList[i]);
+                populationList[i].SetImageColor(blankColor);
+                populationList[i].SetTextValue("");
 
             }
 
             else
             {
-                GridPopulator.instance.SetTextValue("i.ToString()", populationList[i]);
-                if (i == currentDate.Day)
+
+                populationList[i].SetTextValue(day.ToString());
+                if (day == currentDate.Day && defaultDate.Month == currentDate.Month && defaultDate.Year == currentDate.Year)
                 {
-                    populationList[i].GetComponent<Image>().color = currentDayColor;
+                    populationList[i].SetImageColor(currentDayColor);
                 }
                 else
                 {
-                    populationList[i].GetComponent<Image>().color = daysDefaultColor;
+                    populationList[i].SetImageColor(daysDefaultColor);
                 }
-
+                day++;
             }
-            populationList.Add(dayPrefab);
+
         }
 
 
     }
 
+
+
     private int GetBlanksBefore()
     {
+
+        firstDayOfMonth = new DateTime(defaultDate.Year, defaultDate.Month, 1);
         int dayofWeek = (Int32)firstDayOfMonth.DayOfWeek;
-        int number = (dayofWeek + 6) % 7;
+        int number = (dayofWeek + 6) % DAYS_IN_WEEK;
 
         return number;
     }
     private int GetBlanksAfter()
     {
-        DateTime lastDayOfMonth = new DateTime(currentDate.Year, currentDate.Month, daysInMonth);
+        daysInMonth = DateTime.DaysInMonth(defaultDate.Year, defaultDate.Month);
+        DateTime lastDayOfMonth = new(defaultDate.Year, defaultDate.Month, daysInMonth);
         int dayofWeek = (Int32)lastDayOfMonth.DayOfWeek;
-        int number = (7 - dayofWeek) % 7;
+        int number = (DAYS_IN_WEEK - dayofWeek) % DAYS_IN_WEEK;
 
         return number;
     }
@@ -100,12 +149,12 @@ public class CalendarUI : MonoBehaviour
 
     private void PopulateWeekDaysGrid()
     {
-        int weekLength = 7;
+
         List<string> weekDays = new List<string> { "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun" };
-        List<GameObject> populationList = GridPopulator.instance.PopulateTheGrid(weekLength, weekDaysGrid, weekDaysPrefab);
+        List<Cell> populationList = weekDaysGridPopulator.PopulateTheGrid(weekDays.Count);
         for (int i = 0; i < weekDays.Count; i++)
         {
-            GridPopulator.instance.SetTextValue(weekDays[i], populationList[i]);
+            populationList[i].SetTextValue(weekDays[i]);
         }
     }
 }

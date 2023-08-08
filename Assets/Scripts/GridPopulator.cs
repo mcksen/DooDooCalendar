@@ -1,36 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-
+using Ksen;
 public class GridPopulator : MonoBehaviour
 {
-    public static GridPopulator instance;
-    void Awake()
-    {
-        instance = this;
-    }
+    [SerializeField] private Cell cellPrefab;
+    private List<Cell> populationList;
 
 
-    public List<GameObject> PopulateTheGrid(int numberOfCells, GameObject parent, GameObject objToPopulate)
+    public List<Cell> PopulateTheGrid(int numberOfCells)
     {
-        List<GameObject> populationList = new List<GameObject>();
+        populationList = new();
         for (int i = 0; i <= numberOfCells - 1; i++)
         {
 
-            GameObject obj = GameObject.Instantiate(objToPopulate);
-            obj.transform.SetParent(parent.transform);
-            populationList.Add(obj);
+            Cell cell = Instantiate(cellPrefab);
+            cell.transform.SetParent(transform);
+            populationList.Add(cell);
         }
         return populationList;
 
     }
-
-
-
-    public void SetTextValue(string text, GameObject obj)
+    public void ClearCalendarGrid()
     {
+        if (populationList.Count > 0)
+        {
+            foreach (Cell i in populationList)
+            {
+                Destroy(i.gameObject);
+            }
+            populationList.Clear();
 
-        obj.GetComponentInChildren<TextMeshProUGUI>().text = text;
+
+        }
     }
+
+
 }
