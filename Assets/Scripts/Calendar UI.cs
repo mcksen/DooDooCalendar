@@ -43,13 +43,8 @@ public class CalendarUI : MonoBehaviour
     {
         currentDate = DateTime.Today;
         defaultDate = currentDate;
-        monthText.text = defaultDate.ToString("MMMM");
-        yearText.text = defaultDate.ToString("yyyy");
-
-
-
-        numberOfBlanksBefore = GetBlanksBefore();
-        numberOfBlanksAfter = GetBlanksAfter();
+        SetHeadingText();
+        SetNumberOfBlanks();
         PopulateCalendarGrid();
         PopulateWeekDaysGrid();
 
@@ -70,11 +65,8 @@ public class CalendarUI : MonoBehaviour
         defaultDate = defaultDate.AddMonths(1);
         defaultDate = new DateTime(defaultDate.Year, defaultDate.Month, 1);
 
-        monthText.text = defaultDate.ToString("MMMM");
-        yearText.text = defaultDate.ToString("yyyy");
-        numberOfBlanksBefore = GetBlanksBefore();
-        numberOfBlanksAfter = GetBlanksAfter();
-
+        SetHeadingText();
+        SetNumberOfBlanks();
         PopulateCalendarGrid();
 
     }
@@ -84,10 +76,8 @@ public class CalendarUI : MonoBehaviour
         defaultDate = defaultDate.AddMonths(-1);
 
 
-        monthText.text = defaultDate.ToString("MMMM");
-        yearText.text = defaultDate.ToString("yyyy");
-        numberOfBlanksBefore = GetBlanksBefore();
-        numberOfBlanksAfter = GetBlanksAfter();
+        SetHeadingText();
+        SetNumberOfBlanks();
         PopulateCalendarGrid();
     }
 
@@ -159,6 +149,18 @@ public class CalendarUI : MonoBehaviour
         {
             populationList[i].SetTextValue(weekDays[i]);
         }
+    }
+
+
+    private void SetHeadingText()
+    {
+        monthText.text = defaultDate.ToString("MMMM");
+        yearText.text = defaultDate.ToString("yyyy");
+    }
+    private void SetNumberOfBlanks()
+    {
+        numberOfBlanksBefore = GetBlanksBefore();
+        numberOfBlanksAfter = GetBlanksAfter();
     }
 }
 
