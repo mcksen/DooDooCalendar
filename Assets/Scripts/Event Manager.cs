@@ -5,23 +5,25 @@ using UnityEngine.Events;
 
 
 [CreateAssetMenu(fileName = "EventManager", menuName = "Scriptable Objects/EventManager")]
-public class EventManager : ScriptableObject
+public class EventManager : ScriptableSingleton<EventManager>
 
 {
-    public static EventManager instance;
+
 
     public delegate void ButtonClickEvent();
     public ButtonClickEvent onForwardClick;
     public ButtonClickEvent onBackwardClick;
 
 
+
+    public delegate void CellSelectEvent();
+    public CellSelectEvent onCellSelect;
+    public CellSelectEvent onCellDESelect;
+
+
     public delegate void SceneEvent();
     public SceneEvent onOpenGame;
 
-    public void Initialise()
-    {
-        instance = this;
-    }
 
     public void TriggerForwardClick()
     {
@@ -48,6 +50,21 @@ public class EventManager : ScriptableObject
         }
 
     }
+    public void TriggerCellSelect()
+    {
+        if (onCellSelect != null)
+        {
+            onCellSelect();
+        }
 
+    }
+    public void TriggerCellDESelect()
+    {
+        if (onCellDESelect != null)
+        {
+            onCellDESelect();
+        }
+
+    }
 
 }

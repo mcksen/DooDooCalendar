@@ -35,8 +35,8 @@ public class CalendarUI : MonoBehaviour
 
     private void Awake()
     {
-        EventManager.instance.onForwardClick += HandleForwardClick;
-        EventManager.instance.onBackwardClick += HandleBackwardClick;
+        EventManager.Instance.onForwardClick += HandleForwardClick;
+        EventManager.Instance.onBackwardClick += HandleBackwardClick;
 
     }
     private void Start()
@@ -52,8 +52,8 @@ public class CalendarUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventManager.instance.onForwardClick -= HandleForwardClick;
-        EventManager.instance.onBackwardClick -= HandleBackwardClick;
+        EventManager.Instance.onForwardClick -= HandleForwardClick;
+        EventManager.Instance.onBackwardClick -= HandleBackwardClick;
     }
 
 
