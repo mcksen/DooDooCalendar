@@ -22,7 +22,7 @@ public class GridPopulator : MonoBehaviour
     }
     public void Clear()
     {
-        if (populationList.Count > 0)
+        if (populationList != null)
         {
             foreach (Cell i in populationList)
             {
