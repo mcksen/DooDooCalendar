@@ -59,7 +59,7 @@ public class CalendarUI : MonoBehaviour
 
     private void HandleForwardClick()
     {
-        calendarGridPopulator.ClearCalendarGrid();
+        calendarGridPopulator.Clear();
 
 
         defaultDate = defaultDate.AddMonths(1);
@@ -72,7 +72,7 @@ public class CalendarUI : MonoBehaviour
     }
     private void HandleBackwardClick()
     {
-        calendarGridPopulator.ClearCalendarGrid();
+        calendarGridPopulator.Clear();
         defaultDate = defaultDate.AddMonths(-1);
 
 
@@ -85,7 +85,7 @@ public class CalendarUI : MonoBehaviour
     {
 
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
-        List<Cell> populationList = calendarGridPopulator.PopulateTheGrid(totalDays);
+        List<Cell> populationList = calendarGridPopulator.Populate(totalDays);
         int day = 1;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
@@ -144,7 +144,7 @@ public class CalendarUI : MonoBehaviour
     {
 
         List<string> weekDays = new List<string> { "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun" };
-        List<Cell> populationList = weekDaysGridPopulator.PopulateTheGrid(weekDays.Count);
+        List<Cell> populationList = weekDaysGridPopulator.Populate(weekDays.Count);
         for (int i = 0; i < weekDays.Count; i++)
         {
             populationList[i].SetTextValue(weekDays[i]);

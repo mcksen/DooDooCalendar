@@ -7,7 +7,7 @@ public class GridPopulator : MonoBehaviour
     private List<Cell> populationList;
 
 
-    public List<Cell> PopulateTheGrid(int numberOfCells)
+    public List<Cell> Populate(int numberOfCells)
     {
         populationList = new();
         for (int i = 0; i <= numberOfCells - 1; i++)
@@ -20,7 +20,7 @@ public class GridPopulator : MonoBehaviour
         return populationList;
 
     }
-    public void ClearCalendarGrid()
+    public void Clear()
     {
         if (populationList.Count > 0)
         {
