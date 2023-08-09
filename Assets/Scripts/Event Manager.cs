@@ -23,7 +23,7 @@ public class EventManager : ScriptableObject
         instance = this;
     }
 
-    public void HandleForwardClick()
+    public void TriggerForwardClick()
     {
         if (onForwardClick != null)
         {
@@ -32,7 +32,7 @@ public class EventManager : ScriptableObject
 
     }
 
-    public void HandleBackwardClick()
+    public void TriggerBackwardClick()
     {
         if (onBackwardClick != null)
         {
@@ -40,7 +40,7 @@ public class EventManager : ScriptableObject
         }
 
     }
-    public void HandleOpenGame()
+    public void TriggerOpenGame()
     {
         if (onOpenGame != null)
         {
