@@ -125,7 +125,7 @@ public class CalendarUI : MonoBehaviour
 
         firstDayOfMonth = new DateTime(defaultDate.Year, defaultDate.Month, 1);
         int dayofWeek = (Int32)firstDayOfMonth.DayOfWeek;
-        int number = (dayofWeek + 6) % DAYS_IN_WEEK;
+        int number = (dayofWeek + (DAYS_IN_WEEK - 1)) % DAYS_IN_WEEK;
 
         return number;
     }
