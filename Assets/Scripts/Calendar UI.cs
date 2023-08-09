@@ -124,7 +124,7 @@ public class CalendarUI : MonoBehaviour
     {
 
         firstDayOfMonth = new DateTime(defaultDate.Year, defaultDate.Month, 1);
-        int dayofWeek = (Int32)firstDayOfMonth.DayOfWeek;
+        int dayofWeek = (int)firstDayOfMonth.DayOfWeek;
         int number = (dayofWeek + (DAYS_IN_WEEK - 1)) % DAYS_IN_WEEK;
 
         return number;
@@ -133,7 +133,7 @@ public class CalendarUI : MonoBehaviour
     {
         daysInMonth = DateTime.DaysInMonth(defaultDate.Year, defaultDate.Month);
         DateTime lastDayOfMonth = new(defaultDate.Year, defaultDate.Month, daysInMonth);
-        int dayofWeek = (Int32)lastDayOfMonth.DayOfWeek;
+        int dayofWeek = (int)lastDayOfMonth.DayOfWeek;
         int number = (DAYS_IN_WEEK - dayofWeek) % DAYS_IN_WEEK;
 
         return number;
