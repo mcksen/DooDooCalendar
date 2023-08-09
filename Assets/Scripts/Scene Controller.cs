@@ -12,13 +12,13 @@ public class SceneController : ScriptableObject
 
 
 
-    private List<string> scenesToUnload;
+    private List<string> scenesToUnload = new();
 
     public void Initialise()
     {
         instance = this;
 
-        scenesToUnload = new List<string>();
+
         EventManager.instance.onOpenGame += HandleOpenGame;
 
     }

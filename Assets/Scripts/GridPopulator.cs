@@ -4,12 +4,12 @@ using UnityEngine;
 public class GridPopulator : MonoBehaviour
 {
     [SerializeField] private Cell cellPrefab;
-    private List<Cell> populationList;
+    private List<Cell> populationList = new();
 
 
     public List<Cell> Populate(int numberOfCells)
     {
-        populationList = new();
+
         for (int i = 0; i <= numberOfCells - 1; i++)
         {
 
