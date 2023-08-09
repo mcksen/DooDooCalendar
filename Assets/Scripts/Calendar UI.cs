@@ -33,10 +33,14 @@ public class CalendarUI : MonoBehaviour
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
 
-    private void Start()
+    private void Awake()
     {
         EventManager.instance.onForwardClick += HandleForwardClick;
         EventManager.instance.onBackwardClick += HandleBackwardClick;
+
+    }
+    private void Start()
+    {
         currentDate = DateTime.Today;
         defaultDate = currentDate;
         monthText.text = defaultDate.ToString("MMMM");
