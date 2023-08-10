@@ -16,15 +16,14 @@ public class SceneController : ScriptableSingleton<SceneController>
 
     public void Initialise()
     {
-
-
-
         EventManager.Instance.onOpenGame += HandleOpenGame;
-
     }
 
 
-
+    public void OnDestroy()
+    {
+        EventManager.Instance.onOpenGame -= HandleOpenGame;
+    }
 
 
 
