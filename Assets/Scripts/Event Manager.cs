@@ -16,9 +16,6 @@ public class EventManager : ScriptableSingleton<EventManager>
 
 
 
-    public delegate void CellSelectEvent();
-    public CellSelectEvent onCellSelect;
-    public CellSelectEvent onCellDESelect;
 
 
     public delegate void SceneEvent();
@@ -47,22 +44,6 @@ public class EventManager : ScriptableSingleton<EventManager>
         if (onOpenGame != null)
         {
             onOpenGame();
-        }
-
-    }
-    public void TriggerCellSelect()
-    {
-        if (onCellSelect != null)
-        {
-            onCellSelect();
-        }
-
-    }
-    public void TriggerCellDESelect()
-    {
-        if (onCellDESelect != null)
-        {
-            onCellDESelect();
         }
 
     }
