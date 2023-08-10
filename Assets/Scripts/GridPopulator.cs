@@ -13,8 +13,8 @@ public class GridPopulator : MonoBehaviour
         for (int i = 0; i <= numberOfCells - 1; i++)
         {
 
-            Cell cell = Instantiate(cellPrefab);
-            cell.transform.SetParent(transform);
+            Cell cell = Instantiate(cellPrefab, transform);
+
             populationList.Add(cell);
         }
         return populationList;
