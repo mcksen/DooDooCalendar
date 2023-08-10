@@ -12,7 +12,7 @@ public class DayCell : Cell
     [SerializeField] private Image defaultImage;
 
 
-    public override void Select(Cell cell)
+    public override void Select()
     {
         if (!selectImage.enabled)
         {
