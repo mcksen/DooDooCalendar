@@ -7,13 +7,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class CalendarUI : MonoBehaviour
 {
-    [SerializeField] private GameObject calendarGrid;
-    [SerializeField] private GameObject dayPrefab;
-    [SerializeField] private GameObject weekDaysGrid;
-    [SerializeField] private GameObject weekDaysPrefab;
+    private const int DAYS_IN_WEEK = 7;
+
+    [SerializeField] private GridPopulator calendarGridPopulator;
+    [SerializeField] private GridPopulator weekDaysGridPopulator;
+
+
 
     [SerializeField] private Color blankColor;
     [SerializeField] private Color daysDefaultColor;
@@ -23,76 +24,117 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI yearText;
 
 
+
     private DateTime currentDate;
+    private DateTime defaultDate;
     private DateTime firstDayOfMonth;
+
     private int daysInMonth;
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
+
+    private void Awake()
+    {
+        EventManager.Instance.onForwardClick += HandleForwardClick;
+        EventManager.Instance.onBackwardClick += HandleBackwardClick;
+
+    }
     private void Start()
     {
-
         currentDate = DateTime.Today;
-
-        monthText.text = currentDate.ToString("MMMM");
-
-        yearText.text = currentDate.ToString("yyyy");
-        firstDayOfMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
-        daysInMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
-        numberOfBlanksBefore = GetBlanksBefore();
-        numberOfBlanksAfter = GetBlanksAfter();
-        PopulateWeekDaysGrid();
+        defaultDate = currentDate;
+        SetHeadingText();
+        SetNumberOfBlanks();
         PopulateCalendarGrid();
+        PopulateWeekDaysGrid();
+
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.onForwardClick -= HandleForwardClick;
+        EventManager.Instance.onBackwardClick -= HandleBackwardClick;
     }
 
 
+    private void HandleForwardClick()
+    {
+        calendarGridPopulator.Clear();
+
+
+        defaultDate = defaultDate.AddMonths(1);
+        defaultDate = new DateTime(defaultDate.Year, defaultDate.Month, 1);
+
+        SetHeadingText();
+        SetNumberOfBlanks();
+        PopulateCalendarGrid();
+
+    }
+    private void HandleBackwardClick()
+    {
+        calendarGridPopulator.Clear();
+        defaultDate = defaultDate.AddMonths(-1);
+
+
+        SetHeadingText();
+        SetNumberOfBlanks();
+        PopulateCalendarGrid();
+    }
 
     public void PopulateCalendarGrid()
     {
 
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
-        List<GameObject> populationList = GridPopulator.instance.PopulateTheGrid(totalDays, calendarGrid, dayPrefab);
+        List<Cell> populationList = calendarGridPopulator.Populate(totalDays);
+        int day = 1;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
 
 
             if (i < numberOfBlanksBefore || i >= numberOfBlanksBefore + daysInMonth)
             {
-                populationList[i].GetComponent<Image>().color = blankColor;
-                GridPopulator.instance.SetTextValue("", populationList[i]);
+                populationList[i].SetImageColor(blankColor);
+                populationList[i].SetTextValue("");
 
             }
 
             else
             {
-                GridPopulator.instance.SetTextValue("i.ToString()", populationList[i]);
-                if (i == currentDate.Day)
+
+                populationList[i].SetTextValue(day.ToString());
+                if (day == currentDate.Day && defaultDate.Month == currentDate.Month && defaultDate.Year == currentDate.Year)
                 {
-                    populationList[i].GetComponent<Image>().color = currentDayColor;
+                    populationList[i].SetImageColor(currentDayColor);
                 }
                 else
                 {
-                    populationList[i].GetComponent<Image>().color = daysDefaultColor;
+                    populationList[i].SetImageColor(daysDefaultColor);
                 }
-
+                day++;
             }
-            populationList.Add(dayPrefab);
+
         }
 
 
     }
 
+
+
     private int GetBlanksBefore()
     {
-        int dayofWeek = (Int32)firstDayOfMonth.DayOfWeek;
-        int number = (dayofWeek + 6) % 7;
+
+        firstDayOfMonth = new DateTime(defaultDate.Year, defaultDate.Month, 1);
+        int dayofWeek = (int)firstDayOfMonth.DayOfWeek;
+        int number = (dayofWeek + (DAYS_IN_WEEK - 1)) % DAYS_IN_WEEK;
 
         return number;
     }
     private int GetBlanksAfter()
     {
-        DateTime lastDayOfMonth = new DateTime(currentDate.Year, currentDate.Month, daysInMonth);
-        int dayofWeek = (Int32)lastDayOfMonth.DayOfWeek;
-        int number = (7 - dayofWeek) % 7;
+        daysInMonth = DateTime.DaysInMonth(defaultDate.Year, defaultDate.Month);
+        DateTime lastDayOfMonth = new(defaultDate.Year, defaultDate.Month, daysInMonth);
+        int dayofWeek = (int)lastDayOfMonth.DayOfWeek;
+        int number = (DAYS_IN_WEEK - dayofWeek) % DAYS_IN_WEEK;
 
         return number;
     }
@@ -100,13 +142,25 @@ public class CalendarUI : MonoBehaviour
 
     private void PopulateWeekDaysGrid()
     {
-        int weekLength = 7;
+
         List<string> weekDays = new List<string> { "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun" };
-        List<GameObject> populationList = GridPopulator.instance.PopulateTheGrid(weekLength, weekDaysGrid, weekDaysPrefab);
+        List<Cell> populationList = weekDaysGridPopulator.Populate(weekDays.Count);
         for (int i = 0; i < weekDays.Count; i++)
         {
-            GridPopulator.instance.SetTextValue(weekDays[i], populationList[i]);
+            populationList[i].SetTextValue(weekDays[i]);
         }
+    }
+
+
+    private void SetHeadingText()
+    {
+        monthText.text = defaultDate.ToString("MMMM");
+        yearText.text = defaultDate.ToString("yyyy");
+    }
+    private void SetNumberOfBlanks()
+    {
+        numberOfBlanksBefore = GetBlanksBefore();
+        numberOfBlanksAfter = GetBlanksAfter();
     }
 }
 

@@ -1,36 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-
 public class GridPopulator : MonoBehaviour
 {
-    public static GridPopulator instance;
-    void Awake()
-    {
-        instance = this;
-    }
+    [SerializeField] private Cell cellPrefab;
+    private List<Cell> populationList = new();
 
 
-    public List<GameObject> PopulateTheGrid(int numberOfCells, GameObject parent, GameObject objToPopulate)
+    public List<Cell> Populate(int numberOfCells)
     {
-        List<GameObject> populationList = new List<GameObject>();
+
         for (int i = 0; i <= numberOfCells - 1; i++)
         {
 
-            GameObject obj = GameObject.Instantiate(objToPopulate);
-            obj.transform.SetParent(parent.transform);
-            populationList.Add(obj);
+            Cell cell = Instantiate(cellPrefab, transform);
+
+            populationList.Add(cell);
         }
         return populationList;
 
     }
-
-
-
-    public void SetTextValue(string text, GameObject obj)
+    public void Clear()
     {
+        if (populationList != null)
+        {
+            foreach (Cell i in populationList)
+            {
+                Destroy(i.gameObject);
+            }
+            populationList.Clear();
 
-        obj.GetComponentInChildren<TextMeshProUGUI>().text = text;
+
+        }
     }
+
+
 }
