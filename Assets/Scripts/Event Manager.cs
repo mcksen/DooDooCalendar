@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+
+
 using UnityEngine;
-using UnityEngine.Events;
+
 
 
 [CreateAssetMenu(fileName = "EventManager", menuName = "Scriptable Objects/EventManager")]

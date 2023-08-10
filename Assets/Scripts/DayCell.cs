@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+
+
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System;
+
 
 public class DayCell : Cell
 {
     [SerializeField] private TextMeshProUGUI cellText;
     [SerializeField] private Image selectImage;
     [SerializeField] private Image defaultImage;
-    [SerializeField] private Button button;
+
 
 
     private void Awake()
