@@ -20,6 +20,7 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private TextMeshProUGUI yearText;
 
+    List<Cell> selectedCells = new();
 
 
     private DateTime currentDate;
@@ -34,8 +35,11 @@ public class CalendarUI : MonoBehaviour
     {
         EventManager.Instance.onForwardClick += HandleForwardClick;
         EventManager.Instance.onBackwardClick += HandleBackwardClick;
-
+        EventManager.Instance.onCellSelect += HandleSelectCell;
+        EventManager.Instance.onCellDESelect += HandleDESelectCell;
     }
+
+
     private void Start()
     {
         currentDate = DateTime.Today;
@@ -51,9 +55,13 @@ public class CalendarUI : MonoBehaviour
     {
         EventManager.Instance.onForwardClick -= HandleForwardClick;
         EventManager.Instance.onBackwardClick -= HandleBackwardClick;
+        EventManager.Instance.onCellSelect -= HandleSelectCell;
+        EventManager.Instance.onCellDESelect -= HandleDESelectCell;
     }
 
-
+    // _____________________________________________________________________________________
+    //   EVENT - DEPENDANT FUNCTIONS
+    // _____________________________________________________________________________________
     private void HandleForwardClick()
     {
         calendarGridPopulator.Clear();
@@ -77,7 +85,26 @@ public class CalendarUI : MonoBehaviour
         SetNumberOfBlanks();
         PopulateCalendarGrid();
     }
+    private void HandleSelectCell(Cell cell)
+    {
+        if (selectedCells != null)
+        {
+            selectedCells.Add(cell);
+        }
 
+    }
+    private void HandleDESelectCell(Cell cell)
+    {
+        if (selectedCells != null)
+        {
+            selectedCells.Remove(cell);
+        }
+    }
+
+
+    // _____________________________________________________________________________________
+    //   CLASS - SPECIEFIC FUNCTIONS
+    // _____________________________________________________________________________________
     public void PopulateCalendarGrid()
     {
 
@@ -114,8 +141,6 @@ public class CalendarUI : MonoBehaviour
 
 
     }
-
-
 
     private int GetBlanksBefore()
     {

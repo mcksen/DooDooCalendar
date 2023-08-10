@@ -12,26 +12,21 @@ public class DayCell : Cell
     [SerializeField] private Image defaultImage;
 
 
-
-    private void Awake()
-    {
-        EventManager.Instance.onCellSelect += HandleSelectCell;
-    }
-
-    private void HandleSelectCell()
+    public override void Select(Cell cell)
     {
         if (!selectImage.enabled)
         {
-
             selectImage.enabled = true;
+            EventManager.Instance.TriggerCellSelect(this);
         }
         else
         {
             selectImage.enabled = false;
-            EventManager.Instance.TriggerCellDESelect();
+            EventManager.Instance.TriggerCellDESelect(this);
         }
-
     }
+
+
 
     public override void SetTextValue(string text)
     {

@@ -16,7 +16,7 @@ public class EventManager : ScriptableSingleton<EventManager>
 
 
 
-    public delegate void CellSelectEvent();
+    public delegate void CellSelectEvent(Cell cell);
     public CellSelectEvent onCellSelect;
     public CellSelectEvent onCellDESelect;
 
@@ -50,19 +50,19 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
-    public void TriggerCellSelect()
+    public void TriggerCellSelect(Cell cell)
     {
         if (onCellSelect != null)
         {
-            onCellSelect();
+            onCellSelect(cell);
         }
 
     }
-    public void TriggerCellDESelect()
+    public void TriggerCellDESelect(Cell cell)
     {
         if (onCellDESelect != null)
         {
-            onCellDESelect();
+            onCellDESelect(cell);
         }
 
     }

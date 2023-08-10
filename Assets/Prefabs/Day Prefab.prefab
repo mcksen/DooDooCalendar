@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4245113167025466350}
   - component: {fileID: 1710591608191100471}
   - component: {fileID: 6142213992618726016}
-  - component: {fileID: 4468956736462455195}
   m_Layer: 5
   m_Name: Day Prefab
   m_TagString: Untagged
@@ -95,9 +94,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: c4bbb40e48087854daccedaa09fbfa43, type: 2}
-        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: TriggerSelectCell
+      - m_Target: {fileID: 6142213992618726016}
+        m_TargetAssemblyTypeName: DayCell, Assembly-CSharp
+        m_MethodName: Select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -122,21 +121,6 @@ MonoBehaviour:
   cellText: {fileID: 5286269118139789083}
   selectImage: {fileID: 7555791392193838517}
   defaultImage: {fileID: 6171982344474704808}
-  button: {fileID: 0}
---- !u!114 &4468956736462455195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057950050781578889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 0
 --- !u!1 &6372136435594756997
 GameObject:
   m_ObjectHideFlags: 0

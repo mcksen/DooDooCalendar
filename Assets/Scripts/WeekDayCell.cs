@@ -20,6 +20,11 @@ public class WeekDayCell : Cell
     {
         image.color = color;
     }
+    public override void Select(Cell cell)
+    {
+
+
+    }
 
 
 }
