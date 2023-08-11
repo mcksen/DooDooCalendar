@@ -33,6 +33,7 @@ RectTransform:
   m_Children:
   - {fileID: 5673732614001323436}
   - {fileID: 8213274020439399252}
+  - {fileID: 3408731665525064130}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,9 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellText: {fileID: 5286269118139789083}
-  selectImage: {fileID: 0}
+  selectImage: {fileID: 7555791392193838517}
   defaultImage: {fileID: 6171982344474704808}
-<<<<<<< HEAD
 --- !u!1 &6372136435594756997
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,16 +168,11 @@ CanvasRenderer:
   m_GameObject: {fileID: 6372136435594756997}
   m_CullTransparentMesh: 1
 --- !u!114 &7555791392193838517
-=======
-  button: {fileID: 0}
---- !u!114 &4468956736462455195
->>>>>>> ksen/develop
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 6372136435594756997}
   m_Enabled: 0
   m_EditorHideFlags: 0
@@ -202,16 +197,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
-=======
-  m_GameObject: {fileID: 2057950050781578889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 0
->>>>>>> ksen/develop
 --- !u!1 &7556027871164599055
 GameObject:
   m_ObjectHideFlags: 0

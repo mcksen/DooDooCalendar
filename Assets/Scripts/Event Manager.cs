@@ -16,12 +16,9 @@ public class EventManager : ScriptableSingleton<EventManager>
 
 
 
-<<<<<<< HEAD
     public delegate void CellSelectEvent(Cell cell);
     public CellSelectEvent onCellSelect;
     public CellSelectEvent onCellDESelect;
-=======
->>>>>>> ksen/develop
 
 
     public delegate void SceneEvent();
@@ -53,7 +50,6 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
-<<<<<<< HEAD
     public void TriggerCellSelect(Cell cell)
     {
         if (onCellSelect != null)
@@ -70,7 +66,5 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
-=======
->>>>>>> ksen/develop
 
 }
