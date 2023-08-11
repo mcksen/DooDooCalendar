@@ -3,28 +3,27 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "SceneController", menuName = "Scriptable Objects/SceneController")]
-public class SceneController : ScriptableObject
+public class SceneController : ScriptableSingleton<SceneController>
 {
-    public static SceneController instance;
+
 
     [SerializeField] private string calendar;
     [SerializeField] private string awake;
 
 
 
-    private List<string> scenesToUnload;
+    private List<string> scenesToUnload = new();
 
     public void Initialise()
     {
-        instance = this;
-
-        scenesToUnload = new List<string>();
-        EventManager.instance.onOpenGame += HandleOpenGame;
-
+        EventManager.Instance.onOpenGame += HandleOpenGame;
     }
 
 
-
+    public void OnDestroy()
+    {
+        EventManager.Instance.onOpenGame -= HandleOpenGame;
+    }
 
 
 
@@ -51,7 +50,7 @@ public class SceneController : ScriptableObject
         {
             scenesToUnload.Add(name);
         }
-        Debug.Log("pop" + Time.frameCount);
+
     }
 
     public void UnloadScenes()

@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 using TMPro;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.UI;
-using Ksen;
 
 public class CalendarUI : MonoBehaviour
 {
@@ -34,19 +33,18 @@ public class CalendarUI : MonoBehaviour
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
 
+    private void Awake()
+    {
+        EventManager.Instance.onForwardClick += HandleForwardClick;
+        EventManager.Instance.onBackwardClick += HandleBackwardClick;
+
+    }
     private void Start()
     {
-        EventManager.instance.onForwardClick += HandleForwardClick;
-        EventManager.instance.onBackwardClick += HandleBackwardClick;
         currentDate = DateTime.Today;
         defaultDate = currentDate;
-        monthText.text = defaultDate.ToString("MMMM");
-        yearText.text = defaultDate.ToString("yyyy");
-
-
-
-        numberOfBlanksBefore = GetBlanksBefore();
-        numberOfBlanksAfter = GetBlanksAfter();
+        SetHeadingText();
+        SetNumberOfBlanks();
         PopulateCalendarGrid();
         PopulateWeekDaysGrid();
 
@@ -54,37 +52,32 @@ public class CalendarUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventManager.instance.onForwardClick -= HandleForwardClick;
-        EventManager.instance.onBackwardClick -= HandleBackwardClick;
+        EventManager.Instance.onForwardClick -= HandleForwardClick;
+        EventManager.Instance.onBackwardClick -= HandleBackwardClick;
     }
 
 
     private void HandleForwardClick()
     {
-        calendarGridPopulator.ClearCalendarGrid();
+        calendarGridPopulator.Clear();
 
 
         defaultDate = defaultDate.AddMonths(1);
         defaultDate = new DateTime(defaultDate.Year, defaultDate.Month, 1);
 
-        monthText.text = defaultDate.ToString("MMMM");
-        yearText.text = defaultDate.ToString("yyyy");
-        numberOfBlanksBefore = GetBlanksBefore();
-        numberOfBlanksAfter = GetBlanksAfter();
-
+        SetHeadingText();
+        SetNumberOfBlanks();
         PopulateCalendarGrid();
 
     }
     private void HandleBackwardClick()
     {
-        calendarGridPopulator.ClearCalendarGrid();
+        calendarGridPopulator.Clear();
         defaultDate = defaultDate.AddMonths(-1);
 
 
-        monthText.text = defaultDate.ToString("MMMM");
-        yearText.text = defaultDate.ToString("yyyy");
-        numberOfBlanksBefore = GetBlanksBefore();
-        numberOfBlanksAfter = GetBlanksAfter();
+        SetHeadingText();
+        SetNumberOfBlanks();
         PopulateCalendarGrid();
     }
 
@@ -92,7 +85,7 @@ public class CalendarUI : MonoBehaviour
     {
 
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
-        List<Cell> populationList = calendarGridPopulator.PopulateTheGrid(totalDays);
+        List<Cell> populationList = calendarGridPopulator.Populate(totalDays);
         int day = 1;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
@@ -131,8 +124,8 @@ public class CalendarUI : MonoBehaviour
     {
 
         firstDayOfMonth = new DateTime(defaultDate.Year, defaultDate.Month, 1);
-        int dayofWeek = (Int32)firstDayOfMonth.DayOfWeek;
-        int number = (dayofWeek + 6) % DAYS_IN_WEEK;
+        int dayofWeek = (int)firstDayOfMonth.DayOfWeek;
+        int number = (dayofWeek + (DAYS_IN_WEEK - 1)) % DAYS_IN_WEEK;
 
         return number;
     }
@@ -140,7 +133,7 @@ public class CalendarUI : MonoBehaviour
     {
         daysInMonth = DateTime.DaysInMonth(defaultDate.Year, defaultDate.Month);
         DateTime lastDayOfMonth = new(defaultDate.Year, defaultDate.Month, daysInMonth);
-        int dayofWeek = (Int32)lastDayOfMonth.DayOfWeek;
+        int dayofWeek = (int)lastDayOfMonth.DayOfWeek;
         int number = (DAYS_IN_WEEK - dayofWeek) % DAYS_IN_WEEK;
 
         return number;
@@ -151,11 +144,23 @@ public class CalendarUI : MonoBehaviour
     {
 
         List<string> weekDays = new List<string> { "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun" };
-        List<Cell> populationList = weekDaysGridPopulator.PopulateTheGrid(weekDays.Count);
+        List<Cell> populationList = weekDaysGridPopulator.Populate(weekDays.Count);
         for (int i = 0; i < weekDays.Count; i++)
         {
             populationList[i].SetTextValue(weekDays[i]);
         }
+    }
+
+
+    private void SetHeadingText()
+    {
+        monthText.text = defaultDate.ToString("MMMM");
+        yearText.text = defaultDate.ToString("yyyy");
+    }
+    private void SetNumberOfBlanks()
+    {
+        numberOfBlanksBefore = GetBlanksBefore();
+        numberOfBlanksAfter = GetBlanksAfter();
     }
 }
 

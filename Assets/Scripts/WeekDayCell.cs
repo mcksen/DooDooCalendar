@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
-using Ksen;
 using UnityEngine.UI;
 
 public class WeekDayCell : Cell

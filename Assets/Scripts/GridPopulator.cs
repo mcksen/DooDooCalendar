@@ -1,29 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Ksen;
 public class GridPopulator : MonoBehaviour
 {
     [SerializeField] private Cell cellPrefab;
-    private List<Cell> populationList;
+    private List<Cell> populationList = new();
 
 
-    public List<Cell> PopulateTheGrid(int numberOfCells)
+    public List<Cell> Populate(int numberOfCells)
     {
-        populationList = new();
+
         for (int i = 0; i <= numberOfCells - 1; i++)
         {
 
-            Cell cell = Instantiate(cellPrefab);
-            cell.transform.SetParent(transform);
+            Cell cell = Instantiate(cellPrefab, transform);
+
             populationList.Add(cell);
         }
         return populationList;
 
     }
-    public void ClearCalendarGrid()
+    public void Clear()
     {
-        if (populationList.Count > 0)
+        if (populationList != null)
         {
             foreach (Cell i in populationList)
             {

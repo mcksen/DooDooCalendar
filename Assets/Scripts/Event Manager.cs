@@ -5,25 +5,24 @@ using UnityEngine.Events;
 
 
 [CreateAssetMenu(fileName = "EventManager", menuName = "Scriptable Objects/EventManager")]
-public class EventManager : ScriptableObject
+public class EventManager : ScriptableSingleton<EventManager>
 
 {
-    public static EventManager instance;
 
-    public delegate void ButtonClickEvents();
-    public ButtonClickEvents onForwardClick;
-    public ButtonClickEvents onBackwardClick;
+
+    public delegate void ButtonClickEvent();
+    public ButtonClickEvent onForwardClick;
+    public ButtonClickEvent onBackwardClick;
+
+
+
 
 
     public delegate void SceneEvent();
     public SceneEvent onOpenGame;
 
-    public void Initialise()
-    {
-        instance = this;
-    }
 
-    public void HandleForwardClick()
+    public void TriggerForwardClick()
     {
         if (onForwardClick != null)
         {
@@ -32,7 +31,7 @@ public class EventManager : ScriptableObject
 
     }
 
-    public void HandleBackwardClick()
+    public void TriggerBackwardClick()
     {
         if (onBackwardClick != null)
         {
@@ -40,7 +39,7 @@ public class EventManager : ScriptableObject
         }
 
     }
-    public void HandleOpenGame()
+    public void TriggerOpenGame()
     {
         if (onOpenGame != null)
         {
@@ -48,6 +47,5 @@ public class EventManager : ScriptableObject
         }
 
     }
-
 
 }

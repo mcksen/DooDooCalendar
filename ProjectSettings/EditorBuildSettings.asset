@@ -12,5 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Calendar.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 76ee746c979331848adf63224e7ddc30, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 9618d42229fad734fb6580fdfc07d720, type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: 6d5796ea7003772498c1fd73bca78eeb, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7cf1d20be89414e4ba08799c1083cf22, type: 2}
