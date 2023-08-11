@@ -17,11 +17,13 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private Color daysDefaultColor;
     [SerializeField] private Color currentDayColor;
 
+
+
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private TextMeshProUGUI yearText;
 
-    List<Cell> selectedCells = new();
-
+    private List<Cell> selectedCells = new();
+    private PopUp pop = null;
 
     private DateTime currentDate;
     private DateTime defaultDate;
@@ -91,8 +93,19 @@ public class CalendarUI : MonoBehaviour
         {
             selectedCells.Add(cell);
         }
+        if (pop != null)
+        {
+            Destroy(pop);
+            pop = null;
+        }
+        else if (pop == null && Input.GetTouch(0).phase == TouchPhase.Stationary)
+        {
+            pop.Instantiate(cell);
+        }
+
 
     }
+
     private void HandleDESelectCell(Cell cell)
     {
         if (selectedCells != null)

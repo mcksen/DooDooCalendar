@@ -12,5 +12,7 @@ public abstract class Cell : MonoBehaviour
 
     public abstract void SetImageColor(Color color);
     public abstract void Select();
+
+
 }
 

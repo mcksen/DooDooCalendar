@@ -25,6 +25,10 @@ public class EventManager : ScriptableSingleton<EventManager>
     public SceneEvent onOpenGame;
 
 
+
+    public delegate void PopUpEvent();
+    public PopUpEvent onStickerAdded;
+
     public void TriggerForwardClick()
     {
         if (onForwardClick != null)
@@ -63,6 +67,14 @@ public class EventManager : ScriptableSingleton<EventManager>
         if (onCellDESelect != null)
         {
             onCellDESelect(cell);
+        }
+
+    }
+    public void TriggerStickerAdded()
+    {
+        if (onStickerAdded != null)
+        {
+            onStickerAdded();
         }
 
     }
