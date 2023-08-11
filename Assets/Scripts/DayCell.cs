@@ -8,10 +8,15 @@ using UnityEngine.UI;
 public class DayCell : Cell
 {
     [SerializeField] private TextMeshProUGUI cellText;
+<<<<<<< HEAD
     [SerializeField] private Image selectImage;
     [SerializeField] private Image defaultImage;
+=======
+>>>>>>> ksen/develop
 
+    [SerializeField] private Image defaultImage;
 
+<<<<<<< HEAD
     public override void Select()
     {
         if (!selectImage.enabled)
@@ -25,6 +30,11 @@ public class DayCell : Cell
             EventManager.Instance.TriggerCellDESelect(this);
         }
     }
+=======
+
+
+
+>>>>>>> ksen/develop
 
 
 
