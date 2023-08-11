@@ -165,7 +165,7 @@ public class CalendarUI : MonoBehaviour
     private void PopulateWeekDaysGrid()
     {
 
-        List<string> weekDays = new List<string> { "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun" };
+        List<string> weekDays = new List<string> { "M", "T", "W", "T", "F", "S", "S" };
         List<Cell> populationList = weekDaysGridPopulator.Populate(weekDays.Count);
         for (int i = 0; i < weekDays.Count; i++)
         {
