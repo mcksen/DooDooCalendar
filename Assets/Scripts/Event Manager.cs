@@ -27,7 +27,9 @@ public class EventManager : ScriptableSingleton<EventManager>
 
 
     public delegate void PopUpEvent();
-    public PopUpEvent onStickerAdded;
+
+
+    public PopUpEvent onAddDescriptionPressed;
 
     public void TriggerForwardClick()
     {
@@ -70,11 +72,12 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
-    public void TriggerStickerAdded()
+
+    public void TriggerAddDescriptionPressed()
     {
-        if (onStickerAdded != null)
+        if (onAddDescriptionPressed != null)
         {
-            onStickerAdded();
+            onAddDescriptionPressed();
         }
 
     }

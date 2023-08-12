@@ -14,7 +14,7 @@ public class SceneController : ScriptableSingleton<SceneController>
 
     private List<string> scenesToUnload = new();
 
-    public void Initialise()
+    public void Subscribe()
     {
         EventManager.Instance.onOpenGame += HandleOpenGame;
     }
@@ -34,7 +34,6 @@ public class SceneController : ScriptableSingleton<SceneController>
 
     public void HandleOpenGame()
     {
-
         LoadScene(calendar, true);
         scenesToUnload.Add(awake);
         UnloadScenes();
@@ -53,13 +52,21 @@ public class SceneController : ScriptableSingleton<SceneController>
 
     }
 
+    [ContextMenu("PR")]
+    public void PrintOper()
+    {
+        Debug.LogError(oper.progress);
+    }
+
+    static AsyncOperation oper = null;
+
     public void UnloadScenes()
     {
         if (scenesToUnload != null)
         {
             foreach (string i in scenesToUnload)
             {
-                SceneManager.UnloadSceneAsync(i);
+                oper = SceneManager.UnloadSceneAsync(i);
 
             }
             scenesToUnload.Clear();

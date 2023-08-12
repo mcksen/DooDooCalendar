@@ -10,6 +10,8 @@ public class CalendarUI : MonoBehaviour
 
     [SerializeField] private GridPopulator calendarGridPopulator;
     [SerializeField] private GridPopulator weekDaysGridPopulator;
+    [SerializeField] private PopUp popUpPrefab;
+
 
 
 
@@ -22,8 +24,10 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private TextMeshProUGUI yearText;
 
-    private List<Cell> selectedCells = new();
+
     private PopUp pop = null;
+    private List<Tuple<string, System.Action>> popList = new();
+    private DayCell selectedCell;
 
     private DateTime currentDate;
     private DateTime defaultDate;
@@ -39,7 +43,9 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onBackwardClick += HandleBackwardClick;
         EventManager.Instance.onCellSelect += HandleSelectCell;
         EventManager.Instance.onCellDESelect += HandleDESelectCell;
+
     }
+
 
 
     private void Start()
@@ -89,32 +95,50 @@ public class CalendarUI : MonoBehaviour
     }
     private void HandleSelectCell(Cell cell)
     {
-        if (selectedCells != null)
+        if (pop == null)
         {
-            selectedCells.Add(cell);
-        }
-        if (pop != null)
-        {
-            Destroy(pop);
-            pop = null;
-        }
-        else if (pop == null && Input.GetTouch(0).phase == TouchPhase.Stationary)
-        {
-            pop.Instantiate(cell);
-        }
+            popList.Clear();
+            selectedCell = cell as DayCell;
 
+            pop = Instantiate(popUpPrefab, cell.transform.position, cell.transform.rotation);
+            popList.Add(new Tuple<string, Action>("Sticker", HandleAddStickerPressed));
+            popList.Add(new Tuple<string, Action>("Description", HandleAddDescriptionPressed));
+            pop.Configure(popList);
+
+        }
+    }
+    private void HandleAddDescriptionPressed()
+    {
+        EventManager.Instance.TriggerAddDescriptionPressed();
+        //Make function to trigger description scene;
+    }
+
+
+    public void HandleAddStickerPressed()
+    {
+        popList.Clear();
+        popList.Add(new Tuple<string, Action>("", HandleAddPoopPressed));
+        popList.Add(new Tuple<string, Action>("", HandleAddMedicinePressed));
+        pop.Configure(popList);
 
     }
 
     private void HandleDESelectCell(Cell cell)
     {
-        if (selectedCells != null)
-        {
-            selectedCells.Remove(cell);
-        }
+        selectedCell = null;
+        Destroy(pop);
+        pop = null;
     }
 
+    private void HandleAddPoopPressed()
+    {
+        selectedCell.SetPoopImage();
+    }
 
+    private void HandleAddMedicinePressed()
+    {
+        selectedCell.SetMedicineImage();
+    }
     // _____________________________________________________________________________________
     //   CLASS - SPECIEFIC FUNCTIONS
     // _____________________________________________________________________________________

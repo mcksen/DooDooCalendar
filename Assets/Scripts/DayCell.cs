@@ -11,6 +11,9 @@ public class DayCell : Cell
     [SerializeField] private Image selectImage;
     [SerializeField] private Image defaultImage;
 
+    [SerializeField] private Image poop;
+    [SerializeField] private Image medicine;
+
 
     public override void Select()
     {
@@ -22,7 +25,7 @@ public class DayCell : Cell
         else
         {
             selectImage.enabled = false;
-            EventManager.Instance.TriggerCellDESelect(this);
+            // EventManager.Instance.TriggerCellDESelect(this);
         }
     }
 
@@ -35,6 +38,27 @@ public class DayCell : Cell
     public override void SetImageColor(Color color)
     {
         defaultImage.color = color;
+    }
+
+    public void SetPoopImage()
+    {
+        SetImageActiveDependancy(poop);
+    }
+    public void SetMedicineImage()
+    {
+        SetImageActiveDependancy(medicine);
+    }
+
+    private void SetImageActiveDependancy(Image image)
+    {
+        if (image.enabled)
+        {
+            image.enabled = false;
+        }
+        else
+        {
+            image.enabled = true;
+        }
     }
 
 
