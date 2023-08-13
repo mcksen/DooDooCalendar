@@ -50,6 +50,8 @@ public class CalendarUI : MonoBehaviour
 
     private void Start()
     {
+
+        EventManager.Instance.TriggerLoadedGame();
         currentDate = DateTime.Today;
         defaultDate = currentDate;
         SetHeadingText();

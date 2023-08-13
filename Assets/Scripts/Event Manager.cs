@@ -23,6 +23,7 @@ public class EventManager : ScriptableSingleton<EventManager>
 
     public delegate void SceneEvent();
     public SceneEvent onOpenGame;
+    public SceneEvent onLoadedGame;
 
 
 
@@ -53,6 +54,14 @@ public class EventManager : ScriptableSingleton<EventManager>
         if (onOpenGame != null)
         {
             onOpenGame();
+        }
+
+    }
+    public void TriggerLoadedGame()
+    {
+        if (onLoadedGame != null)
+        {
+            onLoadedGame();
         }
 
     }

@@ -17,14 +17,16 @@ public class SceneController : ScriptableSingleton<SceneController>
     public void Subscribe()
     {
         EventManager.Instance.onOpenGame += HandleOpenGame;
+        EventManager.Instance.onLoadedGame += HandleLoadedGame;
     }
 
 
     public void OnDestroy()
     {
         EventManager.Instance.onOpenGame -= HandleOpenGame;
-    }
+        EventManager.Instance.onLoadedGame -= HandleLoadedGame;
 
+    }
 
 
 
@@ -35,11 +37,16 @@ public class SceneController : ScriptableSingleton<SceneController>
     public void HandleOpenGame()
     {
         LoadScene(calendar, true);
-        scenesToUnload.Add(awake);
-        UnloadScenes();
+
     }
 
+    public void HandleLoadedGame()
+    {
 
+        scenesToUnload.Add(awake);
+        UnloadScenes();
+
+    }
 
 
     public void LoadScene(string name, bool isPermanent)
@@ -52,22 +59,15 @@ public class SceneController : ScriptableSingleton<SceneController>
 
     }
 
-    [ContextMenu("PR")]
-    public void PrintOper()
-    {
-        Debug.LogError(oper.progress);
-    }
 
-    static AsyncOperation oper = null;
 
     public void UnloadScenes()
     {
         if (scenesToUnload != null)
         {
-            foreach (string i in scenesToUnload)
+            foreach (string sceneName in scenesToUnload)
             {
-                oper = SceneManager.UnloadSceneAsync(i);
-
+                SceneManager.UnloadSceneAsync(sceneName);
             }
             scenesToUnload.Clear();
         }
