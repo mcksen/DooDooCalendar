@@ -3,7 +3,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
+using System;
+using System.Diagnostics;
 
 public class DayCell : Cell
 {
@@ -17,9 +18,11 @@ public class DayCell : Cell
 
     public override void Select()
     {
+
         if (!selectImage.enabled)
         {
             selectImage.enabled = true;
+
             EventManager.Instance.TriggerCellSelect(this);
         }
         else

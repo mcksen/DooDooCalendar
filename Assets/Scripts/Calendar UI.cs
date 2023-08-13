@@ -118,9 +118,14 @@ public class CalendarUI : MonoBehaviour
 
     public void HandleAddStickerPressed()
     {
-        popList.Clear();
-        popList.Add(new Tuple<string, Action>("", HandleAddPoopPressed));
-        popList.Add(new Tuple<string, Action>("", HandleAddMedicinePressed));
+        if (popList != null)
+        {
+            pop.DestroyObjects();
+            popList.Clear();
+        }
+
+        popList.Add(new Tuple<string, Action>("Poop", HandleAddPoopPressed));
+        popList.Add(new Tuple<string, Action>("Medicine", HandleAddMedicinePressed));
         pop.Configure(popList);
 
     }
