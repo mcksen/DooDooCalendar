@@ -10,17 +10,18 @@ public class PopUp : MonoBehaviour
 {
 
     [SerializeField] ButtonCell buttonCellPrefab;
-    [SerializeField] GameObject horizontalLayoutGroup;
+    [SerializeField] GridLayoutGroup grid;
+    [SerializeField] Button backgroundPrefab;
 
 
     List<ButtonCell> list = new();
 
-
     public void Configure(List<Tuple<string, System.Action>> buttonList)
     {
+        Button background = Instantiate(backgroundPrefab, transform);
         foreach (Tuple<string, System.Action> i in buttonList)
         {
-            ButtonCell button = Instantiate(buttonCellPrefab, horizontalLayoutGroup.transform);
+            ButtonCell button = Instantiate(buttonCellPrefab, grid.transform);
             button.SetTextValue(i.Item1);
             button.Configure(i.Item2);
             list.Add(button);

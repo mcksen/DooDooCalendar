@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4245113167025466350}
   - component: {fileID: 1710591608191100471}
   - component: {fileID: 6142213992618726016}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Day Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 2897966756857980735}
   - component: {fileID: 2649005581332096133}
   - component: {fileID: 2187135798045497408}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Poop Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 3408731665525064130}
   - component: {fileID: 1294998396602418367}
   - component: {fileID: 7555791392193838517}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Selected Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 5543836603327822637}
   - component: {fileID: 4979644527260532508}
   - component: {fileID: 4763336091590590285}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Medication Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 5673732614001323436}
   - component: {fileID: 8932294030580248986}
   - component: {fileID: 6171982344474704808}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Default Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 8213274020439399252}
   - component: {fileID: 4248042550899200554}
   - component: {fileID: 5286269118139789083}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

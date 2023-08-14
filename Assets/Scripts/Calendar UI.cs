@@ -11,6 +11,7 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private GridPopulator calendarGridPopulator;
     [SerializeField] private GridPopulator weekDaysGridPopulator;
     [SerializeField] private PopUp popUpPrefab;
+    [SerializeField] private RectTransform canvas;
 
 
 
@@ -118,7 +119,7 @@ public class CalendarUI : MonoBehaviour
             popList.Clear();
             selectedCell = cell as DayCell;
 
-            pop = Instantiate(popUpPrefab, cell.transform.position, cell.transform.rotation);
+            pop = Instantiate(popUpPrefab, cell.transform.position, cell.transform.rotation, canvas);
             popList.Add(new Tuple<string, Action>("Sticker", HandleAddStickerPressed));
             popList.Add(new Tuple<string, Action>("Description", HandleAddDescriptionPressed));
             pop.Configure(popList);
