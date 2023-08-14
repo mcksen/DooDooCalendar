@@ -27,6 +27,7 @@ public class CalendarUI : MonoBehaviour
 
     private PopUp pop = null;
     private List<Tuple<string, System.Action>> popList = new();
+    private List<Cell> populationList = new();
     private DayCell selectedCell;
 
     private DateTime currentDate;
@@ -41,8 +42,10 @@ public class CalendarUI : MonoBehaviour
     {
         EventManager.Instance.onForwardClick += HandleForwardClick;
         EventManager.Instance.onBackwardClick += HandleBackwardClick;
+        EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
         EventManager.Instance.onCellSelect += HandleSelectCell;
-        EventManager.Instance.onCellDESelect += HandleDESelectCell;
+        EventManager.Instance.onDESelectAllCells += HandleDESelectAllCells;
+
 
     }
 
@@ -66,7 +69,9 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onForwardClick -= HandleForwardClick;
         EventManager.Instance.onBackwardClick -= HandleBackwardClick;
         EventManager.Instance.onCellSelect -= HandleSelectCell;
-        EventManager.Instance.onCellDESelect -= HandleDESelectCell;
+        EventManager.Instance.onDESelectAllCells -= HandleDESelectAllCells;
+        EventManager.Instance.onCellImageSelect -= HandleCellImageSelect;
+
     }
 
     // _____________________________________________________________________________________
@@ -86,6 +91,7 @@ public class CalendarUI : MonoBehaviour
 
     }
     private void HandleBackwardClick()
+
     {
         calendarGridPopulator.Clear();
         defaultDate = defaultDate.AddMonths(-1);
@@ -94,6 +100,16 @@ public class CalendarUI : MonoBehaviour
         SetHeadingText();
         SetNumberOfBlanks();
         PopulateCalendarGrid();
+    }
+    private void HandleCellImageSelect(Cell cell)
+    {
+        foreach (DayCell c in populationList)
+        {
+            if (c != cell)
+            {
+                c.DeSelect();
+            }
+        }
     }
     private void HandleSelectCell(Cell cell)
     {
@@ -130,16 +146,18 @@ public class CalendarUI : MonoBehaviour
 
     }
 
-    private void HandleDESelectCell(Cell cell)
+    private void HandleDESelectAllCells()
     {
+        selectedCell.DeSelect();
         selectedCell = null;
-        Destroy(pop);
+        Destroy(pop.gameObject);
         pop = null;
     }
 
     private void HandleAddPoopPressed()
     {
         selectedCell.SetPoopImage();
+
     }
 
     private void HandleAddMedicinePressed()
@@ -151,9 +169,9 @@ public class CalendarUI : MonoBehaviour
     // _____________________________________________________________________________________
     public void PopulateCalendarGrid()
     {
-
+        ClearPopulationList();
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
-        List<Cell> populationList = calendarGridPopulator.Populate(totalDays);
+        populationList = calendarGridPopulator.Populate(totalDays);
         int day = 1;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
@@ -227,6 +245,20 @@ public class CalendarUI : MonoBehaviour
     {
         numberOfBlanksBefore = GetBlanksBefore();
         numberOfBlanksAfter = GetBlanksAfter();
+    }
+
+
+
+    private void ClearPopulationList()
+    {
+
+        foreach (Cell c in populationList)
+        {
+            Destroy(c.gameObject);
+
+        }
+        populationList.Clear();
+
     }
 }
 

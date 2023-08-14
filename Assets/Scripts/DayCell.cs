@@ -15,25 +15,26 @@ public class DayCell : Cell
     [SerializeField] private Image poop;
     [SerializeField] private Image medicine;
 
-
+    private int clickCount = 0;
     public override void Select()
     {
 
-        if (!selectImage.enabled)
+        if (clickCount == 0)
         {
             selectImage.enabled = true;
-
+            EventManager.Instance.TriggerCellImageSelect(this);
+            clickCount++;
+        }
+        else if (clickCount == 1)
+        {
             EventManager.Instance.TriggerCellSelect(this);
         }
-        else
-        {
-            selectImage.enabled = false;
-            // EventManager.Instance.TriggerCellDESelect(this);
-        }
     }
-
-
-
+    public void DeSelect()
+    {
+        selectImage.enabled = false;
+        clickCount = 0;
+    }
     public override void SetTextValue(string text)
     {
         cellText.text = text;
@@ -65,5 +66,9 @@ public class DayCell : Cell
     }
 
 
+
 }
+
+
+
 

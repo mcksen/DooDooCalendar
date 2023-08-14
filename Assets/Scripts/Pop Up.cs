@@ -12,6 +12,7 @@ public class PopUp : MonoBehaviour
     [SerializeField] ButtonCell buttonCellPrefab;
     [SerializeField] GameObject horizontalLayoutGroup;
 
+
     List<ButtonCell> list = new();
 
 
@@ -36,6 +37,7 @@ public class PopUp : MonoBehaviour
         }
         list.Clear();
     }
+
 
 
 }

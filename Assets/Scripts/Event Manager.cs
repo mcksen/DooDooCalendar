@@ -17,8 +17,8 @@ public class EventManager : ScriptableSingleton<EventManager>
 
 
     public delegate void CellSelectEvent(Cell cell);
+    public CellSelectEvent onCellImageSelect;
     public CellSelectEvent onCellSelect;
-    public CellSelectEvent onCellDESelect;
 
 
     public delegate void SceneEvent();
@@ -29,7 +29,7 @@ public class EventManager : ScriptableSingleton<EventManager>
 
     public delegate void PopUpEvent();
 
-
+    public PopUpEvent onDESelectAllCells;
     public PopUpEvent onAddDescriptionPressed;
 
     public void TriggerForwardClick()
@@ -73,11 +73,20 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
-    public void TriggerCellDESelect(Cell cell)
+
+    public void TriggerCellImageSelect(Cell cell)
     {
-        if (onCellDESelect != null)
+        if (onCellImageSelect != null)
         {
-            onCellDESelect(cell);
+            onCellImageSelect(cell);
+        }
+
+    }
+    public void TriggerDESelectAllCells()
+    {
+        if (onDESelectAllCells != null)
+        {
+            onDESelectAllCells();
         }
 
     }
