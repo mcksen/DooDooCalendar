@@ -119,9 +119,10 @@ public class CalendarUI : MonoBehaviour
             popList.Clear();
             selectedCell = cell as DayCell;
 
-            pop = Instantiate(popUpPrefab, cell.transform.position, cell.transform.rotation, canvas);
+            pop = Instantiate(popUpPrefab, canvas);
             popList.Add(new Tuple<string, Action>("Sticker", HandleAddStickerPressed));
-            popList.Add(new Tuple<string, Action>("Description", HandleAddDescriptionPressed));
+            popList.Add(new Tuple<string, Action>("Notes", HandleAddDescriptionPressed));
+            pop.SetPosition(cell.transform.position);
             pop.Configure(popList);
 
         }
@@ -142,7 +143,7 @@ public class CalendarUI : MonoBehaviour
         }
 
         popList.Add(new Tuple<string, Action>("Poop", HandleAddPoopPressed));
-        popList.Add(new Tuple<string, Action>("Medicine", HandleAddMedicinePressed));
+        popList.Add(new Tuple<string, Action>("Pill", HandleAddMedicinePressed));
         pop.Configure(popList);
 
     }

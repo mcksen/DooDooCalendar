@@ -6,19 +6,19 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
+
 public class PopUp : MonoBehaviour
 {
 
     [SerializeField] ButtonCell buttonCellPrefab;
     [SerializeField] GridLayoutGroup grid;
-    [SerializeField] Button backgroundPrefab;
-
+    [SerializeField] Transform locationDependantArea;
 
     List<ButtonCell> list = new();
 
     public void Configure(List<Tuple<string, System.Action>> buttonList)
     {
-        Button background = Instantiate(backgroundPrefab, transform);
+
         foreach (Tuple<string, System.Action> i in buttonList)
         {
             ButtonCell button = Instantiate(buttonCellPrefab, grid.transform);
@@ -29,6 +29,11 @@ public class PopUp : MonoBehaviour
 
     }
 
+
+    public void SetPosition(Vector3 cellPosition)
+    {
+        locationDependantArea.position = cellPosition;
+    }
     public void DestroyObjects()
     {
         foreach (ButtonCell button in list)
