@@ -32,6 +32,7 @@ public class EventManager : ScriptableSingleton<EventManager>
     public PopUpEvent onDESelectAllCells;
     public PopUpEvent onAddDescriptionPressed;
 
+
     public void TriggerForwardClick()
     {
         if (onForwardClick != null)
@@ -99,5 +100,6 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
+
 
 }
