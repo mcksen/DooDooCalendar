@@ -101,5 +101,4 @@ public class EventManager : ScriptableSingleton<EventManager>
 
     }
 
-
 }

@@ -4,48 +4,51 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class ButtonCell : MonoBehaviour
+public class ButtonCell : Cell
 {
     [SerializeField] private TextMeshProUGUI cellText;
     [SerializeField] private Image image;
     System.Action callback;
 
-    private int clickCount = 0;
 
-    private void Awake()
+
+
+
+    public override void Configure(CellData data)
     {
-
-    }
-
-
-    public void Configure(System.Action action)
-    {
-
-        callback = action;
+        ButtonCellData bData = data as ButtonCellData;
+        callback = bData.action;
+        SetTextValue(bData.text);
+        if (bData.isImageActive)
+        {
+            image.color = Color.gray;
+        }
+        else
+        {
+            image.color = Color.white;
+        }
     }
     public void OnClick()
     {
         callback?.Invoke();
     }
+    public void SetButtonTint()
+    {
+
+        if (image.color == Color.gray)
+        {
+            image.color = Color.white;
+
+        }
+        else
+        {
+            image.color = Color.gray;
+        }
+
+    }
+
     public void SetTextValue(string text)
     {
         cellText.text = text;
     }
-    public void SetButtonTint()
-    {
-
-        if (clickCount == 0)
-        {
-            image.color = Color.gray;
-            clickCount++;
-
-        }
-        else if (clickCount == 1)
-        {
-            image.color = Color.white;
-            clickCount = 0;
-        }
-
-    }
-
 }

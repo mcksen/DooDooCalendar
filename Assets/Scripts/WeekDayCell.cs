@@ -9,18 +9,24 @@ public class WeekDayCell : Cell
     [SerializeField] private TextMeshProUGUI cellText;
 
     [SerializeField] private Image image;
+    WeekCellData wData = new();
 
 
+    public override void Configure(CellData data)
+    {
 
-    public override void SetTextValue(string text)
+        wData = data as WeekCellData;
+        SetTextValue(wData.text);
+
+
+    }
+
+    public void SetTextValue(string text)
     {
         cellText.text = text;
     }
-    public override void SetImageColor(Color color)
-    {
-        image.color = color;
-    }
-    public override void Select() { }
+
+
 
 
 

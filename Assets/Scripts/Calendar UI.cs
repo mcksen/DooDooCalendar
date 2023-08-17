@@ -27,7 +27,7 @@ public class CalendarUI : MonoBehaviour
 
 
     private PopUp pop = null;
-    private List<Tuple<string, System.Action>> popList = new();
+
     private List<Cell> populationList = new();
     private DayCell selectedCell;
 
@@ -116,14 +116,14 @@ public class CalendarUI : MonoBehaviour
     {
         if (pop == null)
         {
-            popList.Clear();
+
             selectedCell = cell as DayCell;
 
             pop = Instantiate(popUpPrefab, canvas);
-            popList.Add(new Tuple<string, Action>("Sticker", HandleAddStickerPressed));
-            popList.Add(new Tuple<string, Action>("Notes", HandleAddDescriptionPressed));
+            pop.MakeButton("Sticker", HandleAddStickerPressed, false);
+            pop.MakeButton("Notes", HandleAddDescriptionPressed, false);
             pop.SetPosition(cell.transform.position);
-            pop.Configure(popList);
+
 
         }
     }
@@ -136,15 +136,11 @@ public class CalendarUI : MonoBehaviour
 
     public void HandleAddStickerPressed()
     {
-        if (popList != null)
-        {
-            pop.DestroyObjects();
-            popList.Clear();
-        }
 
-        popList.Add(new Tuple<string, Action>("Poop", HandleAddPoopPressed));
-        popList.Add(new Tuple<string, Action>("Pill", HandleAddMedicinePressed));
-        pop.Configure(popList);
+        pop.DestroyButonCells();
+        pop.MakeButton("Poop", HandleAddPoopPressed, selectedCell.DData.isPoopImageActive);
+        pop.MakeButton("Pill", HandleAddMedicinePressed, selectedCell.DData.isMedicineImageActive);
+
 
     }
 
@@ -160,6 +156,7 @@ public class CalendarUI : MonoBehaviour
     {
         selectedCell.SetPoopImage();
 
+
     }
 
     private void HandleAddMedicinePressed()
@@ -174,32 +171,39 @@ public class CalendarUI : MonoBehaviour
         ClearPopulationList();
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
         populationList = calendarGridPopulator.Populate(totalDays);
+
         int day = 1;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
-
+            string text;
+            Color color;
 
             if (i < numberOfBlanksBefore || i >= numberOfBlanksBefore + daysInMonth)
             {
-                populationList[i].SetImageColor(blankColor);
-                populationList[i].SetTextValue("");
+
+                text = "";
+                color = blankColor;
 
             }
 
             else
             {
 
-                populationList[i].SetTextValue(day.ToString());
+                text = day.ToString();
                 if (day == currentDate.Day && defaultDate.Month == currentDate.Month && defaultDate.Year == currentDate.Year)
                 {
-                    populationList[i].SetImageColor(currentDayColor);
+                    color = currentDayColor;
                 }
                 else
                 {
-                    populationList[i].SetImageColor(daysDefaultColor);
+                    color = daysDefaultColor;
                 }
                 day++;
             }
+            DayCellData data = new DayCellData();
+            data.text = text;
+            data.color = color;
+            populationList[i].Configure(data);
 
         }
 
@@ -233,7 +237,10 @@ public class CalendarUI : MonoBehaviour
         List<Cell> populationList = weekDaysGridPopulator.Populate(weekDays.Count);
         for (int i = 0; i < weekDays.Count; i++)
         {
-            populationList[i].SetTextValue(weekDays[i]);
+            WeekCellData d = new WeekCellData();
+            d.text = weekDays[i];
+
+            populationList[i].Configure(d);
         }
     }
 

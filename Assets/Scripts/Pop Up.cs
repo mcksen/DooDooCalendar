@@ -25,15 +25,22 @@ public class PopUp : MonoBehaviour
 
 
 
-    public void Configure(List<Tuple<string, System.Action>> buttonList)
+
+
+
+    public void MakeButton(string text, System.Action action, bool isImageActive)
     {
-        foreach (Tuple<string, System.Action> i in buttonList)
-        {
-            ButtonCell button = Instantiate(buttonCellPrefab, grid.transform);
-            button.SetTextValue(i.Item1);
-            button.Configure(i.Item2);
-            list.Add(button);
-        }
+        ButtonCellData bData = new ButtonCellData();
+        bData.text = text;
+        bData.action = action;
+        bData.isImageActive = isImageActive;
+
+
+        ButtonCell button = Instantiate(buttonCellPrefab, grid.transform);
+        button.Configure(bData);
+        list.Add(button);
+
+
 
     }
 
@@ -84,7 +91,7 @@ public class PopUp : MonoBehaviour
         }
 
     }
-    public void DestroyObjects()
+    public void DestroyButonCells()
     {
         foreach (ButtonCell button in list)
         {

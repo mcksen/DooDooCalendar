@@ -16,7 +16,17 @@ public class DayCell : Cell
     [SerializeField] private Image medicine;
 
     private int clickCount = 0;
-    public override void Select()
+    private DayCellData dData = new DayCellData();
+    public DayCellData DData => dData;
+
+    public override void Configure(CellData data)
+    {
+        dData = data as DayCellData;
+        SetTextValue(dData.text);
+        SetImageColor(dData.color);
+    }
+
+    private void Select()
     {
 
         if (clickCount == 0)
@@ -35,33 +45,37 @@ public class DayCell : Cell
         selectImage.enabled = false;
         clickCount = 0;
     }
-    public override void SetTextValue(string text)
+    private void SetTextValue(string text)
     {
         cellText.text = text;
     }
-    public override void SetImageColor(Color color)
+    private void SetImageColor(Color color)
     {
         defaultImage.color = color;
     }
 
     public void SetPoopImage()
     {
-        SetImageActiveDependancy(poop);
+
+        dData.isPoopImageActive = SetImageActiveDependancy(poop);
     }
     public void SetMedicineImage()
     {
-        SetImageActiveDependancy(medicine);
+        dData.isMedicineImageActive = SetImageActiveDependancy(medicine);
     }
 
-    private void SetImageActiveDependancy(Image image)
+    private bool SetImageActiveDependancy(Image image)
     {
         if (image.enabled)
         {
             image.enabled = false;
+            return image.enabled;
+
         }
         else
         {
             image.enabled = true;
+            return image.enabled;
         }
     }
 
