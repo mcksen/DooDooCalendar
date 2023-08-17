@@ -21,7 +21,7 @@ public class SceneController : ScriptableSingleton<SceneController>
     }
 
 
-    public void OnDestroy()
+    private void OnDestroy()
     {
         EventManager.Instance.onOpenGame -= HandleOpenGame;
         EventManager.Instance.onLoadedGame -= HandleLoadedGame;
@@ -34,13 +34,13 @@ public class SceneController : ScriptableSingleton<SceneController>
     // Scene Controller-speciefic functions
     // --------------------------------------------------------------------------------------
 
-    public void HandleOpenGame()
+    private void HandleOpenGame()
     {
         LoadScene(calendar, true);
 
     }
 
-    public void HandleLoadedGame()
+    private void HandleLoadedGame()
     {
 
         scenesToUnload.Add(awake);
@@ -49,7 +49,7 @@ public class SceneController : ScriptableSingleton<SceneController>
     }
 
 
-    public void LoadScene(string name, bool isPermanent)
+    private void LoadScene(string name, bool isPermanent)
     {
         SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
         if (!isPermanent)
@@ -61,7 +61,7 @@ public class SceneController : ScriptableSingleton<SceneController>
 
 
 
-    public void UnloadScenes()
+    private void UnloadScenes()
     {
         if (scenesToUnload != null)
         {

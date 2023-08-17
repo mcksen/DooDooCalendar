@@ -4,22 +4,19 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System;
-using System.Runtime.InteropServices;
-using UnityEditor.PackageManager.UI;
-using UnityEditor;
-using UnityEngine.AI;
+
+
 
 public class PopUp : MonoBehaviour
 {
 
-    [SerializeField] ButtonCell buttonCellPrefab;
-    [SerializeField] GridLayoutGroup grid;
-    [SerializeField] RectTransform locationDependantArea;
-    [SerializeField] RectTransform tail;
+    [SerializeField] private ButtonCell buttonCellPrefab;
+    [SerializeField] private GridLayoutGroup grid;
+    [SerializeField] private RectTransform locationDependantArea;
+    [SerializeField] private RectTransform tail;
 
 
-    List<ButtonCell> list = new();
+    private List<ButtonCell> list = new();
 
 
 

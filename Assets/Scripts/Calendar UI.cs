@@ -134,7 +134,7 @@ public class CalendarUI : MonoBehaviour
     }
 
 
-    public void HandleAddStickerPressed()
+    private void HandleAddStickerPressed()
     {
 
         pop.DestroyButonCells();
@@ -166,7 +166,7 @@ public class CalendarUI : MonoBehaviour
     // _____________________________________________________________________________________
     //   CLASS - SPECIEFIC FUNCTIONS
     // _____________________________________________________________________________________
-    public void PopulateCalendarGrid()
+    private void PopulateCalendarGrid()
     {
         ClearPopulationList();
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;

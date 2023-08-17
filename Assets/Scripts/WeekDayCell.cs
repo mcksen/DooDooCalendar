@@ -9,7 +9,7 @@ public class WeekDayCell : Cell
     [SerializeField] private TextMeshProUGUI cellText;
 
     [SerializeField] private Image image;
-    WeekCellData wData = new();
+    private WeekCellData wData = new();
 
 
     public override void Configure(CellData data)
@@ -21,7 +21,7 @@ public class WeekDayCell : Cell
 
     }
 
-    public void SetTextValue(string text)
+    private void SetTextValue(string text)
     {
         cellText.text = text;
     }

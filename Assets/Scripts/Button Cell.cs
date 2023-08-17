@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -8,15 +7,12 @@ public class ButtonCell : Cell
 {
     [SerializeField] private TextMeshProUGUI cellText;
     [SerializeField] private Image image;
-    System.Action callback;
-
-
-
-
+    private System.Action callback;
+    private ButtonCellData bData = new();
 
     public override void Configure(CellData data)
     {
-        ButtonCellData bData = data as ButtonCellData;
+        bData = data as ButtonCellData;
         callback = bData.action;
         SetTextValue(bData.text);
         if (bData.isImageActive)
@@ -47,7 +43,7 @@ public class ButtonCell : Cell
 
     }
 
-    public void SetTextValue(string text)
+    private void SetTextValue(string text)
     {
         cellText.text = text;
     }

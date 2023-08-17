@@ -3,8 +3,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System;
-using System.Diagnostics;
+
 
 public class DayCell : Cell
 {
