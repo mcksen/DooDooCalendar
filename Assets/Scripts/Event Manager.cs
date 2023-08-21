@@ -29,7 +29,7 @@ public class EventManager : ScriptableSingleton<EventManager>
 
     public delegate void PopUpEvent();
 
-    public PopUpEvent onDESelectAllCells;
+    public PopUpEvent onDeselectCell;
     public PopUpEvent onAddDescriptionPressed;
 
 
@@ -83,11 +83,11 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
-    public void TriggerDESelectAllCells()
+    public void TriggerDeselectCell()
     {
-        if (onDESelectAllCells != null)
+        if (onDeselectCell != null)
         {
-            onDESelectAllCells();
+            onDeselectCell();
         }
 
     }

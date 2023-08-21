@@ -3,7 +3,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
+using System;
 
 public class DayCell : Cell
 {
@@ -14,27 +14,29 @@ public class DayCell : Cell
     [SerializeField] private Image poop;
     [SerializeField] private Image medicine;
 
-    private int clickCount = 0;
-    private DayCellData dData = new DayCellData();
-    public DayCellData DData => dData;
+
+
+
+
+    private DayCellData daycellData = new DayCellData();
+    public DayCellData DaycellData => daycellData;
 
     public override void Configure(CellData data)
     {
-        dData = data as DayCellData;
-        SetTextValue(dData.text);
-        SetImageColor(dData.color);
+        daycellData = data as DayCellData;
+        SetTextValue(daycellData.text);
+        SetImageColor(daycellData.color);
     }
 
     private void Select()
     {
-
-        if (clickCount == 0)
+        if (selectImage.enabled == false)
         {
+
             selectImage.enabled = true;
             EventManager.Instance.TriggerCellImageSelect(this);
-            clickCount++;
         }
-        else if (clickCount == 1)
+        else
         {
             EventManager.Instance.TriggerCellSelect(this);
         }
@@ -42,7 +44,7 @@ public class DayCell : Cell
     public void DeSelect()
     {
         selectImage.enabled = false;
-        clickCount = 0;
+
     }
     private void SetTextValue(string text)
     {
@@ -56,11 +58,11 @@ public class DayCell : Cell
     public void SetPoopImage()
     {
 
-        dData.isPoopImageActive = SetImageActiveDependancy(poop);
+        daycellData.isPoopImageActive = SetImageActiveDependancy(poop);
     }
     public void SetMedicineImage()
     {
-        dData.isMedicineImageActive = SetImageActiveDependancy(medicine);
+        daycellData.isMedicineImageActive = SetImageActiveDependancy(medicine);
     }
 
     private bool SetImageActiveDependancy(Image image)

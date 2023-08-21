@@ -8,14 +8,15 @@ public class ButtonCell : Cell
     [SerializeField] private TextMeshProUGUI cellText;
     [SerializeField] private Image image;
     private System.Action callback;
-    private ButtonCellData bData = new();
+    private ButtonCellData buttoncellData = new();
 
     public override void Configure(CellData data)
     {
-        bData = data as ButtonCellData;
-        callback = bData.action;
-        SetTextValue(bData.text);
-        if (bData.isImageActive)
+        buttoncellData = data as ButtonCellData;
+        callback = buttoncellData.action;
+        SetTextValue(buttoncellData.text);
+
+        if (buttoncellData.isImageActive)
         {
             image.color = Color.gray;
         }

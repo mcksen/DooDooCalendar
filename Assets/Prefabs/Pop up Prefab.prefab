@@ -215,7 +215,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: f7cfca275296369448eb0d25d51a9b09, type: 2}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: TriggerDESelectAllCells
+        m_MethodName: TriggerDeselectCell
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

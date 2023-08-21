@@ -15,6 +15,8 @@ public class PopUp : MonoBehaviour
     [SerializeField] private RectTransform locationDependantArea;
     [SerializeField] private RectTransform tail;
 
+    private const float minPadding = 50f;
+
 
     private List<ButtonCell> list = new();
 
@@ -51,7 +53,7 @@ public class PopUp : MonoBehaviour
 
         float minXbound = popupArray[0].x;
         float maxXbound = popupArray[3].x;
-        float minPadding = 50f;
+
         float halfPopWidth = (maxXbound - minXbound) / 2;
 
         if (minXbound <= 0)
@@ -88,7 +90,7 @@ public class PopUp : MonoBehaviour
         }
 
     }
-    public void DestroyButonCells()
+    public void DestroyButons()
     {
         foreach (ButtonCell button in list)
         {
