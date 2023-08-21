@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4649580175249934954}
   - component: {fileID: 8807475598976571872}
   - component: {fileID: 1167917614687176785}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: WeekDay Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 4441411480044934893}
   - component: {fileID: 6495774988718309585}
   - component: {fileID: 3439190377003642375}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,8 +185,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 16.77
+  m_fontSizeBase: 16.77
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

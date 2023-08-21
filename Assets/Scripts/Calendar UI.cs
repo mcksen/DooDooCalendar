@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-
 using TMPro;
-
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class CalendarUI : MonoBehaviour
 {
@@ -13,6 +10,9 @@ public class CalendarUI : MonoBehaviour
 
     [SerializeField] private GridPopulator calendarGridPopulator;
     [SerializeField] private GridPopulator weekDaysGridPopulator;
+    [SerializeField] private PopUp popUpPrefab;
+    [SerializeField] private RectTransform canvas;
+
 
 
 
@@ -20,10 +20,16 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private Color daysDefaultColor;
     [SerializeField] private Color currentDayColor;
 
+
+
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private TextMeshProUGUI yearText;
 
 
+    private PopUp pop = null;
+
+    private List<Cell> populationList = new();
+    private DayCell selectedCell;
 
     private DateTime currentDate;
     private DateTime defaultDate;
@@ -37,10 +43,19 @@ public class CalendarUI : MonoBehaviour
     {
         EventManager.Instance.onForwardClick += HandleForwardClick;
         EventManager.Instance.onBackwardClick += HandleBackwardClick;
+        EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
+        EventManager.Instance.onCellSelect += HandleSelectCell;
+        EventManager.Instance.onDESelectAllCells += HandleDESelectAllCells;
+
 
     }
+
+
+
     private void Start()
     {
+
+        EventManager.Instance.TriggerLoadedGame();
         currentDate = DateTime.Today;
         defaultDate = currentDate;
         SetHeadingText();
@@ -54,9 +69,15 @@ public class CalendarUI : MonoBehaviour
     {
         EventManager.Instance.onForwardClick -= HandleForwardClick;
         EventManager.Instance.onBackwardClick -= HandleBackwardClick;
+        EventManager.Instance.onCellSelect -= HandleSelectCell;
+        EventManager.Instance.onDESelectAllCells -= HandleDESelectAllCells;
+        EventManager.Instance.onCellImageSelect -= HandleCellImageSelect;
+
     }
 
-
+    // _____________________________________________________________________________________
+    //   EVENT - DEPENDANT FUNCTIONS
+    // _____________________________________________________________________________________
     private void HandleForwardClick()
     {
         calendarGridPopulator.Clear();
@@ -71,6 +92,7 @@ public class CalendarUI : MonoBehaviour
 
     }
     private void HandleBackwardClick()
+
     {
         calendarGridPopulator.Clear();
         defaultDate = defaultDate.AddMonths(-1);
@@ -80,45 +102,113 @@ public class CalendarUI : MonoBehaviour
         SetNumberOfBlanks();
         PopulateCalendarGrid();
     }
+    private void HandleCellImageSelect(Cell cell)
+    {
+        foreach (DayCell c in populationList)
+        {
+            if (c != cell)
+            {
+                c.DeSelect();
+            }
+        }
+    }
+    private void HandleSelectCell(Cell cell)
+    {
+        if (pop == null)
+        {
 
-    public void PopulateCalendarGrid()
+            selectedCell = cell as DayCell;
+
+            pop = Instantiate(popUpPrefab, canvas);
+            pop.MakeButton("Sticker", HandleAddStickerPressed, false);
+            pop.MakeButton("Notes", HandleAddDescriptionPressed, false);
+            pop.SetPosition(cell.transform.position);
+
+
+        }
+    }
+    private void HandleAddDescriptionPressed()
+    {
+        EventManager.Instance.TriggerAddDescriptionPressed();
+        //Make function to trigger description scene;
+    }
+
+
+    private void HandleAddStickerPressed()
     {
 
+        pop.DestroyButonCells();
+        pop.MakeButton("Poop", HandleAddPoopPressed, selectedCell.DData.isPoopImageActive);
+        pop.MakeButton("Pill", HandleAddMedicinePressed, selectedCell.DData.isMedicineImageActive);
+
+
+    }
+
+    private void HandleDESelectAllCells()
+    {
+        selectedCell.DeSelect();
+        selectedCell = null;
+        Destroy(pop.gameObject);
+        pop = null;
+    }
+
+    private void HandleAddPoopPressed()
+    {
+        selectedCell.SetPoopImage();
+
+
+    }
+
+    private void HandleAddMedicinePressed()
+    {
+        selectedCell.SetMedicineImage();
+    }
+    // _____________________________________________________________________________________
+    //   CLASS - SPECIEFIC FUNCTIONS
+    // _____________________________________________________________________________________
+    private void PopulateCalendarGrid()
+    {
+        ClearPopulationList();
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
-        List<Cell> populationList = calendarGridPopulator.Populate(totalDays);
+        populationList = calendarGridPopulator.Populate(totalDays);
+
         int day = 1;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
-
+            string text;
+            Color color;
 
             if (i < numberOfBlanksBefore || i >= numberOfBlanksBefore + daysInMonth)
             {
-                populationList[i].SetImageColor(blankColor);
-                populationList[i].SetTextValue("");
+
+                text = "";
+                color = blankColor;
 
             }
 
             else
             {
 
-                populationList[i].SetTextValue(day.ToString());
+                text = day.ToString();
                 if (day == currentDate.Day && defaultDate.Month == currentDate.Month && defaultDate.Year == currentDate.Year)
                 {
-                    populationList[i].SetImageColor(currentDayColor);
+                    color = currentDayColor;
                 }
                 else
                 {
-                    populationList[i].SetImageColor(daysDefaultColor);
+                    color = daysDefaultColor;
                 }
                 day++;
             }
+            DayCellData data = new DayCellData();
+            data.text = text;
+            data.color = color;
+            populationList[i].Configure(data);
 
         }
 
 
     }
-
-
 
     private int GetBlanksBefore()
     {
@@ -143,11 +233,14 @@ public class CalendarUI : MonoBehaviour
     private void PopulateWeekDaysGrid()
     {
 
-        List<string> weekDays = new List<string> { "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun" };
+        List<string> weekDays = new List<string> { "M", "T", "W", "T", "F", "S", "S" };
         List<Cell> populationList = weekDaysGridPopulator.Populate(weekDays.Count);
         for (int i = 0; i < weekDays.Count; i++)
         {
-            populationList[i].SetTextValue(weekDays[i]);
+            WeekCellData d = new WeekCellData();
+            d.text = weekDays[i];
+
+            populationList[i].Configure(d);
         }
     }
 
@@ -161,6 +254,20 @@ public class CalendarUI : MonoBehaviour
     {
         numberOfBlanksBefore = GetBlanksBefore();
         numberOfBlanksAfter = GetBlanksAfter();
+    }
+
+
+
+    private void ClearPopulationList()
+    {
+
+        foreach (Cell c in populationList)
+        {
+            Destroy(c.gameObject);
+
+        }
+        populationList.Clear();
+
     }
 }
 

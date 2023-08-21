@@ -1,20 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class GameAwakeSettings : MonoBehaviour
 {
-    [SerializeField] private SceneController sceneController;
 
-
-    private void Awake()
+    private void Start()
     {
-
-
-
-        sceneController.Initialise();
-
+        SceneController.Instance.Subscribe();
         EventManager.Instance.TriggerOpenGame();
-
     }
 }
