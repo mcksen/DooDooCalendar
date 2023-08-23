@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
+
 [CreateAssetMenu(fileName = "StateSaver", menuName = "Scriptable Objects/StateSaver")]
 public class StateSaver : ScriptableSingleton<StateSaver>
 {
@@ -9,7 +11,7 @@ public class StateSaver : ScriptableSingleton<StateSaver>
     public DataToSave data = new();
     public static List<DayCellData> Data => Instance.data.dataToSave;
 
-    private string path = "/tmp/savedData.tmp";
+    private string Path => System.IO.Path.Combine(Application.persistentDataPath, "savedData.tmp");
 
 
 
@@ -30,15 +32,35 @@ public class StateSaver : ScriptableSingleton<StateSaver>
     public void Save()
     {
         ConvertToJSSON();
-        File.WriteAllText(path, json);
+        try
+        {
+            File.WriteAllText(Path, json);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Couldn't save: " + ex);
+        }
+
+
+
     }
     public void Load()
     {
-        if (File.Exists(path))
+        data = new DataToSave();
+        try
         {
-            json = File.ReadAllText(path);
-            data = ConvertFromJSSON();
+            if (File.Exists(Path))
+            {
+
+                json = File.ReadAllText(Path);
+                data = ConvertFromJSSON();
+            }
         }
+        catch (Exception ex)
+        {
+            Debug.Log("Fail to Load" + ex);
+        }
+
     }
 
 
