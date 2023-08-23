@@ -1,7 +1,8 @@
 
+using System;
 using UnityEngine;
-
-public class DayCellData : CellData
+[Serializable]
+public class DayCellData : CellData, IEquatable<DayCellData>
 {
 
 
@@ -21,6 +22,12 @@ public class DayCellData : CellData
     }
     public DayCellData()
     {
+
+    }
+
+    public bool Equals(DayCellData other)
+    {
+        return other.day == day && other.month == month && other.year == year;
 
     }
 }

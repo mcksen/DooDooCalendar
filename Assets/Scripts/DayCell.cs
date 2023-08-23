@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using System.Data.Common;
 
 public class DayCell : Cell
 {
@@ -30,6 +31,14 @@ public class DayCell : Cell
         date = new DateTime(daycellData.year, daycellData.month, daycellData.day);
         SetTextValue();
         SetImageColor();
+        if (daycellData.isMedicineImageActive)
+        {
+            SetMedicineImage();
+        }
+        if (daycellData.isPoopImageActive)
+        {
+            SetPoopImage();
+        }
     }
 
     private void Select()
@@ -78,12 +87,22 @@ public class DayCell : Cell
 
     public void SetPoopImage()
     {
-
         daycellData.isPoopImageActive = SetImageActiveDependancy(poop);
+        TryRemoveCellData();
     }
     public void SetMedicineImage()
     {
         daycellData.isMedicineImageActive = SetImageActiveDependancy(medicine);
+        TryRemoveCellData();
+    }
+
+
+    private void TryRemoveCellData()
+    {
+        if (!daycellData.isPoopImageActive && !daycellData.isMedicineImageActive)
+        {
+            StateSaver.Data.Remove(DaycellData);
+        }
     }
 
     private bool SetImageActiveDependancy(Image image)

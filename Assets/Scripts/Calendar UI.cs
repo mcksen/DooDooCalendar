@@ -27,6 +27,9 @@ public class CalendarUI : MonoBehaviour
     private PopUp pop = null;
 
     private List<Cell> populationList = new();
+    private List<CellData> cellDatas = new();
+
+
     private DayCell selectedDayCell;
 
     private DateTime currentDate;
@@ -39,6 +42,7 @@ public class CalendarUI : MonoBehaviour
 
     private void Awake()
     {
+
         EventManager.Instance.onForwardClick += HandleForwardClick;
         EventManager.Instance.onBackwardClick += HandleBackwardClick;
         EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
@@ -153,11 +157,24 @@ public class CalendarUI : MonoBehaviour
     private void HandleAddPoopPressed()
     {
         selectedDayCell.SetPoopImage();
+        TryAddCellData();
     }
 
     private void HandleAddMedicinePressed()
     {
         selectedDayCell.SetMedicineImage();
+        TryAddCellData();
+    }
+
+    private void TryAddCellData()
+    {
+        if (!StateSaver.Data.Contains(selectedDayCell.DaycellData))
+        {
+            StateSaver.Data.Add(selectedDayCell.DaycellData);
+
+        }
+
+
     }
     // _____________________________________________________________________________________
     //   CLASS - SPECIEFIC FUNCTIONS
@@ -185,7 +202,6 @@ public class CalendarUI : MonoBehaviour
 
                 }
 
-
             }
             else
             {
@@ -193,8 +209,15 @@ public class CalendarUI : MonoBehaviour
             }
             DayCellData data = new DayCellData(date.Day, date.Month, date.Year);
 
-            populationList[i].Configure(data);
+            foreach (DayCellData daycellData in StateSaver.Data)
+            {
+                if (daycellData.Equals(data))
+                {
+                    data = daycellData;
+                }
+            }
 
+            populationList[i].Configure(data);
 
         }
 
