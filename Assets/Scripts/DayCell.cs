@@ -14,8 +14,11 @@ public class DayCell : Cell
     [SerializeField] private Image poop;
     [SerializeField] private Image medicine;
 
+    [SerializeField] private Color blankColor;
+    [SerializeField] private Color defaultColor;
+    [SerializeField] private Color currentDayColor;
 
-
+    private DateTime date;
 
 
     private DayCellData daycellData = new DayCellData();
@@ -24,8 +27,9 @@ public class DayCell : Cell
     public override void Configure(CellData data)
     {
         daycellData = data as DayCellData;
-        SetTextValue(daycellData.text);
-        SetImageColor(daycellData.color);
+        date = new DateTime(daycellData.year, daycellData.month, daycellData.day);
+        SetTextValue();
+        SetImageColor();
     }
 
     private void Select()
@@ -46,13 +50,30 @@ public class DayCell : Cell
         selectImage.enabled = false;
 
     }
-    private void SetTextValue(string text)
+    private void SetTextValue()
     {
-        cellText.text = text;
+        if (date == DateTime.MinValue)
+        {
+            cellText.text = "";
+        }
+        else
+        {
+            cellText.text = date.Day.ToString();
+        }
     }
-    private void SetImageColor(Color color)
+    private void SetImageColor()
     {
-        defaultImage.color = color;
+        defaultImage.color = defaultColor;
+
+        if (date == DateTime.Today)
+        {
+            defaultImage.color = currentDayColor;
+        }
+        else if (date == DateTime.MinValue)
+        {
+            defaultImage.color = blankColor;
+        }
+
     }
 
     public void SetPoopImage()

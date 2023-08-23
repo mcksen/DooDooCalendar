@@ -20,13 +20,6 @@ public class CalendarUI : MonoBehaviour
 
 
 
-
-    [SerializeField] private Color blankColor;
-    [SerializeField] private Color daysDefaultColor;
-    [SerializeField] private Color currentDayColor;
-
-
-
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private TextMeshProUGUI yearText;
 
@@ -175,29 +168,33 @@ public class CalendarUI : MonoBehaviour
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
         populationList = calendarGridPopulator.Populate(totalDays);
 
-        int day = 1;
+        DateTime date = DateTime.MinValue;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
-            string text = "";
-            Color color = blankColor;
+
 
             if (i >= numberOfBlanksBefore && i < numberOfBlanksBefore + daysInMonth)
             {
-
-                text = day.ToString();
-                if (day == currentDate.Day && defaultDate.Month == currentDate.Month && defaultDate.Year == currentDate.Year)
+                if (date.Date == DateTime.MinValue)
                 {
-                    color = currentDayColor;
+                    date = firstDayOfMonth;
                 }
                 else
                 {
-                    color = daysDefaultColor;
+                    date = date.AddDays(1);
+
                 }
-                day++;
+
+
             }
-            DayCellData data = new DayCellData(text, color);
+            else
+            {
+                date = DateTime.MinValue;
+            }
+            DayCellData data = new DayCellData(date.Day, date.Month, date.Year);
 
             populationList[i].Configure(data);
+
 
         }
 

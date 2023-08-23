@@ -3,17 +3,21 @@ using UnityEngine;
 
 public class DayCellData : CellData
 {
-    public string text;
-    public Color color;
+
 
     public bool isPoopImageActive;
     public bool isMedicineImageActive;
 
 
-    public DayCellData(string text, Color color)
+    public int day;
+    public int month;
+    public int year;
+
+    public DayCellData(int day, int month, int year)
     {
-        this.text = text;
-        this.color = color;
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
     public DayCellData()
     {

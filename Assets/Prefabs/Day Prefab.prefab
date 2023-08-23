@@ -125,6 +125,9 @@ MonoBehaviour:
   defaultImage: {fileID: 6171982344474704808}
   poop: {fileID: 2187135798045497408}
   medicine: {fileID: 4763336091590590285}
+  blankColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
+  defaultColor: {r: 1, g: 0.9283468, b: 0.5896226, a: 1}
+  currentDayColor: {r: 0.2756764, g: 0.990566, b: 0.7207568, a: 1}
 --- !u!1 &2380585444124567472
 GameObject:
   m_ObjectHideFlags: 0
