@@ -9,6 +9,8 @@ public class EventManager : ScriptableSingleton<EventManager>
 
 {
 
+    public delegate void ApplicationEvent();
+    public ApplicationEvent onExitGame;
 
     public delegate void ButtonClickEvent();
     public ButtonClickEvent onForwardClick;
@@ -33,6 +35,15 @@ public class EventManager : ScriptableSingleton<EventManager>
     public PopUpEvent onAddDescriptionPressed;
 
 
+
+    public void TriggerExitGame()
+    {
+        if (onExitGame != null)
+        {
+            onExitGame();
+        }
+
+    }
     public void TriggerForwardClick()
     {
         if (onForwardClick != null)

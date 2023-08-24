@@ -20,13 +20,6 @@ public class CalendarUI : MonoBehaviour
 
 
 
-
-    [SerializeField] private Color blankColor;
-    [SerializeField] private Color daysDefaultColor;
-    [SerializeField] private Color currentDayColor;
-
-
-
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private TextMeshProUGUI yearText;
 
@@ -34,6 +27,9 @@ public class CalendarUI : MonoBehaviour
     private PopUp pop = null;
 
     private List<Cell> populationList = new();
+    private List<CellData> cellDatas = new();
+
+
     private DayCell selectedDayCell;
 
     private DateTime currentDate;
@@ -46,6 +42,7 @@ public class CalendarUI : MonoBehaviour
 
     private void Awake()
     {
+
         EventManager.Instance.onForwardClick += HandleForwardClick;
         EventManager.Instance.onBackwardClick += HandleBackwardClick;
         EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
@@ -160,11 +157,24 @@ public class CalendarUI : MonoBehaviour
     private void HandleAddPoopPressed()
     {
         selectedDayCell.SetPoopImage();
+        TryAddCellData();
     }
 
     private void HandleAddMedicinePressed()
     {
         selectedDayCell.SetMedicineImage();
+        TryAddCellData();
+    }
+
+    private void TryAddCellData()
+    {
+        if (!StateSaver.Data.Contains(selectedDayCell.DaycellData))
+        {
+            StateSaver.Data.Add(selectedDayCell.DaycellData);
+
+        }
+
+
     }
     // _____________________________________________________________________________________
     //   CLASS - SPECIEFIC FUNCTIONS
@@ -175,27 +185,37 @@ public class CalendarUI : MonoBehaviour
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
         populationList = calendarGridPopulator.Populate(totalDays);
 
-        int day = 1;
+        DateTime date = DateTime.MinValue;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
-            string text = "";
-            Color color = blankColor;
+
 
             if (i >= numberOfBlanksBefore && i < numberOfBlanksBefore + daysInMonth)
             {
-
-                text = day.ToString();
-                if (day == currentDate.Day && defaultDate.Month == currentDate.Month && defaultDate.Year == currentDate.Year)
+                if (date.Date == DateTime.MinValue)
                 {
-                    color = currentDayColor;
+                    date = firstDayOfMonth;
                 }
                 else
                 {
-                    color = daysDefaultColor;
+                    date = date.AddDays(1);
+
                 }
-                day++;
+
             }
-            DayCellData data = new DayCellData(text, color);
+            else
+            {
+                date = DateTime.MinValue;
+            }
+            DayCellData data = new DayCellData(date.Day, date.Month, date.Year);
+
+            foreach (DayCellData daycellData in StateSaver.Data)
+            {
+                if (daycellData.Equals(data))
+                {
+                    data = daycellData;
+                }
+            }
 
             populationList[i].Configure(data);
 
