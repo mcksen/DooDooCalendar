@@ -1,4 +1,4 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -8,7 +8,7 @@ using System;
 public class StateSaver : ScriptableSingleton<StateSaver>
 {
     private string json;
-    public DataToSave data = new();
+    private DataToSave data = new();
     public static List<DayCellData> Data => Instance.data.dataToSave;
 
     private string Path => System.IO.Path.Combine(Application.persistentDataPath, "savedData.tmp");
