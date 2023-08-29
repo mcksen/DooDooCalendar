@@ -18,6 +18,7 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private PopUp popUpPrefab;
     [SerializeField] private RectTransform canvas;
 
+    [SerializeField] private DescriptionWindow descriptionWindowPrefab;
 
 
     [SerializeField] private TextMeshProUGUI monthText;
@@ -25,7 +26,7 @@ public class CalendarUI : MonoBehaviour
 
 
     private PopUp pop = null;
-
+    private DescriptionWindow descriptionWindow = null;
     private List<Cell> populationList = new();
     private List<CellData> cellDatas = new();
 
@@ -48,6 +49,7 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
         EventManager.Instance.onCellSelect += HandleSelectCell;
         EventManager.Instance.onDeselectCell += HandleDeselectCell;
+        EventManager.Instance.onCancelChanges += HandleCancelChanges;
 
 
     }
@@ -74,6 +76,7 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onCellSelect -= HandleSelectCell;
         EventManager.Instance.onDeselectCell -= HandleDeselectCell;
         EventManager.Instance.onCellImageSelect -= HandleCellImageSelect;
+        EventManager.Instance.onCancelChanges -= HandleCancelChanges;
 
     }
 
@@ -131,10 +134,25 @@ public class CalendarUI : MonoBehaviour
     }
     private void HandleAddDescriptionPressed()
     {
-        EventManager.Instance.TriggerAddDescriptionPressed();
+        // EventManager.Instance.TriggerAddDescriptionPressed();
+        if (descriptionWindow == null)
+        {
+            descriptionWindow = Instantiate(descriptionWindowPrefab, canvas);
+            descriptionWindow.Configure(selectedDayCell.DaycellData.description);
+
+        }
+
 
     }
-
+    private void HandleCancelChanges()
+    {
+        if (descriptionWindow != null)
+        {
+            Destroy(descriptionWindow.gameObject);
+            descriptionWindow = null;
+            HandleDeselectCell();
+        }
+    }
 
     private void HandleAddStickerPressed()
     {

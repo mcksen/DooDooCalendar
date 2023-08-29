@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1013e832fd0b9934ca58f13b5c067e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  descriptionWindowPrefab: {fileID: 4705528097620880883, guid: 16bc3768bcb47d24683dc9dbaa08cd8b, type: 3}
   cellText: {fileID: 5286269118139789083}
   selectImage: {fileID: 7555791392193838517}
   defaultImage: {fileID: 6171982344474704808}

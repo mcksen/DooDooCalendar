@@ -8,6 +8,7 @@ using System;
 
 public class DayCell : Cell
 {
+
     [SerializeField] private TextMeshProUGUI cellText;
     [SerializeField] private Image selectImage;
     [SerializeField] private Image defaultImage;
@@ -20,6 +21,7 @@ public class DayCell : Cell
     [SerializeField] private Color currentDayColor;
 
     private DateTime date;
+
 
 
     private DayCellData daycellData = new DayCellData();
@@ -119,6 +121,9 @@ public class DayCell : Cell
             return image.enabled;
         }
     }
+
+
+
 
 
 

@@ -8,7 +8,8 @@ public class DayCellData : CellData, IEquatable<DayCellData>
 
     public bool isPoopImageActive;
     public bool isMedicineImageActive;
-
+    public DescriptionWindow descriptionWindow;
+    public string description = "";
 
     public int day;
     public int month;

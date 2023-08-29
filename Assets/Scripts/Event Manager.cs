@@ -35,6 +35,11 @@ public class EventManager : ScriptableSingleton<EventManager>
     public PopUpEvent onAddDescriptionPressed;
 
 
+    public delegate void DesctiptionWindowEvent();
+
+    public DesctiptionWindowEvent onConfirmChanges;
+    public DesctiptionWindowEvent onCancelChanges;
+
 
     public void TriggerExitGame()
     {
@@ -112,4 +117,18 @@ public class EventManager : ScriptableSingleton<EventManager>
 
     }
 
+    public void TriggerConfirmChanges()
+    {
+        if (onConfirmChanges != null)
+        {
+            onConfirmChanges();
+        }
+    }
+    public void TriggerCancelChanges()
+    {
+        if (onCancelChanges != null)
+        {
+            onCancelChanges();
+        }
+    }
 }
