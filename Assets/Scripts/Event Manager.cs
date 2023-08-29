@@ -46,6 +46,9 @@ public class EventManager : ScriptableSingleton<EventManager>
     public InputFiledEvent onSetNoteText;
 
 
+    public delegate void PhoneCameraEvent();
+    public PhoneCameraEvent onCameraPressed;
+
     public void TriggerExitGame()
     {
         if (onExitGame != null)

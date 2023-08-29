@@ -17,7 +17,7 @@ public class CalendarUI : MonoBehaviour
     [SerializeField] private GridPopulator weekDaysGridPopulator;
     [SerializeField] private PopUp popUpPrefab;
     [SerializeField] private RectTransform canvas;
-
+    [SerializeField] private PhoneCamera phoneCameraPrefab;
     [SerializeField] private DescriptionWindow descriptionWindowPrefab;
 
 
@@ -26,6 +26,7 @@ public class CalendarUI : MonoBehaviour
 
 
     private PopUp pop = null;
+    private PhoneCamera phoneCamera;
     private DescriptionWindow descriptionWindow = null;
     private List<Cell> populationList = new();
     private List<CellData> cellDatas = new();
@@ -52,6 +53,7 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onSetNoteText += HandleSetNoteText;
         EventManager.Instance.onConfirmChanges += HandleConfirmChanges;
         EventManager.Instance.onCancelChanges += HandleCancelChanges;
+        EventManager.Instance.onCameraPressed += HandleCameraPressed;
 
 
     }
@@ -81,7 +83,13 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onCancelChanges -= HandleCancelChanges;
         EventManager.Instance.onConfirmChanges -= HandleConfirmChanges;
         EventManager.Instance.onSetNoteText -= HandleSetNoteText;
+        EventManager.Instance.onCameraPressed += HandleCameraPressed;
 
+    }
+
+    private void HandleCameraPressed()
+    {
+        phoneCamera = Instantiate(phoneCameraPrefab, canvas);
     }
 
 
@@ -157,6 +165,7 @@ public class CalendarUI : MonoBehaviour
     }
     private void HandleCancelChanges()
     {
+        tempNote = "";
         CloseDescriptionWindow();
     }
     private void HandleConfirmChanges()

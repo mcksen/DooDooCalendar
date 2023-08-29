@@ -951,6 +951,7 @@ MonoBehaviour:
   weekDaysGridPopulator: {fileID: 954052109}
   popUpPrefab: {fileID: 719441924954893904, guid: a6c1d20e7a4fac146b4d9f24e0b0a158, type: 3}
   canvas: {fileID: 842816405}
+  phoneCameraPrefab: {fileID: 7401884904290365281, guid: b36631200f3934243804d6e87cd9235a, type: 3}
   descriptionWindowPrefab: {fileID: 4705528097620880883, guid: 16bc3768bcb47d24683dc9dbaa08cd8b, type: 3}
   monthText: {fileID: 1438419403}
   yearText: {fileID: 530887632}

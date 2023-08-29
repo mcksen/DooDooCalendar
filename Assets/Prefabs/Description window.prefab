@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7466197283787941779}
   - component: {fileID: 2258408546884714522}
   - component: {fileID: 1712249836272290163}
+  - component: {fileID: 5728026039608606623}
   m_Layer: 0
   m_Name: Photo 3
   m_TagString: Untagged
@@ -120,7 +121,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2258408546884714522}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5728026039608606623}
+        m_TargetAssemblyTypeName: PhotoButton, Assembly-CSharp
+        m_MethodName: TriggerCameraOn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5728026039608606623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264712698679978685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20952ecb6da43b48a46c3608ac49d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1494780403682687553
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +158,7 @@ GameObject:
   - component: {fileID: 9101038669009040713}
   - component: {fileID: 7514275584179418968}
   - component: {fileID: 5632886845849872076}
+  - component: {fileID: 7423414460491550452}
   m_Layer: 0
   m_Name: Photo 2
   m_TagString: Untagged
@@ -241,7 +267,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7514275584179418968}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7423414460491550452}
+        m_TargetAssemblyTypeName: PhotoButton, Assembly-CSharp
+        m_MethodName: TriggerCameraOn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7423414460491550452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494780403682687553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20952ecb6da43b48a46c3608ac49d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2294445156968941264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,6 +1084,7 @@ GameObject:
   - component: {fileID: 1000129535051037531}
   - component: {fileID: 579412409080658382}
   - component: {fileID: 2428861659325265537}
+  - component: {fileID: 3766006672082418672}
   m_Layer: 0
   m_Name: Photo 1
   m_TagString: Untagged
@@ -1142,7 +1193,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 579412409080658382}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3766006672082418672}
+        m_TargetAssemblyTypeName: PhotoButton, Assembly-CSharp
+        m_MethodName: TriggerCameraOn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3766006672082418672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153035004244395963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20952ecb6da43b48a46c3608ac49d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5956641632924400966
 GameObject:
   m_ObjectHideFlags: 0
