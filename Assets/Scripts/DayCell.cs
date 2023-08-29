@@ -101,7 +101,7 @@ public class DayCell : Cell
 
     private void TryRemoveCellData()
     {
-        if (!daycellData.isPoopImageActive && !daycellData.isMedicineImageActive)
+        if (!daycellData.isPoopImageActive && !daycellData.isMedicineImageActive && daycellData.description == "")
         {
             StateSaver.Data.Remove(DaycellData);
         }

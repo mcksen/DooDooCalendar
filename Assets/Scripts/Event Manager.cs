@@ -1,5 +1,6 @@
 
 
+using System;
 using UnityEngine;
 
 
@@ -32,13 +33,17 @@ public class EventManager : ScriptableSingleton<EventManager>
     public delegate void PopUpEvent();
 
     public PopUpEvent onDeselectCell;
-    public PopUpEvent onAddDescriptionPressed;
+
 
 
     public delegate void DesctiptionWindowEvent();
 
     public DesctiptionWindowEvent onConfirmChanges;
     public DesctiptionWindowEvent onCancelChanges;
+
+
+    public delegate void InputFiledEvent(string str);
+    public InputFiledEvent onSetNoteText;
 
 
     public void TriggerExitGame()
@@ -108,14 +113,6 @@ public class EventManager : ScriptableSingleton<EventManager>
 
     }
 
-    public void TriggerAddDescriptionPressed()
-    {
-        if (onAddDescriptionPressed != null)
-        {
-            onAddDescriptionPressed();
-        }
-
-    }
 
     public void TriggerConfirmChanges()
     {
@@ -130,5 +127,13 @@ public class EventManager : ScriptableSingleton<EventManager>
         {
             onCancelChanges();
         }
+    }
+    public void TriggerSetNoteText(string str)
+    {
+        if (onSetNoteText != null)
+        {
+            onSetNoteText(str);
+        }
+
     }
 }

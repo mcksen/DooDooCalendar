@@ -40,7 +40,7 @@ public class CalendarUI : MonoBehaviour
     private int daysInMonth;
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
-
+    private string tempNote;
     private void Awake()
     {
 
@@ -49,6 +49,8 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
         EventManager.Instance.onCellSelect += HandleSelectCell;
         EventManager.Instance.onDeselectCell += HandleDeselectCell;
+        EventManager.Instance.onSetNoteText += HandleSetNoteText;
+        EventManager.Instance.onConfirmChanges += HandleConfirmChanges;
         EventManager.Instance.onCancelChanges += HandleCancelChanges;
 
 
@@ -77,8 +79,12 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onDeselectCell -= HandleDeselectCell;
         EventManager.Instance.onCellImageSelect -= HandleCellImageSelect;
         EventManager.Instance.onCancelChanges -= HandleCancelChanges;
+        EventManager.Instance.onConfirmChanges -= HandleConfirmChanges;
+        EventManager.Instance.onSetNoteText -= HandleSetNoteText;
 
     }
+
+
 
     // _____________________________________________________________________________________
     //   EVENT - DEPENDANT FUNCTIONS
@@ -134,7 +140,7 @@ public class CalendarUI : MonoBehaviour
     }
     private void HandleAddDescriptionPressed()
     {
-        // EventManager.Instance.TriggerAddDescriptionPressed();
+
         if (descriptionWindow == null)
         {
             descriptionWindow = Instantiate(descriptionWindowPrefab, canvas);
@@ -144,7 +150,23 @@ public class CalendarUI : MonoBehaviour
 
 
     }
+    private void HandleSetNoteText(string str)
+    {
+        tempNote = str;
+
+    }
     private void HandleCancelChanges()
+    {
+        CloseDescriptionWindow();
+    }
+    private void HandleConfirmChanges()
+    {
+        selectedDayCell.DaycellData.description = tempNote;
+        TryAddCellData();
+        CloseDescriptionWindow();
+    }
+
+    private void CloseDescriptionWindow()
     {
         if (descriptionWindow != null)
         {
