@@ -14,8 +14,8 @@ public class PhoneCamera : MonoBehaviour
     private Texture defaultBackground;
     [SerializeField] private RawImage background;
     [SerializeField] private AspectRatioFitter fitter;
-    // private string photoName;
-    // public string PhotoName => photoName;
+
+    public RawImage Background => background;
 
     // private void Awake()
     // {

@@ -42,6 +42,7 @@ public class CalendarUI : MonoBehaviour
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
     private string tempNote;
+    private string photoName;
     private void Awake()
     {
 
@@ -89,21 +90,26 @@ public class CalendarUI : MonoBehaviour
 
     }
 
-    private void HandleTakePhotoPressed(string name)
+    private void HandleTakePhotoPressed()
     {
-        string path = selectedDayCell.DaycellData.day + selectedDayCell.DaycellData.month + selectedDayCell.DaycellData.year + name + ".png";
-        ScreenCapture.CaptureScreenshot(path);
+        string path = selectedDayCell.DaycellData.day + selectedDayCell.DaycellData.month + selectedDayCell.DaycellData.year + photoName + ".png";
+        Texture2D tex = new Texture2D(phoneCamera.Background.texture.width, phoneCamera.Background.texture.height);
+        byte[] bytes = tex.EncodeToPNG();
 
-        if (selectedDayCell.DaycellData.photoPaths.ContainsKey(name))
+        if (selectedDayCell.DaycellData.photoPaths.ContainsKey(photoName))
         {
-            selectedDayCell.DaycellData.photoPaths[name] = path;
+            selectedDayCell.DaycellData.photoPaths[photoName] = path;
         }
+        Destroy(phoneCamera.gameObject);
+        phoneCamera = null;
 
+        photoName = "";
     }
 
     private void HandleCameraEnablePressed(string name)
     {
         phoneCamera = Instantiate(phoneCameraPrefab, canvas);
+        photoName = name;
     }
 
 

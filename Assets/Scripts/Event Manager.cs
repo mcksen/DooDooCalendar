@@ -38,6 +38,7 @@ public class EventManager : ScriptableSingleton<EventManager>
 
     public delegate void DesctiptionWindowEvent();
 
+
     public DesctiptionWindowEvent onConfirmChanges;
     public DesctiptionWindowEvent onCancelChanges;
 
@@ -48,7 +49,9 @@ public class EventManager : ScriptableSingleton<EventManager>
 
     public delegate void PhoneCameraEvent(string name);
     public PhoneCameraEvent onCameraEnablePressed;
-    public PhoneCameraEvent onTakePhotoPressed;
+
+    public delegate void PhotoEvent();
+    public PhotoEvent onTakePhotoPressed;
 
     public void TriggerExitGame()
     {
@@ -141,11 +144,19 @@ public class EventManager : ScriptableSingleton<EventManager>
 
     }
 
-    public void TriggerTakePhotoPressed(string name)
+    public void TriggerTakePhotoPressed()
     {
         if (onTakePhotoPressed != null)
         {
-            onTakePhotoPressed(name);
+            onTakePhotoPressed();
+        }
+
+    }
+    public void TriggerCameraEnablePressed(string name)
+    {
+        if (onCameraEnablePressed != null)
+        {
+            onCameraEnablePressed(name);
         }
 
     }
