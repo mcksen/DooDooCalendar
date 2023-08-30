@@ -94,9 +94,9 @@ public class CalendarUI : MonoBehaviour
         string path = selectedDayCell.DaycellData.day + selectedDayCell.DaycellData.month + selectedDayCell.DaycellData.year + name + ".png";
         ScreenCapture.CaptureScreenshot(path);
 
-        if (selectedDayCell.DaycellData.photos.ContainsKey(name))
+        if (selectedDayCell.DaycellData.photoPaths.ContainsKey(name))
         {
-            selectedDayCell.DaycellData.photos[name] = path;
+            selectedDayCell.DaycellData.photoPaths[name] = path;
         }
 
     }
@@ -166,7 +166,7 @@ public class CalendarUI : MonoBehaviour
         if (descriptionWindow == null)
         {
             descriptionWindow = Instantiate(descriptionWindowPrefab, canvas);
-            descriptionWindow.Configure(selectedDayCell.DaycellData.description);
+            descriptionWindow.Configure(selectedDayCell.DaycellData.description, selectedDayCell.DaycellData.photoPaths);
 
         }
 
