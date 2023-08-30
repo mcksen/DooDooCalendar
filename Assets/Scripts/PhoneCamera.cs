@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.IO;
 using System.Security.AccessControl;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +14,18 @@ public class PhoneCamera : MonoBehaviour
     private Texture defaultBackground;
     [SerializeField] private RawImage background;
     [SerializeField] private AspectRatioFitter fitter;
+    // private string photoName;
+    // public string PhotoName => photoName;
+
+    // private void Awake()
+    // {
+    //     EventManager.Instance.onCameraPressed += HandleCameraPressed;
+    // }
+
+    // public void Configure(string name)
+    // {
+    //     photoName = name;
+    // }
     private void Start()
     {
         defaultBackground = background.texture;
@@ -56,4 +70,19 @@ public class PhoneCamera : MonoBehaviour
         int orientation = -backCamera.videoRotationAngle;
         background.rectTransform.localEulerAngles = new Vector3(0, 0, orientation);
     }
+
+    // private void Destroy()
+    // {
+    //     EventManager.Instance.onCameraPressed -= HandleCameraPressed;
+    // }
+
+    // private void HandleCameraPressed(string name)
+    // {
+    //     photoName = name;
+    // }
+
+    // public void TakePhoto()
+    // {
+    //     ScreenCapture.CaptureScreenshot(photoName);
+    // }
 }

@@ -46,8 +46,9 @@ public class EventManager : ScriptableSingleton<EventManager>
     public InputFiledEvent onSetNoteText;
 
 
-    public delegate void PhoneCameraEvent();
-    public PhoneCameraEvent onCameraPressed;
+    public delegate void PhoneCameraEvent(string name);
+    public PhoneCameraEvent onCameraEnablePressed;
+    public PhoneCameraEvent onTakePhotoPressed;
 
     public void TriggerExitGame()
     {
@@ -139,4 +140,14 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
+
+    public void TriggerTakePhotoPressed(string name)
+    {
+        if (onTakePhotoPressed != null)
+        {
+            onTakePhotoPressed(name);
+        }
+
+    }
+
 }

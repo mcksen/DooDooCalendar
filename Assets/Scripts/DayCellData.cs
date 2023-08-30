@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 [Serializable]
 public class DayCellData : CellData, IEquatable<DayCellData>
@@ -10,7 +11,12 @@ public class DayCellData : CellData, IEquatable<DayCellData>
     public bool isMedicineImageActive;
 
     public string description = "";
-
+    public Dictionary<string, string> photos = new Dictionary<string, string>
+        {
+            { "Photo1", "" },
+            { "Photo2", "" },
+            { "Photo3", "" }
+        };
     public int day;
     public int month;
     public int year;

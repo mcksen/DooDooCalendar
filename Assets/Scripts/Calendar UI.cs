@@ -53,7 +53,8 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onSetNoteText += HandleSetNoteText;
         EventManager.Instance.onConfirmChanges += HandleConfirmChanges;
         EventManager.Instance.onCancelChanges += HandleCancelChanges;
-        EventManager.Instance.onCameraPressed += HandleCameraPressed;
+        EventManager.Instance.onCameraEnablePressed += HandleCameraEnablePressed;
+        EventManager.Instance.onTakePhotoPressed += HandleTakePhotoPressed;
 
 
     }
@@ -83,11 +84,24 @@ public class CalendarUI : MonoBehaviour
         EventManager.Instance.onCancelChanges -= HandleCancelChanges;
         EventManager.Instance.onConfirmChanges -= HandleConfirmChanges;
         EventManager.Instance.onSetNoteText -= HandleSetNoteText;
-        EventManager.Instance.onCameraPressed += HandleCameraPressed;
+        EventManager.Instance.onCameraEnablePressed += HandleCameraEnablePressed;
+        EventManager.Instance.onTakePhotoPressed -= HandleTakePhotoPressed;
 
     }
 
-    private void HandleCameraPressed()
+    private void HandleTakePhotoPressed(string name)
+    {
+        string path = selectedDayCell.DaycellData.day + selectedDayCell.DaycellData.month + selectedDayCell.DaycellData.year + name + ".png";
+        ScreenCapture.CaptureScreenshot(path);
+
+        if (selectedDayCell.DaycellData.photos.ContainsKey(name))
+        {
+            selectedDayCell.DaycellData.photos[name] = path;
+        }
+
+    }
+
+    private void HandleCameraEnablePressed(string name)
     {
         phoneCamera = Instantiate(phoneCameraPrefab, canvas);
     }
