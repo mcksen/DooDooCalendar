@@ -29,6 +29,7 @@ public class PhoneCamera : MonoBehaviour
 #endif
             {
                 backCamera = new WebCamTexture(devices[i].name, Screen.width, Screen.height);
+
                 isCamAvailable = true;
             }
         }
