@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SelectedCellManager : MonoBehaviour
@@ -22,7 +24,7 @@ public class SelectedCellManager : MonoBehaviour
     private PhoneCamera phoneCamera;
     private DescriptionWindow descriptionWindow = null;
     private string tempNote;
-    private string photoName;
+
     private void Awake()
     {
         EventManager.Instance.onCellSelect += HandleSelectCell;
@@ -40,29 +42,28 @@ public class SelectedCellManager : MonoBehaviour
         EventManager.Instance.onCancelChanges -= HandleCancelChanges;
         EventManager.Instance.onConfirmChanges -= HandleConfirmChanges;
         EventManager.Instance.onSetNoteText -= HandleSetNoteText;
-        EventManager.Instance.onCameraEnablePressed += HandleCameraEnablePressed;
+        EventManager.Instance.onCameraEnablePressed -= HandleCameraEnablePressed;
         EventManager.Instance.onTakePhotoPressed -= HandleTakePhotoPressed;
     }
     private void HandleTakePhotoPressed()
     {
-        string path = selectedDayCell.DaycellData.day + selectedDayCell.DaycellData.month + selectedDayCell.DaycellData.year + photoName + ".png";
+        Guid guid = new System.Guid();
+        string path = System.IO.Path.Combine(Application.persistentDataPath + guid.ToString() + ".png");
+        selectedDayCell.DaycellData.photoPaths.Add(path);
         Texture2D tex = new Texture2D(phoneCamera.Background.texture.width, phoneCamera.Background.texture.height);
-        // tex.SetPixels(WebCamTexture.GetPixels();
+        WebCamTexture webTexture = phoneCamera.Background.texture as WebCamTexture;
+        tex.SetPixels(webTexture.GetPixels());
         byte[] bytes = tex.EncodeToPNG();
+        File.WriteAllBytes(path, bytes);
+        EventManager.Instance.TriggerPhotoAdded();
+        CloseCameraWindow();
 
-        if (selectedDayCell.DaycellData.photoPaths.ContainsKey(photoName))
-        {
-            selectedDayCell.DaycellData.photoPaths[photoName] = path;
-        }
-        Destroy(phoneCamera.gameObject);
-        phoneCamera = null;
 
-        photoName = "";
     }
-    private void HandleCameraEnablePressed(string name)
+    private void HandleCameraEnablePressed()
     {
         phoneCamera = Instantiate(phoneCameraPrefab, canvas);
-        photoName = name;
+
     }
 
     private void HandleSelectCell(Cell cell)
@@ -115,7 +116,17 @@ public class SelectedCellManager : MonoBehaviour
             HandleDeselectCell();
         }
     }
+    private void CloseCameraWindow()
+    {
+        if (phoneCamera != null)
+        {
+            phoneCamera.StopCamera();
+            Destroy(phoneCamera.gameObject);
 
+            phoneCamera = null;
+
+        }
+    }
     private void HandleAddStickerPressed()
     {
 

@@ -47,11 +47,10 @@ public class EventManager : ScriptableSingleton<EventManager>
     public InputFiledEvent onSetNoteText;
 
 
-    public delegate void PhoneCameraEvent(string name);
-    public PhoneCameraEvent onCameraEnablePressed;
-
     public delegate void PhotoEvent();
+    public PhotoEvent onCameraEnablePressed;
     public PhotoEvent onTakePhotoPressed;
+    public PhotoEvent onPhotoAdded;
 
     public void TriggerExitGame()
     {
@@ -152,11 +151,19 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
-    public void TriggerCameraEnablePressed(string name)
+    public void TriggerCameraEnablePressed()
     {
         if (onCameraEnablePressed != null)
         {
-            onCameraEnablePressed(name);
+            onCameraEnablePressed();
+        }
+
+    }
+    public void TriggerPhotoAdded()
+    {
+        if (onPhotoAdded != null)
+        {
+            onPhotoAdded();
         }
 
     }

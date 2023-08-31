@@ -17,15 +17,7 @@ public class PhoneCamera : MonoBehaviour
 
     public RawImage Background => background;
 
-    // private void Awake()
-    // {
-    //     EventManager.Instance.onCameraPressed += HandleCameraPressed;
-    // }
 
-    // public void Configure(string name)
-    // {
-    //     photoName = name;
-    // }
     private void Start()
     {
         defaultBackground = background.texture;
@@ -69,20 +61,11 @@ public class PhoneCamera : MonoBehaviour
         background.rectTransform.localScale = new Vector3(1f, scaleY, 1f);
         int orientation = -backCamera.videoRotationAngle;
         background.rectTransform.localEulerAngles = new Vector3(0, 0, orientation);
+
     }
 
-    // private void Destroy()
-    // {
-    //     EventManager.Instance.onCameraPressed -= HandleCameraPressed;
-    // }
-
-    // private void HandleCameraPressed(string name)
-    // {
-    //     photoName = name;
-    // }
-
-    // public void TakePhoto()
-    // {
-    //     ScreenCapture.CaptureScreenshot(photoName);
-    // }
+    public void StopCamera()
+    {
+        backCamera.Stop();
+    }
 }
