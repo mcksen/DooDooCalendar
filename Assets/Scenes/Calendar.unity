@@ -840,6 +840,7 @@ GameObject:
   - component: {fileID: 842816402}
   - component: {fileID: 842816406}
   - component: {fileID: 842816407}
+  - component: {fileID: 842816408}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -949,10 +950,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   calendarGridPopulator: {fileID: 198961860}
   weekDaysGridPopulator: {fileID: 954052109}
-  popUpPrefab: {fileID: 719441924954893904, guid: a6c1d20e7a4fac146b4d9f24e0b0a158, type: 3}
-  canvas: {fileID: 842816405}
-  phoneCameraPrefab: {fileID: 7401884904290365281, guid: b36631200f3934243804d6e87cd9235a, type: 3}
-  descriptionWindowPrefab: {fileID: 4705528097620880883, guid: 16bc3768bcb47d24683dc9dbaa08cd8b, type: 3}
   monthText: {fileID: 1438419403}
   yearText: {fileID: 530887632}
 --- !u!114 &842816407
@@ -967,6 +964,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd1d96fb2cbda141811f4d605c9efe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &842816408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842816401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00fa08ce8c116cc4c9a96ceea8ada97b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popUpPrefab: {fileID: 719441924954893904, guid: a6c1d20e7a4fac146b4d9f24e0b0a158, type: 3}
+  canvas: {fileID: 842816405}
+  phoneCameraPrefab: {fileID: 7401884904290365281, guid: b36631200f3934243804d6e87cd9235a, type: 3}
+  descriptionWindowPrefab: {fileID: 4705528097620880883, guid: 16bc3768bcb47d24683dc9dbaa08cd8b, type: 3}
 --- !u!1 &954052102
 GameObject:
   m_ObjectHideFlags: 0

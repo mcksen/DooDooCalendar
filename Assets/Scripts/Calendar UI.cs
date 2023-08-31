@@ -8,31 +8,23 @@ public class CalendarUI : MonoBehaviour
 {
     private const int DAYS_IN_WEEK = 7;
     private readonly List<string> weekDays = new() { "M", "T", "W", "T", "F", "S", "S" };
-    private const string poopButtonName = "Poop";
-    private const string pillButtonName = "Pill";
-    private const string stickerButtonName = "Sticker";
-    private const string notesButtonName = "Notes";
+
 
     [SerializeField] private GridPopulator calendarGridPopulator;
     [SerializeField] private GridPopulator weekDaysGridPopulator;
-    [SerializeField] private PopUp popUpPrefab;
-    [SerializeField] private RectTransform canvas;
-    [SerializeField] private PhoneCamera phoneCameraPrefab;
-    [SerializeField] private DescriptionWindow descriptionWindowPrefab;
 
 
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private TextMeshProUGUI yearText;
 
 
-    private PopUp pop = null;
-    private PhoneCamera phoneCamera;
-    private DescriptionWindow descriptionWindow = null;
+
+
     private List<Cell> populationList = new();
-    private List<CellData> cellDatas = new();
 
 
-    private DayCell selectedDayCell;
+
+
 
     private DateTime currentDate;
     private DateTime defaultDate;
@@ -41,21 +33,13 @@ public class CalendarUI : MonoBehaviour
     private int daysInMonth;
     private int numberOfBlanksBefore;
     private int numberOfBlanksAfter;
-    private string tempNote;
-    private string photoName;
+
     private void Awake()
     {
 
         EventManager.Instance.onForwardClick += HandleForwardClick;
         EventManager.Instance.onBackwardClick += HandleBackwardClick;
-        EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
-        EventManager.Instance.onCellSelect += HandleSelectCell;
-        EventManager.Instance.onDeselectCell += HandleDeselectCell;
-        EventManager.Instance.onSetNoteText += HandleSetNoteText;
-        EventManager.Instance.onConfirmChanges += HandleConfirmChanges;
-        EventManager.Instance.onCancelChanges += HandleCancelChanges;
-        EventManager.Instance.onCameraEnablePressed += HandleCameraEnablePressed;
-        EventManager.Instance.onTakePhotoPressed += HandleTakePhotoPressed;
+
 
 
     }
@@ -79,39 +63,9 @@ public class CalendarUI : MonoBehaviour
     {
         EventManager.Instance.onForwardClick -= HandleForwardClick;
         EventManager.Instance.onBackwardClick -= HandleBackwardClick;
-        EventManager.Instance.onCellSelect -= HandleSelectCell;
-        EventManager.Instance.onDeselectCell -= HandleDeselectCell;
-        EventManager.Instance.onCellImageSelect -= HandleCellImageSelect;
-        EventManager.Instance.onCancelChanges -= HandleCancelChanges;
-        EventManager.Instance.onConfirmChanges -= HandleConfirmChanges;
-        EventManager.Instance.onSetNoteText -= HandleSetNoteText;
-        EventManager.Instance.onCameraEnablePressed += HandleCameraEnablePressed;
-        EventManager.Instance.onTakePhotoPressed -= HandleTakePhotoPressed;
+
 
     }
-
-    private void HandleTakePhotoPressed()
-    {
-        string path = selectedDayCell.DaycellData.day + selectedDayCell.DaycellData.month + selectedDayCell.DaycellData.year + photoName + ".png";
-        Texture2D tex = new Texture2D(phoneCamera.Background.texture.width, phoneCamera.Background.texture.height);
-        byte[] bytes = tex.EncodeToPNG();
-
-        if (selectedDayCell.DaycellData.photoPaths.ContainsKey(photoName))
-        {
-            selectedDayCell.DaycellData.photoPaths[photoName] = path;
-        }
-        Destroy(phoneCamera.gameObject);
-        phoneCamera = null;
-
-        photoName = "";
-    }
-
-    private void HandleCameraEnablePressed(string name)
-    {
-        phoneCamera = Instantiate(phoneCameraPrefab, canvas);
-        photoName = name;
-    }
-
 
 
     // _____________________________________________________________________________________
@@ -141,110 +95,9 @@ public class CalendarUI : MonoBehaviour
         SetNumberOfBlanks();
         PopulateCalendarGrid();
     }
-    private void HandleCellImageSelect(Cell cell)
-    {
-        foreach (DayCell c in populationList)
-        {
-            if (c != cell)
-            {
-                c.DeSelect();
-            }
-        }
-    }
-    private void HandleSelectCell(Cell cell)
-    {
-        if (pop == null)
-        {
-
-            selectedDayCell = cell as DayCell;
-
-            pop = Instantiate(popUpPrefab, canvas);
-            pop.MakeButton(stickerButtonName, HandleAddStickerPressed, false);
-            pop.MakeButton(notesButtonName, HandleAddDescriptionPressed, false);
-            pop.SetPosition(cell.transform.position);
 
 
-        }
-    }
-    private void HandleAddDescriptionPressed()
-    {
 
-        if (descriptionWindow == null)
-        {
-            descriptionWindow = Instantiate(descriptionWindowPrefab, canvas);
-            descriptionWindow.Configure(selectedDayCell.DaycellData.description, selectedDayCell.DaycellData.photoPaths);
-
-        }
-
-
-    }
-    private void HandleSetNoteText(string str)
-    {
-        tempNote = str;
-
-    }
-    private void HandleCancelChanges()
-    {
-        tempNote = "";
-        CloseDescriptionWindow();
-    }
-    private void HandleConfirmChanges()
-    {
-        selectedDayCell.DaycellData.description = tempNote;
-        TryAddCellData();
-        CloseDescriptionWindow();
-    }
-
-    private void CloseDescriptionWindow()
-    {
-        if (descriptionWindow != null)
-        {
-            Destroy(descriptionWindow.gameObject);
-            descriptionWindow = null;
-            HandleDeselectCell();
-        }
-    }
-
-    private void HandleAddStickerPressed()
-    {
-
-        pop.DestroyButons();
-        pop.MakeButton(poopButtonName, HandleAddPoopPressed, selectedDayCell.DaycellData.isPoopImageActive);
-        pop.MakeButton(pillButtonName, HandleAddMedicinePressed, selectedDayCell.DaycellData.isMedicineImageActive);
-
-
-    }
-
-    private void HandleDeselectCell()
-    {
-        selectedDayCell.DeSelect();
-        selectedDayCell = null;
-        Destroy(pop.gameObject);
-        pop = null;
-    }
-
-    private void HandleAddPoopPressed()
-    {
-        selectedDayCell.SetPoopImage();
-        TryAddCellData();
-    }
-
-    private void HandleAddMedicinePressed()
-    {
-        selectedDayCell.SetMedicineImage();
-        TryAddCellData();
-    }
-
-    private void TryAddCellData()
-    {
-        if (!StateSaver.Data.Contains(selectedDayCell.DaycellData))
-        {
-            StateSaver.Data.Add(selectedDayCell.DaycellData);
-
-        }
-
-
-    }
     // _____________________________________________________________________________________
     //   CLASS - SPECIEFIC FUNCTIONS
     // _____________________________________________________________________________________

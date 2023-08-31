@@ -26,7 +26,14 @@ public class DayCell : Cell
 
     private DayCellData daycellData = new DayCellData();
     public DayCellData DaycellData => daycellData;
-
+    private void Awake()
+    {
+        EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
+    }
+    private void OnDestroy()
+    {
+        EventManager.Instance.onCellImageSelect -= HandleCellImageSelect;
+    }
     public override void Configure(CellData data)
     {
         daycellData = data as DayCellData;
@@ -43,12 +50,10 @@ public class DayCell : Cell
         }
     }
 
-    private void Select()
+    public void Select()
     {
         if (selectImage.enabled == false)
         {
-
-            selectImage.enabled = true;
             EventManager.Instance.TriggerCellImageSelect(this);
         }
         else
@@ -56,7 +61,19 @@ public class DayCell : Cell
             EventManager.Instance.TriggerCellSelect(this);
         }
     }
-    public void DeSelect()
+    private void HandleCellImageSelect(Cell cell)
+    {
+        if (cell as DayCell == this)
+        {
+            selectImage.enabled = true;
+
+        }
+        else
+        {
+            DeselectImage();
+        }
+    }
+    public void DeselectImage()
     {
         selectImage.enabled = false;
 
