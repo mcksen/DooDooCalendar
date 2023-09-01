@@ -15,7 +15,7 @@ public class PhoneCamera : MonoBehaviour
     [SerializeField] private RawImage background;
     [SerializeField] private AspectRatioFitter fitter;
 
-    public RawImage Background => background;
+    public WebCamTexture BackCamera => backCamera;
 
 
     private void Start()
@@ -55,7 +55,7 @@ public class PhoneCamera : MonoBehaviour
         {
             return;
         }
-        float ratio = (float)backCamera.width / (float)backCamera.height;
+        float ratio = (float)Screen.width / (float)Screen.height;
         fitter.aspectRatio = ratio;
         float scaleY = backCamera.videoVerticallyMirrored ? -1f : 1f;
         background.rectTransform.localScale = new Vector3(1f, scaleY, 1f);

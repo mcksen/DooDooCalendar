@@ -50,10 +50,10 @@ public class SelectedCellManager : MonoBehaviour
         Guid guid = new System.Guid();
         string path = System.IO.Path.Combine(Application.persistentDataPath + guid.ToString() + ".png");
         selectedDayCell.DaycellData.photoPaths.Add(path);
-        Texture2D tex = new Texture2D(phoneCamera.Background.texture.width, phoneCamera.Background.texture.height);
-        WebCamTexture webTexture = phoneCamera.Background.texture as WebCamTexture;
-        tex.SetPixels(webTexture.GetPixels());
+        Texture2D tex = new Texture2D(phoneCamera.BackCamera.width, phoneCamera.BackCamera.height);
+        tex.SetPixels(phoneCamera.BackCamera.GetPixels());
         byte[] bytes = tex.EncodeToPNG();
+
         File.WriteAllBytes(path, bytes);
         EventManager.Instance.TriggerPhotoAdded();
         CloseCameraWindow();
