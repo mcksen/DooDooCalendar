@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -7,8 +6,6 @@ using UnityEngine;
 public class SelectedCellManager : MonoBehaviour
 {
     private DayCell selectedDayCell;
-
-
 
     private const string poopButtonName = "Poop";
     private const string pillButtonName = "Pill";

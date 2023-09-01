@@ -10,7 +10,7 @@ public class PhotoCell : Cell
 
     [SerializeField] private Image image;
     [SerializeField] private AspectRatioFitter fitter;
-    [SerializeField] private RectTransform rectTransform;
+
 
     private PhotoCellData photoCellData = new PhotoCellData();
     public PhotoCellData PhotoCellData => photoCellData;
@@ -20,14 +20,11 @@ public class PhotoCell : Cell
 
         byte[] bytes = File.ReadAllBytes(photoCellData.imagePath);
 
-
-        Vector3[] photoCellArray = new Vector3[4];
-        rectTransform.GetWorldCorners(photoCellArray);
-
         Texture2D texture = new Texture2D(Screen.width, Screen.height);
 
         texture.LoadImage(bytes);
         image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
         float ratio = (float)texture.width / (float)texture.height;
         fitter.aspectRatio = ratio;
     }
