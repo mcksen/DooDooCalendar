@@ -24,6 +24,7 @@ public class SelectedCellManager : MonoBehaviour
     private PhoneCamera phoneCamera;
     private DescriptionWindow descriptionWindow = null;
     private string tempNote;
+    private List<string> tempPhotoPaths;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class SelectedCellManager : MonoBehaviour
         EventManager.Instance.onCancelChanges += HandleCancelChanges;
         EventManager.Instance.onCameraEnablePressed += HandleCameraEnablePressed;
         EventManager.Instance.onTakePhotoPressed += HandleTakePhotoPressed;
+
     }
     private void OnDestroy()
     {
@@ -47,7 +49,7 @@ public class SelectedCellManager : MonoBehaviour
     }
     private void HandleTakePhotoPressed()
     {
-        Guid guid = new System.Guid();
+        Guid guid = Guid.NewGuid();
         string path = System.IO.Path.Combine(Application.persistentDataPath + guid.ToString() + ".png");
         selectedDayCell.DaycellData.photoPaths.Add(path);
         Texture2D tex = new Texture2D(phoneCamera.BackCamera.width, phoneCamera.BackCamera.height);
@@ -86,7 +88,7 @@ public class SelectedCellManager : MonoBehaviour
         {
             descriptionWindow = Instantiate(descriptionWindowPrefab, canvas);
             descriptionWindow.Configure(selectedDayCell.DaycellData.description, selectedDayCell.DaycellData.photoPaths);
-
+            tempPhotoPaths = new List<string>(selectedDayCell.DaycellData.photoPaths);
         }
 
 
@@ -98,6 +100,7 @@ public class SelectedCellManager : MonoBehaviour
     private void HandleCancelChanges()
     {
         tempNote = "";
+        selectedDayCell.DaycellData.photoPaths = tempPhotoPaths;
         CloseDescriptionWindow();
     }
     private void HandleConfirmChanges()
