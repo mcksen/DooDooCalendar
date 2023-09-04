@@ -9,6 +9,7 @@ public class PhotoCell : Cell
 
 
     [SerializeField] private Image image;
+    public Image Image => image;
     [SerializeField] private AspectRatioFitter fitter;
 
 
@@ -29,6 +30,10 @@ public class PhotoCell : Cell
         fitter.aspectRatio = ratio;
     }
 
+    public void TriggerPhotoOpen()
+    {
+        EventManager.Instance.TriggerOpenPhotoPressed(this);
+    }
 
 
 

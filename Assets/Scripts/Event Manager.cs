@@ -47,10 +47,21 @@ public class EventManager : ScriptableSingleton<EventManager>
     public InputFiledEvent onSetNoteText;
 
 
-    public delegate void PhotoEvent();
-    public PhotoEvent onCameraEnablePressed;
-    public PhotoEvent onTakePhotoPressed;
-    public PhotoEvent onPhotoAdded;
+    public delegate void CameraEvent();
+    public CameraEvent onCameraEnablePressed;
+    public CameraEvent onTakePhotoPressed;
+    public CameraEvent onPhotoAdded;
+
+    public delegate void PhotoEvent(PhotoCell photoCell);
+    public PhotoEvent onOpenPhotoPressed;
+
+    public delegate void PhotoManagerEvent();
+    public PhotoManagerEvent onNextPhotoPressed;
+    public PhotoManagerEvent onPreviousPhotoPressed;
+    public PhotoManagerEvent onReturnPressed;
+    public PhotoManagerEvent onDeletePhotoPressed;
+
+
 
     public void TriggerExitGame()
     {
@@ -167,5 +178,48 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
+    public void TriggerOpenPhotoPressed(PhotoCell photoCell)
+    {
+        if (onOpenPhotoPressed != null)
+        {
+            onOpenPhotoPressed(photoCell);
+        }
+
+    }
+    public void TriggerNextPhotoPressed()
+    {
+        if (onNextPhotoPressed != null)
+        {
+            onNextPhotoPressed();
+        }
+
+    }
+
+    public void TriggerPreviousPhotoPressed()
+    {
+        if (onPreviousPhotoPressed != null)
+        {
+            onPreviousPhotoPressed();
+        }
+
+    }
+    public void TriggerReturnPressed()
+    {
+        if (onReturnPressed != null)
+        {
+            onReturnPressed();
+        }
+
+    }
+    public void TriggerDeletePhotoPressed()
+    {
+        if (onDeletePhotoPressed != null)
+        {
+            onDeletePhotoPressed();
+        }
+
+    }
+
+
 
 }
