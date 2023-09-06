@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class DescriptionWindow : MonoBehaviour
@@ -15,11 +16,25 @@ public class DescriptionWindow : MonoBehaviour
     [SerializeField] private GridPopulator gridPopulator;
     [SerializeField] private PhotoManager photoManagerPrefab;
 
+
+
     private List<Cell> photoCells = new List<Cell>();
     private List<string> photoPaths = new();
     private PhotoManager photoManager;
     private int index;
 
+
+    private int Index
+    {
+        get => index;
+        set
+        {
+            index = value;
+            SetButtonInteractability();
+
+
+        }
+    }
     private void Awake()
     {
         EventManager.Instance.onPhotoAdded += HandlePhotoAdded;
@@ -39,7 +54,22 @@ public class DescriptionWindow : MonoBehaviour
         EventManager.Instance.onReturnPressed -= HandleReturnPressed;
         EventManager.Instance.onDeletePhotoPressed -= HandleDeletePhotoPressed;
     }
-
+    private void SetButtonInteractability()
+    {
+        if (index == 0)
+        {
+            photoManager.PreviousPhoto.interactable = false;
+        }
+        if (index < photoCells.Count && index > 0)
+        {
+            photoManager.PreviousPhoto.interactable = true;
+            photoManager.NextPhoto.interactable = true;
+        }
+        if (index == photoCells.Count - 1)
+        {
+            photoManager.NextPhoto.interactable = false;
+        }
+    }
     private void HandleDeletePhotoPressed()
     {
         photoPaths.Remove(photoPaths[index]);
@@ -80,19 +110,23 @@ public class DescriptionWindow : MonoBehaviour
         {
             if (photoCells[i] == photoCell)
             {
-                index = i;
+                Index = i;
             }
         }
+
+
     }
     private void HandlePreviousPhotoPressed()
     {
-        index -= 1;
+        Index -= 1;
         photoManager.Configure(photoCells[index] as PhotoCell);
+
     }
     private void HandleNextPhotoPressed()
     {
-        index += 1;
+        Index += 1;
         photoManager.Configure(photoCells[index] as PhotoCell);
+
     }
     private void Populate()
     {

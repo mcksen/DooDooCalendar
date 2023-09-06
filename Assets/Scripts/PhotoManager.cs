@@ -9,6 +9,28 @@ public class PhotoManager : MonoBehaviour
 
     [SerializeField] private Image image;
     [SerializeField] private AspectRatioFitter fitter;
+    [SerializeField] private Button nextPhoto;
+    public Button NextPhoto
+    {
+        get => nextPhoto;
+        set
+        {
+
+            nextPhoto = value;
+
+        }
+    }
+    [SerializeField] private Button previousPhoto;
+    public Button PreviousPhoto
+    {
+        get => previousPhoto;
+        set
+        {
+
+            previousPhoto = value;
+
+        }
+    }
 
     public void Configure(PhotoCell photoCell)
 
