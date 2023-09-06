@@ -24,6 +24,7 @@ public class DescriptionWindow : MonoBehaviour
     {
         EventManager.Instance.onPhotoAdded += HandlePhotoAdded;
         EventManager.Instance.onOpenPhotoPressed += HandlePhotoOpenPressed;
+        EventManager.Instance.onNextPhotoPressed += HandleNextPhotoPressed;
         EventManager.Instance.onPreviousPhotoPressed += HandlePreviousPhotoPressed;
         EventManager.Instance.onReturnPressed += HandleReturnPressed;
         EventManager.Instance.onDeletePhotoPressed += HandleDeletePhotoPressed;
