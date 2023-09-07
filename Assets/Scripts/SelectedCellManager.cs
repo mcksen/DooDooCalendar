@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class SelectedCellManager : MonoBehaviour
 {
+    public delegate void PhotoPathsListEvent(List<string> photoPaths);
+    public static PhotoPathsListEvent onPhotoAdded;
+    public static PhotoPathsListEvent onPhotoDeleted;
     private DayCell selectedDayCell;
 
     private const string poopButtonName = "Poop";
@@ -14,55 +17,67 @@ public class SelectedCellManager : MonoBehaviour
 
     [SerializeField] private PopUp popUpPrefab;
     [SerializeField] private RectTransform canvas;
-    [SerializeField] private PhoneCamera phoneCameraPrefab;
+
     [SerializeField] private DescriptionWindow descriptionWindowPrefab;
 
     private PopUp pop = null;
-    private PhoneCamera phoneCamera;
+
     private DescriptionWindow descriptionWindow = null;
     private string tempNote;
     private List<string> tempPhotoPaths;
 
     private void Awake()
     {
-        EventManager.Instance.onCellSelect += HandleSelectCell;
-        EventManager.Instance.onDeselectCell += HandleDeselectCell;
-        EventManager.Instance.onSetNoteText += HandleSetNoteText;
-        EventManager.Instance.onConfirmChanges += HandleConfirmChanges;
-        EventManager.Instance.onCancelChanges += HandleCancelChanges;
-        EventManager.Instance.onCameraEnablePressed += HandleCameraEnablePressed;
-        EventManager.Instance.onTakePhotoPressed += HandleTakePhotoPressed;
+        DayCell.onCellSelect += HandleSelectCell;
+        PopUp.quitPopUp += HandleQuitPopUp;
+        InputField.onSetNoteText += HandleSetNoteText;
+        DescriptionWindow.onConfirmChanges += HandleConfirmChanges;
+        DescriptionWindow.onCancelChanges += HandleCancelChanges;
+        PhotoManager.onDeletePhotoPressed += TryDeletePhoto;
+        PhoneCamera.onTryAddPhoto += TryAddPhoto;
 
     }
     private void OnDestroy()
     {
-        EventManager.Instance.onCellSelect -= HandleSelectCell;
-        EventManager.Instance.onDeselectCell -= HandleDeselectCell;
-        EventManager.Instance.onCancelChanges -= HandleCancelChanges;
-        EventManager.Instance.onConfirmChanges -= HandleConfirmChanges;
-        EventManager.Instance.onSetNoteText -= HandleSetNoteText;
-        EventManager.Instance.onCameraEnablePressed -= HandleCameraEnablePressed;
-        EventManager.Instance.onTakePhotoPressed -= HandleTakePhotoPressed;
+        DayCell.onCellSelect -= HandleSelectCell;
+        PopUp.quitPopUp -= HandleQuitPopUp;
+        DescriptionWindow.onCancelChanges -= HandleCancelChanges;
+        DescriptionWindow.onConfirmChanges -= HandleConfirmChanges;
+        InputField.onSetNoteText -= HandleSetNoteText;
+        PhotoManager.onDeletePhotoPressed -= TryDeletePhoto;
+        PhoneCamera.onTryAddPhoto -= TryAddPhoto;
     }
-    private void HandleTakePhotoPressed()
+
+    private void TryDeletePhoto(int index)
     {
-        Guid guid = Guid.NewGuid();
-        string path = System.IO.Path.Combine(Application.persistentDataPath + guid.ToString() + ".png");
+        selectedDayCell.DaycellData.photoPaths.Remove(selectedDayCell.DaycellData.photoPaths[index]);
+        TriggerPhotoDeleted(selectedDayCell.DaycellData.photoPaths);
+    }
+
+    private void TryAddPhoto(string path)
+    {
+
         selectedDayCell.DaycellData.photoPaths.Add(path);
-        Texture2D tex = new Texture2D(phoneCamera.BackCamera.width, phoneCamera.BackCamera.height);
-        tex.SetPixels(phoneCamera.BackCamera.GetPixels());
-        byte[] bytes = tex.EncodeToPNG();
+        TriggerPhotoAdded(selectedDayCell.DaycellData.photoPaths);
 
-        File.WriteAllBytes(path, bytes);
-        EventManager.Instance.TriggerPhotoAdded();
-        CloseCameraWindow();
 
 
     }
-    private void HandleCameraEnablePressed()
-    {
-        phoneCamera = Instantiate(phoneCameraPrefab, canvas);
 
+    private void TriggerPhotoAdded(List<string> photoPaths)
+    {
+        if (onPhotoAdded != null)
+        {
+            onPhotoAdded(photoPaths);
+        }
+    }
+
+    private void TriggerPhotoDeleted(List<string> photoPaths)
+    {
+        if (onPhotoDeleted != null)
+        {
+            onPhotoDeleted(photoPaths);
+        }
     }
 
     private void HandleSelectCell(Cell cell)
@@ -113,20 +128,10 @@ public class SelectedCellManager : MonoBehaviour
         {
             Destroy(descriptionWindow.gameObject);
             descriptionWindow = null;
-            HandleDeselectCell();
+            pop.TriggerQuitPopUp();
         }
     }
-    private void CloseCameraWindow()
-    {
-        if (phoneCamera != null)
-        {
-            phoneCamera.StopCamera();
-            Destroy(phoneCamera.gameObject);
 
-            phoneCamera = null;
-
-        }
-    }
     private void HandleAddStickerPressed()
     {
 
@@ -137,9 +142,9 @@ public class SelectedCellManager : MonoBehaviour
 
     }
 
-    private void HandleDeselectCell()
+    private void HandleQuitPopUp()
     {
-        selectedDayCell.DeselectImage();
+
         selectedDayCell = null;
         Destroy(pop.gameObject);
         pop = null;

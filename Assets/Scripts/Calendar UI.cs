@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class CalendarUI : MonoBehaviour
 {
+
+    private delegate void ButtonClickEvent();
+    private ButtonClickEvent onForwardClick;
+    private ButtonClickEvent onBackwardClick;
+
+
     private const int DAYS_IN_WEEK = 7;
     private readonly List<string> weekDays = new() { "M", "T", "W", "T", "F", "S", "S" };
 
@@ -35,8 +41,8 @@ public class CalendarUI : MonoBehaviour
     private void Awake()
     {
 
-        EventManager.Instance.onForwardClick += HandleForwardClick;
-        EventManager.Instance.onBackwardClick += HandleBackwardClick;
+        onForwardClick += HandleForwardClick;
+        onBackwardClick += HandleBackwardClick;
 
 
 
@@ -59,8 +65,8 @@ public class CalendarUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventManager.Instance.onForwardClick -= HandleForwardClick;
-        EventManager.Instance.onBackwardClick -= HandleBackwardClick;
+        onForwardClick -= HandleForwardClick;
+        onBackwardClick -= HandleBackwardClick;
 
 
     }
@@ -201,6 +207,25 @@ public class CalendarUI : MonoBehaviour
 
         }
         populationList.Clear();
+
+    }
+
+
+    public void TriggerForwardClick()
+    {
+        if (onForwardClick != null)
+        {
+            onForwardClick();
+        }
+
+    }
+
+    public void TriggerBackwardClick()
+    {
+        if (onBackwardClick != null)
+        {
+            onBackwardClick();
+        }
 
     }
 }

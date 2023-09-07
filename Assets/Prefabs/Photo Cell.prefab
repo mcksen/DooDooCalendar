@@ -96,7 +96,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7626238597545991920}
         m_TargetAssemblyTypeName: PhotoCell, Assembly-CSharp
-        m_MethodName: TriggerPhotoOpen
+        m_MethodName: TriggerOpenPhotoPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

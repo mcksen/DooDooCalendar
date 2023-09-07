@@ -121,8 +121,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: f7cfca275296369448eb0d25d51a9b09, type: 2}
-        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+      - m_Target: {fileID: 7401884904290365281}
+        m_TargetAssemblyTypeName: PhoneCamera, Assembly-CSharp
         m_MethodName: TriggerTakePhotoPressed
         m_Mode: 1
         m_Arguments:

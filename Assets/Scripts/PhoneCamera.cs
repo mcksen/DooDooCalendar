@@ -1,15 +1,28 @@
+using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PhoneCamera : MonoBehaviour
 {
+    public delegate void PhoneCameraEvent();
+    public PhoneCameraEvent onTakePhotoPressed;
+
+    public delegate void CameraSaveEvent(string path);
+    public static CameraSaveEvent onTryAddPhoto;
+
+
     private bool isCamAvailable;
     private WebCamTexture backCamera;
     private Texture defaultBackground;
     [SerializeField] private RawImage background;
     [SerializeField] private AspectRatioFitter fitter;
 
-    public WebCamTexture BackCamera => backCamera;
+    private void Awake()
+    {
+        onTakePhotoPressed += HandleTakePhotoPressed;
+        onTryAddPhoto += HandleTryAddPhoto;
+    }
 
 
     private void Start()
@@ -58,8 +71,52 @@ public class PhoneCamera : MonoBehaviour
 
     }
 
+
+    private void OnDestroy()
+    {
+        onTakePhotoPressed += HandleTakePhotoPressed;
+        onTryAddPhoto -= HandleTryAddPhoto;
+    }
+
+
+
+    private void HandleTakePhotoPressed()
+    {
+        Guid guid = Guid.NewGuid();
+        string path = System.IO.Path.Combine(Application.persistentDataPath + guid.ToString() + ".png");
+
+        Texture2D tex = new Texture2D(backCamera.width, backCamera.height);
+        tex.SetPixels(backCamera.GetPixels());
+        byte[] bytes = tex.EncodeToPNG();
+
+        File.WriteAllBytes(path, bytes);
+        TriggerTryAddPhoto(path);
+
+    }
+
+    private void HandleTryAddPhoto(string path)
+    {
+        StopCamera();
+    }
     public void StopCamera()
     {
         backCamera.Stop();
+    }
+    public void TriggerTakePhotoPressed()
+    {
+        if (onTakePhotoPressed != null)
+        {
+            onTakePhotoPressed();
+        }
+
+    }
+
+    public void TriggerTryAddPhoto(string path)
+    {
+        if (onTryAddPhoto != null)
+        {
+            onTryAddPhoto(path);
+        }
+
     }
 }

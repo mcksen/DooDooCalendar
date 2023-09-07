@@ -10,149 +10,54 @@ using UnityEngine.UI;
 
 public class DescriptionWindow : MonoBehaviour
 {
+    public delegate void DesctiptionWindowEvent();
 
 
-    [SerializeField] private TMP_InputField inputField;
-    [SerializeField] private GridPopulator gridPopulator;
-    [SerializeField] private PhotoManager photoManagerPrefab;
+    public static DesctiptionWindowEvent onConfirmChanges;
+    public static DesctiptionWindowEvent onCancelChanges;
 
 
 
-    private List<Cell> photoCells = new List<Cell>();
-    private List<string> photoPaths = new();
+
+
+    [SerializeField] private InputField inputField;
+    [SerializeField] private PhotoGallery photoGallery;
+
+
+
+
     private PhotoManager photoManager;
-    private int index;
 
 
-    private int Index
-    {
-        get => index;
-        set
-        {
-            index = value;
-            SetButtonInteractability();
 
 
-        }
-    }
-    private void Awake()
-    {
-        EventManager.Instance.onPhotoAdded += HandlePhotoAdded;
-        EventManager.Instance.onOpenPhotoPressed += HandlePhotoOpenPressed;
-        EventManager.Instance.onNextPhotoPressed += HandleNextPhotoPressed;
-        EventManager.Instance.onPreviousPhotoPressed += HandlePreviousPhotoPressed;
-        EventManager.Instance.onReturnPressed += HandleReturnPressed;
-        EventManager.Instance.onDeletePhotoPressed += HandleDeletePhotoPressed;
 
-    }
-    private void OnDestroy()
-    {
-        EventManager.Instance.onPhotoAdded -= HandlePhotoAdded;
-        EventManager.Instance.onOpenPhotoPressed -= HandlePhotoOpenPressed;
-        EventManager.Instance.onNextPhotoPressed -= HandleNextPhotoPressed;
-        EventManager.Instance.onPreviousPhotoPressed -= HandlePreviousPhotoPressed;
-        EventManager.Instance.onReturnPressed -= HandleReturnPressed;
-        EventManager.Instance.onDeletePhotoPressed -= HandleDeletePhotoPressed;
-    }
-    private void SetButtonInteractability()
-    {
-        if (index == 0)
-        {
-            photoManager.PreviousPhoto.interactable = false;
-        }
-        if (index < photoCells.Count && index > 0)
-        {
-            photoManager.PreviousPhoto.interactable = true;
-            photoManager.NextPhoto.interactable = true;
-        }
-        if (index == photoCells.Count - 1)
-        {
-            photoManager.NextPhoto.interactable = false;
-        }
-    }
-    private void HandleDeletePhotoPressed()
-    {
-        photoPaths.Remove(photoPaths[index]);
-        Destroy(photoManager.gameObject);
-        photoManager = null;
-        Clear();
-        Populate();
-
-    }
-
-    private void HandleReturnPressed()
-    {
-        Destroy(photoManager.gameObject);
-        photoManager = null;
-        Clear();
-        Populate();
-    }
 
     public void Configure(string description, List<string> photoPaths)
     {
-        inputField.text = description;
-        this.photoPaths = photoPaths;
-        Populate();
+
+        inputField.Configure(description);
+        photoGallery.Configure(photoPaths);
 
     }
 
-    private void HandlePhotoAdded()
-    {
-        Clear();
-        Populate();
-    }
 
-    private void HandlePhotoOpenPressed(PhotoCell photoCell)
+
+
+
+
+    public void TriggerConfirmChanges()
     {
-        photoManager = Instantiate(photoManagerPrefab, transform.parent);
-        photoManager.Configure(photoCell);
-        for (int i = 0; i < photoCells.Count; i++)
+        if (onConfirmChanges != null)
         {
-            if (photoCells[i] == photoCell)
-            {
-                Index = i;
-            }
-        }
-
-
-    }
-    private void HandlePreviousPhotoPressed()
-    {
-        Index -= 1;
-        photoManager.Configure(photoCells[index] as PhotoCell);
-
-    }
-    private void HandleNextPhotoPressed()
-    {
-        Index += 1;
-        photoManager.Configure(photoCells[index] as PhotoCell);
-
-    }
-    private void Populate()
-    {
-        photoCells = gridPopulator.Populate(photoPaths.Count);
-        for (int i = 0; i < photoCells.Count; i++)
-        {
-            string path = photoPaths[i];
-
-            PhotoCellData data = new PhotoCellData(path);
-            photoCells[i].Configure(data);
-        }
-
-    }
-
-    private void Clear()
-    {
-        if (photoCells != null)
-        {
-            foreach (PhotoCell photoCell in photoCells)
-            {
-                Destroy(photoCell.gameObject);
-            }
-            photoCells.Clear();
-
-
+            onConfirmChanges();
         }
     }
-
+    public void TriggerCancelChanges()
+    {
+        if (onCancelChanges != null)
+        {
+            onCancelChanges();
+        }
+    }
 }

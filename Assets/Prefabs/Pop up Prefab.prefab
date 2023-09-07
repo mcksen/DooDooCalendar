@@ -213,9 +213,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: f7cfca275296369448eb0d25d51a9b09, type: 2}
-        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: TriggerDeselectCell
+      - m_Target: {fileID: 719441924954893904}
+        m_TargetAssemblyTypeName: PopUp, Assembly-CSharp
+        m_MethodName: TriggerQuitPopUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

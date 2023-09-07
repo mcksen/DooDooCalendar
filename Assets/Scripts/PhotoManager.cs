@@ -1,50 +1,62 @@
 
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PhotoManager : MonoBehaviour
 {
+    public delegate void DeletePhotoEvent(int index);
 
-    [SerializeField] private Image image;
-    [SerializeField] private AspectRatioFitter fitter;
-    [SerializeField] private Button nextPhoto;
-    public Button NextPhoto
+    public static DeletePhotoEvent onDeletePhotoPressed;
+
+    public delegate void ReturnEvent();
+    public static ReturnEvent onReturnPressed;
+
+    [SerializeField] private FullSizePhoto fullSizePhoto;
+    [SerializeField] private ListToButtonManager listToButtonManager;
+    private List<Cell> photoCells = new();
+    private int photoIndex;
+    private void Awake()
     {
-        get => nextPhoto;
-        set
-        {
-
-            nextPhoto = value;
-
-        }
-    }
-    [SerializeField] private Button previousPhoto;
-    public Button PreviousPhoto
-    {
-        get => previousPhoto;
-        set
-        {
-
-            previousPhoto = value;
-
-        }
+        ListToButtonManager.onChangeIndex += HandleChangeIndex;
     }
 
-    public void Configure(PhotoCell photoCell)
 
+    public void Configure(PhotoCell photoCell, List<Cell> photoCells, int index)
     {
-        byte[] bytes = File.ReadAllBytes(photoCell.PhotoCellData.imagePath);
+        this.photoCells = photoCells;
+        fullSizePhoto.Configure(photoCell);
+        listToButtonManager.Configure(photoCells, index);
+        photoIndex = index;
+    }
+    private void OnDestroy()
+    {
+        ListToButtonManager.onChangeIndex -= HandleChangeIndex;
+    }
+    private void HandleChangeIndex(int index)
+    {
+        fullSizePhoto.Configure(photoCells[index] as PhotoCell);
+        photoIndex = index;
+    }
 
-        Texture2D texture = new Texture2D(Screen.width, Screen.height);
+    public void TriggerDeletePhotoPressed()
+    {
+        if (onDeletePhotoPressed != null)
+        {
+            onDeletePhotoPressed(photoIndex);
+        }
 
-        texture.LoadImage(bytes);
-        image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
 
-
-        float ratio = (float)image.sprite.texture.width / (float)image.sprite.texture.height;
-        fitter.aspectRatio = ratio;
+    public void TriggerReturnPressed()
+    {
+        if (onDeletePhotoPressed != null)
+        {
+            onDeletePhotoPressed(photoIndex);
+        }
 
     }
 

@@ -458,8 +458,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: f7cfca275296369448eb0d25d51a9b09, type: 2}
-        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+      - m_Target: {fileID: 6729063085449162580}
+        m_TargetAssemblyTypeName: PhotoManager, Assembly-CSharp
         m_MethodName: TriggerDeletePhotoPressed
         m_Mode: 1
         m_Arguments:
@@ -519,6 +519,7 @@ GameObject:
   - component: {fileID: 8061117984482183176}
   - component: {fileID: 5265419232846472629}
   - component: {fileID: 1336235360466166944}
+  - component: {fileID: 5052171129748107731}
   m_Layer: 0
   m_Name: Image Container
   m_TagString: Untagged
@@ -598,6 +599,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &5052171129748107731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6803079850151443110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8d0f5c164e41a418297fb72fd4ddc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 439623402511565503}
+  fitter: {fileID: 6484553043112479139}
 --- !u!1 &6976200316960839230
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,6 +625,7 @@ GameObject:
   - component: {fileID: 8190656541422395782}
   - component: {fileID: 5376903455755436438}
   - component: {fileID: 6607904156672156984}
+  - component: {fileID: 7866448453293670997}
   m_Layer: 0
   m_Name: Lower Buttons Container
   m_TagString: Untagged
@@ -694,6 +710,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7866448453293670997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6976200316960839230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425ac4de57206064bba9c0f02de77788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forward: {fileID: 4534068372249522617}
+  back: {fileID: 7489038425594564275}
 --- !u!1 &7093225991326710099
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,9 +754,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1323523112391528195}
-  - {fileID: 5180741435232850392}
   - {fileID: 2538067639844140230}
   - {fileID: 2301938330700401358}
+  - {fileID: 5180741435232850392}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -747,10 +777,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aafaaca76ccd254192a3a47c517e2de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 439623402511565503}
-  fitter: {fileID: 6484553043112479139}
-  nextPhoto: {fileID: 4534068372249522617}
-  previousPhoto: {fileID: 7489038425594564275}
+  fullSizePhoto: {fileID: 5052171129748107731}
+  listToButtonManager: {fileID: 0}
 --- !u!1 &8390763905059906660
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,8 +1070,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: f7cfca275296369448eb0d25d51a9b09, type: 2}
-        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+      - m_Target: {fileID: 6729063085449162580}
+        m_TargetAssemblyTypeName: PhotoManager, Assembly-CSharp
         m_MethodName: TriggerReturnPressed
         m_Mode: 1
         m_Arguments:

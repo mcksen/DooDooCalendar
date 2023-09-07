@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class PhotoCell : Cell
 {
 
+    public delegate void PhotoEvent(PhotoCell photoCell);
+    public static PhotoEvent onOpenPhotoPressed;
+
 
     [SerializeField] private Image image;
     public Image Image => image;
@@ -29,12 +32,16 @@ public class PhotoCell : Cell
         fitter.aspectRatio = ratio;
     }
 
-    public void TriggerPhotoOpen()
+
+
+    public void TriggerOpenPhotoPressed()
     {
-        EventManager.Instance.TriggerOpenPhotoPressed(this);
+        if (onOpenPhotoPressed != null)
+        {
+            onOpenPhotoPressed(this);
+        }
+
     }
-
-
 
 
 

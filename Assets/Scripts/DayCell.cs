@@ -8,6 +8,10 @@ using System;
 
 public class DayCell : Cell
 {
+    public delegate void CellSelectEvent(Cell cell);
+    public static CellSelectEvent onCellImageSelect;
+    public static CellSelectEvent onCellSelect;
+
 
     [SerializeField] private TextMeshProUGUI cellText;
     [SerializeField] private Image selectImage;
@@ -28,11 +32,13 @@ public class DayCell : Cell
     public DayCellData DaycellData => daycellData;
     private void Awake()
     {
-        EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
+        onCellImageSelect += HandleCellImageSelect;
+        PopUp.quitPopUp += DeselectImage;
     }
     private void OnDestroy()
     {
-        EventManager.Instance.onCellImageSelect -= HandleCellImageSelect;
+        onCellImageSelect -= HandleCellImageSelect;
+        PopUp.quitPopUp -= DeselectImage;
     }
     public override void Configure(CellData data)
     {
@@ -54,11 +60,12 @@ public class DayCell : Cell
     {
         if (selectImage.enabled == false)
         {
-            EventManager.Instance.TriggerCellImageSelect(this);
+
+            TriggerCellImageSelect(this);
         }
         else
         {
-            EventManager.Instance.TriggerCellSelect(this);
+            TriggerCellSelect(this);
         }
     }
     private void HandleCellImageSelect(Cell cell)
@@ -141,8 +148,21 @@ public class DayCell : Cell
 
 
 
+    private void TriggerCellImageSelect(Cell cell)
+    {
+        if (onCellImageSelect != null)
+        {
+            onCellImageSelect(cell);
+        }
+    }
+    private void TriggerCellSelect(Cell cell)
+    {
+        if (onCellSelect != null)
+        {
+            onCellSelect(cell);
+        }
 
-
+    }
 
 }
 

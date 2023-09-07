@@ -842,7 +842,7 @@ GameObject:
   - component: {fileID: 842816407}
   - component: {fileID: 842816408}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Calendar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1138,8 +1138,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: f7cfca275296369448eb0d25d51a9b09, type: 2}
-        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+      - m_Target: {fileID: 842816406}
+        m_TargetAssemblyTypeName: CalendarUI, Assembly-CSharp
         m_MethodName: TriggerForwardClick
         m_Mode: 1
         m_Arguments:
@@ -1405,8 +1405,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: f7cfca275296369448eb0d25d51a9b09, type: 2}
-        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+      - m_Target: {fileID: 842816406}
+        m_TargetAssemblyTypeName: CalendarUI, Assembly-CSharp
         m_MethodName: TriggerBackwardClick
         m_Mode: 1
         m_Arguments:

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 
 public class PopUp : MonoBehaviour
 {
+    public delegate void PopUpEvent();
+    public static PopUpEvent quitPopUp;
 
     [SerializeField] private ButtonCell buttonCellPrefab;
     [SerializeField] private GridLayoutGroup grid;
@@ -100,6 +102,13 @@ public class PopUp : MonoBehaviour
         list.Clear();
     }
 
+    public void TriggerQuitPopUp()
+    {
+        if (quitPopUp != null)
+        {
+            quitPopUp();
+        }
 
+    }
 
 }
