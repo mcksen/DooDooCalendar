@@ -1,14 +1,10 @@
 
-
-
 using System.Collections.Generic;
-
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
-public class DescriptionWindow : MonoBehaviour
+
+public class SelectedCellContentWindow : MonoBehaviour
 {
     public delegate void DesctiptionWindowEvent();
 
@@ -40,9 +36,6 @@ public class DescriptionWindow : MonoBehaviour
         photoGallery.Configure(photoPaths);
 
     }
-
-
-
 
 
 

@@ -1,15 +1,13 @@
 
 
-using System;
+
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class PhotoManager : MonoBehaviour
 {
     public delegate void DeletePhotoEvent(int index);
-
     public static DeletePhotoEvent onDeletePhotoPressed;
 
     public delegate void ReturnEvent();
@@ -19,6 +17,8 @@ public class PhotoManager : MonoBehaviour
     [SerializeField] private ListToButtonManager listToButtonManager;
     private List<Cell> photoCells = new();
     private int photoIndex;
+
+
     private void Awake()
     {
         ListToButtonManager.onChangeIndex += HandleChangeIndex;
@@ -40,6 +40,7 @@ public class PhotoManager : MonoBehaviour
     {
         fullSizePhoto.Configure(photoCells[index] as PhotoCell);
         photoIndex = index;
+
     }
 
     public void TriggerDeletePhotoPressed()
@@ -53,9 +54,9 @@ public class PhotoManager : MonoBehaviour
 
     public void TriggerReturnPressed()
     {
-        if (onDeletePhotoPressed != null)
+        if (onReturnPressed != null)
         {
-            onDeletePhotoPressed(photoIndex);
+            onReturnPressed();
         }
 
     }

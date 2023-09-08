@@ -14,14 +14,14 @@ public class PhotoGallery : MonoBehaviour
     [SerializeField] private PhotoManager photoManagerPrefab;
 
     private PhoneCamera phoneCamera;
+    private PhotoManager photoManager;
 
     private List<Cell> photoCells = new List<Cell>();
-    private PhotoManager photoManager;
 
     private void Awake()
     {
-        PhoneCamera.onTryAddPhoto += HandleTryAddPhoto;
         PhotoCell.onOpenPhotoPressed += HandleOnOpenPhotoPressed;
+        PhoneCamera.onTryAddPhoto += HandleTryAddPhoto;
         SelectedCellManager.onPhotoAdded += HandlePhotoAdded;
         SelectedCellManager.onPhotoDeleted += HandlePhotoDeleted;
         PhotoManager.onReturnPressed += HandleReturnPressed;
@@ -33,8 +33,8 @@ public class PhotoGallery : MonoBehaviour
     }
     private void OnDestroy()
     {
-        PhoneCamera.onTryAddPhoto -= HandleTryAddPhoto;
         PhotoCell.onOpenPhotoPressed -= HandleOnOpenPhotoPressed;
+        PhoneCamera.onTryAddPhoto -= HandleTryAddPhoto;
         SelectedCellManager.onPhotoAdded -= HandlePhotoAdded;
         SelectedCellManager.onPhotoDeleted -= HandlePhotoDeleted;
         PhotoManager.onReturnPressed -= HandleReturnPressed;
@@ -66,7 +66,6 @@ public class PhotoGallery : MonoBehaviour
     public void EnableCamera()
     {
         phoneCamera = Instantiate(phoneCameraPrefab, transform.parent);
-
     }
 
     private void CloseCameraWindow()

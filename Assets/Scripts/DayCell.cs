@@ -9,7 +9,7 @@ using System;
 public class DayCell : Cell
 {
     public delegate void CellSelectEvent(Cell cell);
-    public static CellSelectEvent onCellImageSelect;
+
     public static CellSelectEvent onCellSelect;
 
 
@@ -32,13 +32,8 @@ public class DayCell : Cell
     public DayCellData DaycellData => daycellData;
     private void Awake()
     {
-        onCellImageSelect += HandleCellImageSelect;
-        PopUp.quitPopUp += DeselectImage;
-    }
-    private void OnDestroy()
-    {
-        onCellImageSelect -= HandleCellImageSelect;
-        PopUp.quitPopUp -= DeselectImage;
+
+        PopUp.quitPopUp += DeselectCellImage;
     }
     public override void Configure(CellData data)
     {
@@ -55,36 +50,12 @@ public class DayCell : Cell
             SetPoopImage();
         }
     }
-
-    public void Select()
+    private void OnDestroy()
     {
-        if (selectImage.enabled == false)
-        {
 
-            TriggerCellImageSelect(this);
-        }
-        else
-        {
-            TriggerCellSelect(this);
-        }
+        PopUp.quitPopUp -= DeselectCellImage;
     }
-    private void HandleCellImageSelect(Cell cell)
-    {
-        if (cell as DayCell == this)
-        {
-            selectImage.enabled = true;
 
-        }
-        else
-        {
-            DeselectImage();
-        }
-    }
-    public void DeselectImage()
-    {
-        selectImage.enabled = false;
-
-    }
     private void SetTextValue()
     {
         if (date == DateTime.MinValue)
@@ -109,8 +80,8 @@ public class DayCell : Cell
             defaultImage.color = blankColor;
         }
 
-    }
 
+    }
     public void SetPoopImage()
     {
         daycellData.isPoopImageActive = SetImageActiveDependancy(poop);
@@ -120,15 +91,6 @@ public class DayCell : Cell
     {
         daycellData.isMedicineImageActive = SetImageActiveDependancy(medicine);
         TryRemoveCellData();
-    }
-
-
-    private void TryRemoveCellData()
-    {
-        if (!daycellData.isPoopImageActive && !daycellData.isMedicineImageActive && daycellData.description == "")
-        {
-            StateSaver.Data.Remove(DaycellData);
-        }
     }
 
     private bool SetImageActiveDependancy(Image image)
@@ -147,14 +109,53 @@ public class DayCell : Cell
     }
 
 
-
-    private void TriggerCellImageSelect(Cell cell)
+    private void TryRemoveCellData()
     {
-        if (onCellImageSelect != null)
+        if (!daycellData.isPoopImageActive && !daycellData.isMedicineImageActive && daycellData.description == "")
         {
-            onCellImageSelect(cell);
+            StateSaver.Data.Remove(DaycellData);
         }
     }
+
+
+
+    public void Select()
+    {
+        if (selectImage.enabled == false)
+        {
+
+            SelectCellImage(this);
+        }
+        else
+        {
+            TriggerCellSelect(this);
+        }
+    }
+    public void SelectCellImage(Cell cell)
+    {
+        if (cell as DayCell == this)
+        {
+            selectImage.enabled = true;
+
+        }
+        else
+        {
+            DeselectCellImage();
+        }
+    }
+    public void DeselectCellImage()
+    {
+        selectImage.enabled = false;
+
+    }
+
+
+
+
+
+
+
+
     private void TriggerCellSelect(Cell cell)
     {
         if (onCellSelect != null)

@@ -325,9 +325,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: f7cfca275296369448eb0d25d51a9b09, type: 2}
-        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: TriggerNextPhotoPressed
+      - m_Target: {fileID: 7866448453293670997}
+        m_TargetAssemblyTypeName: ListToButtonManager, Assembly-CSharp
+        m_MethodName: MoveToNextPhoto
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fullSizePhoto: {fileID: 5052171129748107731}
-  listToButtonManager: {fileID: 0}
+  listToButtonManager: {fileID: 7866448453293670997}
 --- !u!1 &8390763905059906660
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,9 +900,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: f7cfca275296369448eb0d25d51a9b09, type: 2}
-        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: TriggerPreviousPhotoPressed
+      - m_Target: {fileID: 7866448453293670997}
+        m_TargetAssemblyTypeName: ListToButtonManager, Assembly-CSharp
+        m_MethodName: MoveToPreviousPhoto
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

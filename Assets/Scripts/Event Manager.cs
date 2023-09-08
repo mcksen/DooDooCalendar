@@ -1,6 +1,3 @@
-
-
-using System;
 using UnityEngine;
 
 
@@ -14,13 +11,9 @@ public class EventManager : ScriptableSingleton<EventManager>
     public ApplicationEvent onExitGame;
 
 
-
-
     public delegate void SceneEvent();
     public SceneEvent onOpenGame;
     public SceneEvent onLoadedGame;
-
-
 
 
 
@@ -49,19 +42,6 @@ public class EventManager : ScriptableSingleton<EventManager>
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

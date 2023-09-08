@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class PhoneCamera : MonoBehaviour
 {
-    public delegate void PhoneCameraEvent();
-    public PhoneCameraEvent onTakePhotoPressed;
+
 
     public delegate void CameraSaveEvent(string path);
     public static CameraSaveEvent onTryAddPhoto;
@@ -18,11 +17,7 @@ public class PhoneCamera : MonoBehaviour
     [SerializeField] private RawImage background;
     [SerializeField] private AspectRatioFitter fitter;
 
-    private void Awake()
-    {
-        onTakePhotoPressed += HandleTakePhotoPressed;
-        onTryAddPhoto += HandleTryAddPhoto;
-    }
+
 
 
     private void Start()
@@ -72,15 +67,10 @@ public class PhoneCamera : MonoBehaviour
     }
 
 
-    private void OnDestroy()
-    {
-        onTakePhotoPressed += HandleTakePhotoPressed;
-        onTryAddPhoto -= HandleTryAddPhoto;
-    }
 
 
 
-    private void HandleTakePhotoPressed()
+    public void TakePhoto()
     {
         Guid guid = Guid.NewGuid();
         string path = System.IO.Path.Combine(Application.persistentDataPath + guid.ToString() + ".png");
@@ -91,27 +81,18 @@ public class PhoneCamera : MonoBehaviour
 
         File.WriteAllBytes(path, bytes);
         TriggerTryAddPhoto(path);
-
-    }
-
-    private void HandleTryAddPhoto(string path)
-    {
         StopCamera();
+
     }
-    public void StopCamera()
+
+
+    private void StopCamera()
     {
         backCamera.Stop();
     }
-    public void TriggerTakePhotoPressed()
-    {
-        if (onTakePhotoPressed != null)
-        {
-            onTakePhotoPressed();
-        }
 
-    }
 
-    public void TriggerTryAddPhoto(string path)
+    private void TriggerTryAddPhoto(string path)
     {
         if (onTryAddPhoto != null)
         {
