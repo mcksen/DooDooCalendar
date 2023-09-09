@@ -6,35 +6,29 @@ using UnityEngine;
 
 public class CalendarUI : MonoBehaviour
 {
+
+    private delegate void ButtonClickEvent();
+    private ButtonClickEvent onForwardClick;
+    private ButtonClickEvent onBackwardClick;
+
+
     private const int DAYS_IN_WEEK = 7;
     private readonly List<string> weekDays = new() { "M", "T", "W", "T", "F", "S", "S" };
-    private const string poopButtonName = "Poop";
-    private const string pillButtonName = "Pill";
-    private const string stickerButtonName = "Sticker";
-    private const string notesButtonName = "Notes";
+
 
     [SerializeField] private GridPopulator calendarGridPopulator;
     [SerializeField] private GridPopulator weekDaysGridPopulator;
-    [SerializeField] private PopUp popUpPrefab;
-    [SerializeField] private RectTransform canvas;
-
-
-
-
-    [SerializeField] private Color blankColor;
-    [SerializeField] private Color daysDefaultColor;
-    [SerializeField] private Color currentDayColor;
-
-
-
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private TextMeshProUGUI yearText;
 
 
-    private PopUp pop = null;
+
 
     private List<Cell> populationList = new();
-    private DayCell selectedDayCell;
+
+
+
+
 
     private DateTime currentDate;
     private DateTime defaultDate;
@@ -46,11 +40,10 @@ public class CalendarUI : MonoBehaviour
 
     private void Awake()
     {
-        EventManager.Instance.onForwardClick += HandleForwardClick;
-        EventManager.Instance.onBackwardClick += HandleBackwardClick;
-        EventManager.Instance.onCellImageSelect += HandleCellImageSelect;
-        EventManager.Instance.onCellSelect += HandleSelectCell;
-        EventManager.Instance.onDeselectCell += HandleDeselectCell;
+
+        onForwardClick += HandleForwardClick;
+        onBackwardClick += HandleBackwardClick;
+
 
 
     }
@@ -72,13 +65,12 @@ public class CalendarUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventManager.Instance.onForwardClick -= HandleForwardClick;
-        EventManager.Instance.onBackwardClick -= HandleBackwardClick;
-        EventManager.Instance.onCellSelect -= HandleSelectCell;
-        EventManager.Instance.onDeselectCell -= HandleDeselectCell;
-        EventManager.Instance.onCellImageSelect -= HandleCellImageSelect;
+        onForwardClick -= HandleForwardClick;
+        onBackwardClick -= HandleBackwardClick;
+
 
     }
+
 
     // _____________________________________________________________________________________
     //   EVENT - DEPENDANT FUNCTIONS
@@ -107,65 +99,9 @@ public class CalendarUI : MonoBehaviour
         SetNumberOfBlanks();
         PopulateCalendarGrid();
     }
-    private void HandleCellImageSelect(Cell cell)
-    {
-        foreach (DayCell c in populationList)
-        {
-            if (c != cell)
-            {
-                c.DeSelect();
-            }
-        }
-    }
-    private void HandleSelectCell(Cell cell)
-    {
-        if (pop == null)
-        {
-
-            selectedDayCell = cell as DayCell;
-
-            pop = Instantiate(popUpPrefab, canvas);
-            pop.MakeButton(stickerButtonName, HandleAddStickerPressed, false);
-            pop.MakeButton(notesButtonName, HandleAddDescriptionPressed, false);
-            pop.SetPosition(cell.transform.position);
 
 
-        }
-    }
-    private void HandleAddDescriptionPressed()
-    {
-        EventManager.Instance.TriggerAddDescriptionPressed();
 
-    }
-
-
-    private void HandleAddStickerPressed()
-    {
-
-        pop.DestroyButons();
-        pop.MakeButton(poopButtonName, HandleAddPoopPressed, selectedDayCell.DaycellData.isPoopImageActive);
-        pop.MakeButton(pillButtonName, HandleAddMedicinePressed, selectedDayCell.DaycellData.isMedicineImageActive);
-
-
-    }
-
-    private void HandleDeselectCell()
-    {
-        selectedDayCell.DeSelect();
-        selectedDayCell = null;
-        Destroy(pop.gameObject);
-        pop = null;
-    }
-
-    private void HandleAddPoopPressed()
-    {
-        selectedDayCell.SetPoopImage();
-    }
-
-    private void HandleAddMedicinePressed()
-    {
-        selectedDayCell.SetMedicineImage();
-    }
     // _____________________________________________________________________________________
     //   CLASS - SPECIEFIC FUNCTIONS
     // _____________________________________________________________________________________
@@ -175,27 +111,37 @@ public class CalendarUI : MonoBehaviour
         int totalDays = numberOfBlanksBefore + daysInMonth + numberOfBlanksAfter;
         populationList = calendarGridPopulator.Populate(totalDays);
 
-        int day = 1;
+        DateTime date = DateTime.MinValue;
         for (int i = 0; i <= populationList.Count - 1; i++)
         {
-            string text = "";
-            Color color = blankColor;
+
 
             if (i >= numberOfBlanksBefore && i < numberOfBlanksBefore + daysInMonth)
             {
-
-                text = day.ToString();
-                if (day == currentDate.Day && defaultDate.Month == currentDate.Month && defaultDate.Year == currentDate.Year)
+                if (date.Date == DateTime.MinValue)
                 {
-                    color = currentDayColor;
+                    date = firstDayOfMonth;
                 }
                 else
                 {
-                    color = daysDefaultColor;
+                    date = date.AddDays(1);
+
                 }
-                day++;
+
             }
-            DayCellData data = new DayCellData(text, color);
+            else
+            {
+                date = DateTime.MinValue;
+            }
+            DayCellData data = new DayCellData(date.Day, date.Month, date.Year);
+
+            foreach (DayCellData daycellData in StateSaver.Data)
+            {
+                if (daycellData.Equals(data))
+                {
+                    data = daycellData;
+                }
+            }
 
             populationList[i].Configure(data);
 
@@ -261,6 +207,25 @@ public class CalendarUI : MonoBehaviour
 
         }
         populationList.Clear();
+
+    }
+
+
+    public void TriggerForwardClick()
+    {
+        if (onForwardClick != null)
+        {
+            onForwardClick();
+        }
+
+    }
+
+    public void TriggerBackwardClick()
+    {
+        if (onBackwardClick != null)
+        {
+            onBackwardClick();
+        }
 
     }
 }

@@ -1,7 +1,7 @@
 
 
 using UnityEngine;
-using TMPro;
+
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -9,6 +9,8 @@ using System.Collections.Generic;
 
 public class PopUp : MonoBehaviour
 {
+    public delegate void PopUpEvent();
+    public static PopUpEvent quitPopUp;
 
     [SerializeField] private ButtonCell buttonCellPrefab;
     [SerializeField] private GridLayoutGroup grid;
@@ -29,14 +31,14 @@ public class PopUp : MonoBehaviour
 
     public void MakeButton(string text, System.Action action, bool isImageActive)
     {
-        ButtonCellData bData = new ButtonCellData();
-        bData.text = text;
-        bData.action = action;
-        bData.isImageActive = isImageActive;
+        ButtonCellData buttonCellData = new ButtonCellData();
+        buttonCellData.text = text;
+        buttonCellData.action = action;
+        buttonCellData.isImageActive = isImageActive;
 
 
         ButtonCell button = Instantiate(buttonCellPrefab, grid.transform);
-        button.Configure(bData);
+        button.Configure(buttonCellData);
         list.Add(button);
 
 
@@ -100,6 +102,13 @@ public class PopUp : MonoBehaviour
         list.Clear();
     }
 
+    public void TriggerQuitPopUp()
+    {
+        if (quitPopUp != null)
+        {
+            quitPopUp();
+        }
 
+    }
 
 }
