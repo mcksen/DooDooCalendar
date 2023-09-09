@@ -8,5 +8,7 @@ public class GameAwakeSettings : MonoBehaviour
     {
         SceneController.Instance.Subscribe();
         EventManager.Instance.TriggerOpenGame();
+        StateSaver.Instance.Load();
+
     }
 }

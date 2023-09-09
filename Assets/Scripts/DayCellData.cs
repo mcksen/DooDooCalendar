@@ -1,22 +1,36 @@
 
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-
-public class DayCellData : CellData
+[Serializable]
+public class DayCellData : CellData, IEquatable<DayCellData>
 {
-    public string text;
-    public Color color;
+
 
     public bool isPoopImageActive;
     public bool isMedicineImageActive;
 
+    public string description = "";
 
-    public DayCellData(string text, Color color)
+    public List<string> photoPaths = new();
+    public int day;
+    public int month;
+    public int year;
+
+    public DayCellData(int day, int month, int year)
     {
-        this.text = text;
-        this.color = color;
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
     public DayCellData()
     {
+
+    }
+
+    public bool Equals(DayCellData other)
+    {
+        return other.day == day && other.month == month && other.year == year;
 
     }
 }
