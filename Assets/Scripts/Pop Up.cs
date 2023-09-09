@@ -31,14 +31,14 @@ public class PopUp : MonoBehaviour
 
     public void MakeButton(string text, System.Action action, bool isImageActive)
     {
-        ButtonCellData buttoncellData = new ButtonCellData();
-        buttoncellData.text = text;
-        buttoncellData.action = action;
-        buttoncellData.isImageActive = isImageActive;
+        ButtonCellData buttonCellData = new ButtonCellData();
+        buttonCellData.text = text;
+        buttonCellData.action = action;
+        buttonCellData.isImageActive = isImageActive;
 
 
         ButtonCell button = Instantiate(buttonCellPrefab, grid.transform);
-        button.Configure(buttoncellData);
+        button.Configure(buttonCellData);
         list.Add(button);
 
 

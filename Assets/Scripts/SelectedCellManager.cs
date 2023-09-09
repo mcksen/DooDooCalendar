@@ -10,10 +10,10 @@ public class SelectedCellManager : MonoBehaviour
     public static PhotoPathsListEvent onPhotoDeleted;
 
 
-    private const string poopButtonName = "Poop";
-    private const string pillButtonName = "Pill";
-    private const string stickerButtonName = "Sticker";
-    private const string notesButtonName = "Notes";
+    private const string POOP_BUTTON_NAME = "Poop";
+    private const string PILL_BUTTON_NAME = "Pill";
+    private const string STICKER_BUTTON_NAME = "Sticker";
+    private const string NOTES_BUTTON_NAME = "Notes";
 
     [SerializeField] private PopUp popUpPrefab;
     [SerializeField] private RectTransform canvas;
@@ -105,8 +105,8 @@ public class SelectedCellManager : MonoBehaviour
             selectedDayCell = cell as DayCell;
 
             pop = Instantiate(popUpPrefab, canvas);
-            pop.MakeButton(stickerButtonName, HandleAddStickerPressed, false);
-            pop.MakeButton(notesButtonName, HandleAddContentPressed, false);
+            pop.MakeButton(STICKER_BUTTON_NAME, HandleAddStickerPressed, false);
+            pop.MakeButton(NOTES_BUTTON_NAME, HandleAddContentPressed, false);
             pop.SetPosition(cell.transform.position);
         }
 
@@ -126,8 +126,8 @@ public class SelectedCellManager : MonoBehaviour
     {
 
         pop.DestroyButons();
-        pop.MakeButton(poopButtonName, HandleAddPoopPressed, selectedDayCell.DaycellData.isPoopImageActive);
-        pop.MakeButton(pillButtonName, HandleAddMedicinePressed, selectedDayCell.DaycellData.isMedicineImageActive);
+        pop.MakeButton(POOP_BUTTON_NAME, HandleAddPoopPressed, selectedDayCell.DaycellData.isPoopImageActive);
+        pop.MakeButton(PILL_BUTTON_NAME, HandleAddMedicinePressed, selectedDayCell.DaycellData.isMedicineImageActive);
 
 
     }
@@ -165,7 +165,7 @@ public class SelectedCellManager : MonoBehaviour
     }
     private void HandleCancelChanges()
     {
-        tempNote = "";
+        tempNote = string.Empty;
         selectedDayCell.DaycellData.photoPaths = tempPhotoPaths;
         CloseContentWindow();
     }

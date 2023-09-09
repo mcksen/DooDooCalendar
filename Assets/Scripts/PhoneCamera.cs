@@ -43,7 +43,7 @@ public class PhoneCamera : MonoBehaviour
         }
         if (backCamera == null)
         {
-            Debug.Log("No back camera were found");
+            Debug.LogError("No back camera were found");
             return;
         }
         backCamera.Play();
@@ -57,8 +57,10 @@ public class PhoneCamera : MonoBehaviour
         {
             return;
         }
+
         float ratio = (float)backCamera.width / (float)backCamera.height;
         fitter.aspectRatio = ratio;
+
         float scaleY = backCamera.videoVerticallyMirrored ? -1f : 1f;
         background.rectTransform.localScale = new Vector3(1f, scaleY, 1f);
         int orientation = -backCamera.videoRotationAngle;

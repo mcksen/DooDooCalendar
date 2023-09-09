@@ -325,8 +325,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7866448453293670997}
-        m_TargetAssemblyTypeName: ListToButtonManager, Assembly-CSharp
+      - m_Target: {fileID: 3153467782386832417}
+        m_TargetAssemblyTypeName: ListTwoButton, Assembly-CSharp
         m_MethodName: MoveToNextPhoto
         m_Mode: 1
         m_Arguments:
@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 8190656541422395782}
   - component: {fileID: 5376903455755436438}
   - component: {fileID: 6607904156672156984}
-  - component: {fileID: 7866448453293670997}
+  - component: {fileID: 3153467782386832417}
   m_Layer: 0
   m_Name: Lower Buttons Container
   m_TagString: Untagged
@@ -710,7 +710,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7866448453293670997
+--- !u!114 &3153467782386832417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6976200316960839230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 425ac4de57206064bba9c0f02de77788, type: 3}
+  m_Script: {fileID: 11500000, guid: 0aa3c8c162e4aea4aaac0ac42432685d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   forward: {fileID: 4534068372249522617}
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fullSizePhoto: {fileID: 5052171129748107731}
-  listToButtonManager: {fileID: 7866448453293670997}
+  listTwoButton: {fileID: 3153467782386832417}
 --- !u!1 &8390763905059906660
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,8 +900,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7866448453293670997}
-        m_TargetAssemblyTypeName: ListToButtonManager, Assembly-CSharp
+      - m_Target: {fileID: 3153467782386832417}
+        m_TargetAssemblyTypeName: ListTwoButton, Assembly-CSharp
         m_MethodName: MoveToPreviousPhoto
         m_Mode: 1
         m_Arguments:

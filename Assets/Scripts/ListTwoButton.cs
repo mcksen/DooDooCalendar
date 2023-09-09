@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ListToButtonManager : MonoBehaviour
+public class ListTwoButton : MonoBehaviour
 {
 
     public delegate void ListEvent(int index);
@@ -11,7 +11,7 @@ public class ListToButtonManager : MonoBehaviour
 
     [SerializeField] private Button forward;
     [SerializeField] private Button back;
-    List<Cell> list = new();
+    private List<Cell> list = new();
     private int index;
 
 

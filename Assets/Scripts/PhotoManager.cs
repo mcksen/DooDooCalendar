@@ -14,14 +14,14 @@ public class PhotoManager : MonoBehaviour
     public static ReturnEvent onReturnPressed;
 
     [SerializeField] private FullSizePhoto fullSizePhoto;
-    [SerializeField] private ListToButtonManager listToButtonManager;
+    [SerializeField] private ListTwoButton listTwoButton;
     private List<Cell> photoCells = new();
     private int photoIndex;
 
 
     private void Awake()
     {
-        ListToButtonManager.onChangeIndex += HandleChangeIndex;
+        ListTwoButton.onChangeIndex += HandleChangeIndex;
     }
 
 
@@ -29,12 +29,12 @@ public class PhotoManager : MonoBehaviour
     {
         this.photoCells = photoCells;
         fullSizePhoto.Configure(photoCell);
-        listToButtonManager.Configure(photoCells, index);
+        listTwoButton.Configure(photoCells, index);
         photoIndex = index;
     }
     private void OnDestroy()
     {
-        ListToButtonManager.onChangeIndex -= HandleChangeIndex;
+        ListTwoButton.onChangeIndex -= HandleChangeIndex;
     }
     private void HandleChangeIndex(int index)
     {

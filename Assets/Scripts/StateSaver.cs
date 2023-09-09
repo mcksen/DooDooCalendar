@@ -20,7 +20,7 @@ public class StateSaver : ScriptableSingleton<StateSaver>
     {
 
         json = JsonUtility.ToJson(data);
-        Debug.Log("Serialized JSON: " + json);
+
 
     }
 
@@ -38,7 +38,7 @@ public class StateSaver : ScriptableSingleton<StateSaver>
         }
         catch (Exception ex)
         {
-            Debug.Log("Couldn't save: " + ex);
+            Debug.LogError("Couldn't save: " + ex);
         }
 
 
@@ -58,7 +58,7 @@ public class StateSaver : ScriptableSingleton<StateSaver>
         }
         catch (Exception ex)
         {
-            Debug.Log("Fail to Load" + ex);
+            Debug.LogError("Fail to Load" + ex);
         }
 
     }

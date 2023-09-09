@@ -111,7 +111,7 @@ public class DayCell : Cell
 
     private void TryRemoveCellData()
     {
-        if (!daycellData.isPoopImageActive && !daycellData.isMedicineImageActive && daycellData.description == "")
+        if (!daycellData.isPoopImageActive && !daycellData.isMedicineImageActive && string.IsNullOrWhiteSpace(daycellData.description))
         {
             StateSaver.Data.Remove(DaycellData);
         }
@@ -121,14 +121,14 @@ public class DayCell : Cell
 
     public void Select()
     {
-        if (selectImage.enabled == false)
+        if (!selectImage.enabled)
         {
 
             SelectCellImage(this);
         }
         else
         {
-            TriggerCellSelect(this);
+            TriggerSelectCell(this);
         }
     }
     public void SelectCellImage(Cell cell)
@@ -156,7 +156,7 @@ public class DayCell : Cell
 
 
 
-    private void TriggerCellSelect(Cell cell)
+    private void TriggerSelectCell(Cell cell)
     {
         if (onCellSelect != null)
         {
