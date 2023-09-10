@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class GameExitSettings : MonoBehaviour
 {
-    private void OnApplicationQuit()
+    private void OnApplicationPause()
     {
+        Debug.Log("Saved");
         StateSaver.Instance.Save();
     }
 }
