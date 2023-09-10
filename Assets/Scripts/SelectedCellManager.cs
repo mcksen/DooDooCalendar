@@ -173,6 +173,7 @@ public class SelectedCellManager : MonoBehaviour
     {
         selectedDayCell.DaycellData.description = tempNote;
         TryAddCellData();
+        StateSaver.Instance.Save();
         CloseContentWindow();
     }
 
